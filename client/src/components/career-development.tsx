@@ -17,6 +17,9 @@ const careerSchema = z.object({
   fieldOfStudy: z.string().min(1, "Field of study is required"),
   careerInterests: z.string().min(1, "Career interests are required"),
   preferredLocation: z.string().min(1, "Preferred location is required"),
+  currentLocation: z.string().min(1, "Current location is required"),
+  workHours: z.string().min(1, "Work availability is required"),
+  experienceLevel: z.string().min(1, "Experience level is required"),
 });
 
 type CareerFormData = z.infer<typeof careerSchema>;
@@ -25,12 +28,32 @@ interface CareerDevelopmentProps {
   aiEnabled: boolean;
 }
 
+interface JobPosting {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  salary: string;
+  type: string;
+  experience: string;
+  description: string;
+  requirements: string[];
+  posted: string;
+  deadline: string;
+  source: string;
+  url: string;
+  distance?: string;
+}
+
 interface CareerResult {
   profile: string;
   goal: string;
   careerPaths: string[];
-  jobMatches: string[];
+  globalJobMatches: JobPosting[];
+  localJobMatches: JobPosting[];
   immigrationInfo: string;
+  careerAdvice: string[];
+  skillGaps: string[];
   aiEnabled: boolean;
 }
 
@@ -41,9 +64,12 @@ export default function CareerDevelopment({ aiEnabled }: CareerDevelopmentProps)
   const form = useForm<CareerFormData>({
     resolver: zodResolver(careerSchema),
     defaultValues: {
-      fieldOfStudy: "Computer Science",
-      careerInterests: "Software development, machine learning, product management",
-      preferredLocation: "USA",
+      fieldOfStudy: "",
+      careerInterests: "",
+      preferredLocation: "",
+      currentLocation: "",
+      workHours: "",
+      experienceLevel: "",
     },
   });
 
@@ -59,7 +85,7 @@ export default function CareerDevelopment({ aiEnabled }: CareerDevelopmentProps)
       setCareerResult(data);
       toast({
         title: "Career Analysis Complete",
-        description: `Found ${data.careerPaths.length} career paths and ${data.jobMatches.length} job matches.`,
+        description: `Found ${data.careerPaths.length} career paths and ${data.globalJobMatches.length + data.localJobMatches.length} job matches.`,
       });
     },
     onError: (error) => {
@@ -174,15 +200,85 @@ export default function CareerDevelopment({ aiEnabled }: CareerDevelopmentProps)
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select location" />
+                            <SelectValue placeholder="Select preferred location" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="USA">USA</SelectItem>
                           <SelectItem value="Canada">Canada</SelectItem>
+                          <SelectItem value="UK">United Kingdom</SelectItem>
+                          <SelectItem value="Germany">Germany</SelectItem>
+                          <SelectItem value="Australia">Australia</SelectItem>
                           <SelectItem value="Remote">Remote</SelectItem>
-                          <SelectItem value="Home Country">Home Country</SelectItem>
                           <SelectItem value="Europe">Europe</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="currentLocation"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Current Location</FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          rows={2} 
+                          placeholder="e.g., New York, NY or London, UK - for local job search..." 
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="workHours"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Work Availability</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select work availability" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="Full-time">Full-time (40+ hours/week)</SelectItem>
+                          <SelectItem value="Part-time">Part-time (20-30 hours/week)</SelectItem>
+                          <SelectItem value="Contract">Contract/Freelance</SelectItem>
+                          <SelectItem value="Internship">Internship</SelectItem>
+                          <SelectItem value="Flexible">Flexible hours</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="experienceLevel"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Experience Level</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select experience level" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="Entry Level">Entry Level (0-2 years)</SelectItem>
+                          <SelectItem value="Mid Level">Mid Level (2-5 years)</SelectItem>
+                          <SelectItem value="Senior Level">Senior Level (5+ years)</SelectItem>
+                          <SelectItem value="New Graduate">New Graduate</SelectItem>
+                          <SelectItem value="Student">Current Student</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -239,35 +335,106 @@ export default function CareerDevelopment({ aiEnabled }: CareerDevelopmentProps)
             <CardTitle>Job Opportunities</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {mockJobOpportunities.map((job, index) => (
-                <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-                          <span className="text-white text-sm font-bold">{job.companyInitial}</span>
+            {/* Global Job Postings */}
+            {careerResult && careerResult.globalJobMatches && careerResult.globalJobMatches.length > 0 && (
+              <div className="mb-6">
+                <h4 className="font-medium text-gray-900 dark:text-white mb-4 flex items-center">
+                  🌍 Global Opportunities (jobs.ac.uk & international platforms)
+                </h4>
+                <div className="space-y-4">
+                  {careerResult.globalJobMatches.map((job) => (
+                    <div key={job.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                              <span className="text-white text-sm font-bold">{job.company.charAt(0)}</span>
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-gray-900 dark:text-white">{job.title}</h4>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">{job.company}</p>
+                              <p className="text-xs text-gray-500 dark:text-gray-500">{job.location}</p>
+                            </div>
+                          </div>
+                          <div className="mt-2 flex items-center space-x-4 flex-wrap gap-2">
+                            <Badge variant="outline" className="text-xs">
+                              {job.type}
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              {job.experience}
+                            </Badge>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">{job.salary}</span>
+                            <span className="text-xs text-blue-600 dark:text-blue-400">Source: {job.source}</span>
+                          </div>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">{job.description}</p>
+                          <div className="mt-2 text-xs text-gray-500">
+                            Posted: {job.posted} | Deadline: {job.deadline}
+                          </div>
                         </div>
-                        <div>
-                          <h4 className="font-medium text-gray-900 dark:text-white">{job.title}</h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">{job.company}</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-500">{job.location}</p>
+                        <div className="flex flex-col space-y-2">
+                          <Button size="sm" asChild>
+                            <a href={job.url} target="_blank" rel="noopener noreferrer">Apply</a>
+                          </Button>
                         </div>
-                      </div>
-                      <div className="mt-2 flex items-center space-x-4">
-                        {job.sponsorship && (
-                          <Badge variant="secondary" className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
-                            H1B Sponsorship
-                          </Badge>
-                        )}
-                        <span className="text-xs text-gray-500 dark:text-gray-400">{job.salary}</span>
                       </div>
                     </div>
-                    <Button size="sm">Apply</Button>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
+
+            {/* Local Job Matches */}
+            {careerResult && careerResult.localJobMatches && careerResult.localJobMatches.length > 0 && (
+              <div className="mb-6">
+                <h4 className="font-medium text-gray-900 dark:text-white mb-4 flex items-center">
+                  📍 Local Opportunities (near your location)
+                </h4>
+                <div className="space-y-4">
+                  {careerResult.localJobMatches.map((job) => (
+                    <div key={job.id} className="border border-green-200 dark:border-green-700 rounded-lg p-4 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                              <span className="text-white text-sm font-bold">{job.company.charAt(0)}</span>
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-gray-900 dark:text-white">{job.title}</h4>
+                              <p className="text-sm text-gray-600 dark:text-gray-400">{job.company}</p>
+                              <p className="text-xs text-gray-500 dark:text-gray-500">{job.location}</p>
+                              {job.distance && (
+                                <p className="text-xs text-green-600 dark:text-green-400">📍 {job.distance} from you</p>
+                              )}
+                            </div>
+                          </div>
+                          <div className="mt-2 flex items-center space-x-4 flex-wrap gap-2">
+                            <Badge variant="outline" className="text-xs">
+                              {job.type}
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              {job.experience}
+                            </Badge>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">{job.salary}</span>
+                            <Badge variant="secondary" className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+                              Local Match
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">{job.description}</p>
+                          <div className="mt-2 text-xs text-gray-500">
+                            Posted: {job.posted} | Deadline: {job.deadline}
+                          </div>
+                        </div>
+                        <div className="flex flex-col space-y-2">
+                          <Button size="sm" asChild>
+                            <a href={job.url} target="_blank" rel="noopener noreferrer">Apply</a>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Post-Graduation Immigration */}
             <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
