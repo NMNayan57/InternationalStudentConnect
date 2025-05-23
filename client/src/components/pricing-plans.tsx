@@ -166,6 +166,15 @@ export default function PricingPlans() {
                 <Button 
                   variant={plan.buttonVariant} 
                   className={`w-full ${plan.popular ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
+                  onClick={() => {
+                    if (plan.name === 'Free Explorer') {
+                      alert('Free plan is already active! You can use all basic features right now.');
+                    } else if (plan.name === 'Smart Student') {
+                      window.open('https://buy.stripe.com/smart-student-plan', '_blank');
+                    } else if (plan.name === 'Premium Pro') {
+                      window.open('https://buy.stripe.com/premium-pro-plan', '_blank');
+                    }
+                  }}
                 >
                   {plan.buttonText}
                 </Button>

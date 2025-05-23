@@ -8,6 +8,7 @@ import { Badge } from './ui/badge';
 import { DollarSign, Calendar, MapPin, GraduationCap, Star, ExternalLink, Filter } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { apiRequest } from '@/lib/queryClient';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 
@@ -65,16 +66,23 @@ export default function ScholarshipFinder({ aiEnabled }: ScholarshipFinderProps)
 
   const mutation = useMutation({
     mutationFn: async (data: ScholarshipFormData) => {
-      const response = await fetch('/api/scholarship-finder', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      return response.json();
+      try {
+        const response = await apiRequest('POST', '/api/scholarship-finder', { ...data, aiEnabled });
+        const result = await response.json();
+        console.log('Scholarship result:', result);
+        return result;
+      } catch (error) {
+        console.error('Scholarship error:', error);
+        throw error;
+      }
     },
     onSuccess: (data: ScholarshipResult) => {
+      console.log('Setting scholarship result:', data);
       setResult(data);
     },
+    onError: (error) => {
+      console.error('Scholarship mutation error:', error);
+    }
   });
 
   const onSubmit = (data: ScholarshipFormData) => {
