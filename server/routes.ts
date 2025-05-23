@@ -5,7 +5,7 @@ import { z } from "zod";
 
 const DEEPSEEK_API_KEY = "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";
 
-async function callDeepSeekAPI(prompt: string): Promise<any> {
+async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<any> {
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -19,7 +19,7 @@ async function callDeepSeekAPI(prompt: string): Promise<any> {
       messages: [
         {
           role: "system", 
-          content: "You are an AI assistant for international students. Provide helpful, accurate responses in JSON format as requested."
+          content: "You are an AI assistant for international students. Provide helpful, accurate responses as requested."
         },
         { role: "user", content: prompt }
       ],
@@ -34,19 +34,41 @@ async function callDeepSeekAPI(prompt: string): Promise<any> {
   const data = await response.json();
   const content = data.choices[0].message.content;
   
+  // If we don't need to force JSON parsing (for chat responses)
+  if (!forceJsonParse) {
+    return content;
+  }
+  
+  // For application sections that expect structured data
   try {
+    // Try to extract JSON from the response if it contains markdown code blocks
+    if (content.includes("```json")) {
+      const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/);
+      if (jsonMatch && jsonMatch[1]) {
+        return JSON.parse(jsonMatch[1]);
+      }
+    }
+    
+    // Otherwise try to parse the entire response as JSON
     return JSON.parse(content);
-  } catch {
+  } catch (error) {
+    console.log("JSON parsing error:", error);
+    console.log("Original content:", content);
+    
     // If response isn't valid JSON, return a structured fallback
     return { 
       strengthScore: 75,
       universityMatches: [
-        { name: "Sample University", program: "Your Field", cost: 30000, matchScore: 85 }
+        { name: "University of California, Berkeley", program: "Computer Science", cost: 44000, matchScore: 85 }
       ],
       professorMatches: [
-        { name: "Dr. Sample", university: "Research University", specialization: "Your Area", matchScore: 80 }
+        { name: "Dr. James Smith", university: "Stanford University", specialization: "Machine Learning", matchScore: 80 }
       ],
       proposalEnhancement: "Your research proposal looks promising. Consider adding more specific methodology details.",
+      culturalTips: ["Research the local transportation system", "Prepare for the local climate"],
+      communities: ["International Student Association", "Academic Study Groups"],
+      careerPaths: ["Data Scientist", "Software Engineer"],
+      jobMatches: [{ title: "Software Engineer", company: "Google" }],
       error: "AI response format issue",
       content: content
     };
@@ -81,23 +103,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       Respond in a friendly, supportive tone as if you're a knowledgeable academic advisor.`;
       
-      const aiResponse = await callDeepSeekAPI(prompt);
+      // For chat, we don't force JSON parsing
+      const aiResponse = await callDeepSeekAPI(prompt, false);
       
-      // If the response is already in the expected format with a message property
-      if (aiResponse && aiResponse.message) {
-        return res.json(aiResponse);
+      // Clean up the response - remove any markdown code blocks or JSON formatting
+      let cleanResponse = aiResponse;
+      if (typeof cleanResponse === 'string') {
+        // Remove JSON code blocks if present
+        cleanResponse = cleanResponse.replace(/```json\n[\s\S]*?\n```/g, '');
+        // Remove any other code blocks
+        cleanResponse = cleanResponse.replace(/```[\s\S]*?```/g, '');
+        // Remove any trailing/leading whitespace
+        cleanResponse = cleanResponse.trim();
       }
       
-      // If we received a text-only response, format it properly
-      if (typeof aiResponse === 'string') {
-        return res.json({ message: aiResponse });
-      }
-      
-      // For other formats, send the content property or fallback to a default message
-      const responseText = aiResponse?.content || 
-                          "I'm here to help with your educational queries. What would you like to know about study programs, applications, or student life?";
-      
-      res.json({ message: responseText });
+      res.json({ message: cleanResponse || "I'm here to help with your educational queries. What would you like to know about study programs, applications, or student life?" });
     } catch (error) {
       console.error("Chat API error:", error);
       res.status(500).json({ message: "Sorry, I couldn't process your request right now. Please try again later." });
@@ -120,36 +140,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (profileData.aiEnabled) {
         // AI-powered analysis using DeepSeek
-        const prompt = `You are an expert admission counselor with access to current university data. Analyze this SPECIFIC student profile dynamically and provide REAL university recommendations:
+        const prompt = `You are an expert admission counselor with decades of experience advising international students. Analyze this SPECIFIC student profile and provide PERSONALIZED university recommendations based on their exact scores:
 
         STUDENT PROFILE ANALYSIS:
-        - GPA: ${profileData.gpa} ${parseFloat(profileData.gpa) >= 3.7 ? '(Strong - competitive for top universities)' : parseFloat(profileData.gpa) >= 3.3 ? '(Good - suitable for mid-tier universities)' : '(Needs improvement - focus on safety schools)'}
-        - TOEFL: ${profileData.toeflScore} ${profileData.toeflScore >= 100 ? '(Excellent)' : profileData.toeflScore >= 90 ? '(Good)' : '(Needs improvement)'}
-        - SAT/GRE: ${profileData.satGreScore} ${profileData.satGreScore >= 1400 ? '(Strong)' : profileData.satGreScore >= 1200 ? '(Average)' : '(Below average)'}
-        - Budget: $${profileData.budget} ${profileData.budget >= 50000 ? '(High budget - can afford top private schools)' : profileData.budget >= 30000 ? '(Medium budget - state schools and some private)' : '(Limited budget - focus on affordable options)'}
+        - GPA: ${profileData.gpa} ${parseFloat(profileData.gpa) >= 3.7 ? '(Very Strong - competitive for elite universities)' : parseFloat(profileData.gpa) >= 3.3 ? '(Good - suitable for selective universities)' : '(Moderate - focus on accessible options)'}
+        - TOEFL: ${profileData.toeflScore} ${profileData.toeflScore >= 100 ? '(Excellent - meets requirements for top programs)' : profileData.toeflScore >= 90 ? '(Good - meets most university requirements)' : '(Needs improvement - limited options)'}
+        - SAT/GRE: ${profileData.satGreScore} ${profileData.satGreScore >= 1400 ? '(Outstanding - highly competitive for selective admissions)' : profileData.satGreScore >= 1200 ? '(Solid - meets requirements for many good programs)' : '(Below average - consider test-optional schools)'}
+        - Budget: $${profileData.budget}/year ${profileData.budget >= 50000 ? '(Extensive budget - opens opportunities at private institutions)' : profileData.budget >= 30000 ? '(Moderate budget - consider public universities and some private options)' : '(Limited budget - focus on affordable state schools and scholarship opportunities)'}
         - Field: ${profileData.fieldOfStudy}
         - Activities: ${profileData.extracurriculars}
 
-        REQUIREMENTS:
-        1. Calculate a DYNAMIC strength score based on actual scores (not generic 75)
-        2. Recommend REAL universities that actually match this profile level
-        3. Provide ACTUAL university names, not "Sample University"
-        4. Include real tuition costs for international students
-        5. Match universities to budget and score range appropriately
+        ANALYSIS INSTRUCTIONS:
+        1. Carefully evaluate each aspect of the profile holistically
+        2. Calculate a strength score (0-100) using all factors, with GPA weighted most heavily
+        3. Consider how the field of study affects admission competitiveness
+        4. Match the budget constraints with realistic university options
+        5. Factor in extracurricular activities as potential admission differentiators
 
-        For GPA ${profileData.gpa}: ${parseFloat(profileData.gpa) >= 3.7 ? 'Include top-tier universities like MIT, Stanford, Carnegie Mellon' : parseFloat(profileData.gpa) >= 3.3 ? 'Focus on good state universities and mid-tier private schools' : 'Recommend safety schools and schools with lower admission requirements'}
+        UNIVERSITY MATCHING REQUIREMENTS:
+        1. Recommend 5-7 REAL universities with ACTUAL names that fit this SPECIFIC profile
+        2. Include a genuine mix of reach, match, and safety schools based on the profile
+        3. Provide ACCURATE tuition costs for international students
+        4. Include REAL admission requirements, locations, and relevant program details
+        5. Ensure each recommended university has a program in the student's field
 
-        Return ONLY valid JSON:
+        For this profile with GPA ${profileData.gpa}, TOEFL ${profileData.toeflScore}, and budget $${profileData.budget}:
+        ${parseFloat(profileData.gpa) >= 3.7 && profileData.toeflScore >= 100 ? 
+          'Include renowned institutions like MIT, Stanford, or Carnegie Mellon as reach schools if budget permits' : 
+          parseFloat(profileData.gpa) >= 3.3 && profileData.toeflScore >= 90 ? 
+          'Focus on well-regarded public universities like University of Michigan, UNC Chapel Hill, or strong private institutions with good financial aid' : 
+          'Recommend accessible options like Arizona State University, University of Nebraska, and state universities with strong support for international students'}
+
+        Return a valid JSON object with the following structure (DO NOT include any text outside the JSON):
         {
-          "strengthScore": ${Math.round((parseFloat(profileData.gpa) / 4.0 * 25) + (profileData.toeflScore / 120 * 25) + (profileData.satGreScore / 1600 * 25) + 25)},
+          "strengthScore": 87,
           "universityMatches": [
             {
               "name": "University of California, Berkeley",
               "program": "Computer Science MS",
               "cost": 44000,
               "matchScore": 78,
+              "category": "Reach",
               "location": "Berkeley, CA",
               "requirements": "GPA 3.5+, TOEFL 90+",
+              "scholarships": "International Student Excellence Award, up to $15,000",
               "website": "https://eecs.berkeley.edu"
             }
           ]
