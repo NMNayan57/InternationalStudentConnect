@@ -20,12 +20,17 @@ export default function NavigationSidebar({
   isMobile = false 
 }: NavigationSidebarProps) {
   const menuItems = [
+    { id: 'ielts-preparation' as Section, label: 'IELTS Prep', icon: BookOpen },
+    { id: 'study-roadmap' as Section, label: 'Study Roadmap', icon: MapPin },
     { id: 'profile-evaluation' as Section, label: 'Profile Evaluation', icon: GraduationCap },
     { id: 'document-preparation' as Section, label: 'Document Prep', icon: FileText },
     { id: 'research-matching' as Section, label: 'Research Matching', icon: Microscope },
+    { id: 'scholarship-finder' as Section, label: 'Scholarships', icon: DollarSign },
     { id: 'visa-support' as Section, label: 'Visa Support', icon: Tickets },
     { id: 'cultural-adaptation' as Section, label: 'Cultural Tips', icon: Globe },
     { id: 'career-development' as Section, label: 'Career Development', icon: Briefcase },
+    { id: 'pricing' as Section, label: 'Pricing Plans', icon: CreditCard },
+    { id: 'contact-team' as Section, label: 'Contact & Team', icon: Users },
   ];
 
   return (

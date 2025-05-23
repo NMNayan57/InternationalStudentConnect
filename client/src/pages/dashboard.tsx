@@ -6,13 +6,18 @@ import ResearchMatching from "@/components/research-matching";
 import VisaSupport from "@/components/visa-support";
 import CulturalAdaptation from "@/components/cultural-adaptation";
 import CareerDevelopment from "@/components/career-development";
+import IeltsPreparation from "@/components/ielts-preparation";
+import ScholarshipFinder from "@/components/scholarship-finder";
+import StudyRoadmap from "@/components/study-roadmap";
+import PricingPlans from "@/components/pricing-plans";
+import ContactTeam from "@/components/contact-team";
 import { ChatBot } from "@/components/chat-bot";
 import { Button } from "@/components/ui/button";
 import { Bell, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useAIToggle } from "@/hooks/use-ai-toggle";
 
-type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development';
+type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'study-roadmap' | 'pricing' | 'contact-team';
 
 export default function Dashboard() {
   const [currentSection, setCurrentSection] = useState<Section>('profile-evaluation');
@@ -20,20 +25,30 @@ export default function Dashboard() {
 
   const renderSection = () => {
     switch (currentSection) {
+      case 'ielts-preparation':
+        return <IeltsPreparation aiEnabled={aiEnabled} />;
+      case 'study-roadmap':
+        return <StudyRoadmap />;
       case 'profile-evaluation':
         return <ProfileEvaluation aiEnabled={aiEnabled} />;
       case 'document-preparation':
         return <DocumentPreparation aiEnabled={aiEnabled} />;
       case 'research-matching':
         return <ResearchMatching aiEnabled={aiEnabled} />;
+      case 'scholarship-finder':
+        return <ScholarshipFinder aiEnabled={aiEnabled} />;
       case 'visa-support':
         return <VisaSupport aiEnabled={aiEnabled} />;
       case 'cultural-adaptation':
         return <CulturalAdaptation aiEnabled={aiEnabled} />;
       case 'career-development':
         return <CareerDevelopment aiEnabled={aiEnabled} />;
+      case 'pricing':
+        return <PricingPlans />;
+      case 'contact-team':
+        return <ContactTeam />;
       default:
-        return <ProfileEvaluation aiEnabled={aiEnabled} />;
+        return <IeltsPreparation aiEnabled={aiEnabled} />;
     }
   };
 
