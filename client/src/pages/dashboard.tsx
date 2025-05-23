@@ -6,7 +6,7 @@ import ResearchMatching from "@/components/research-matching";
 import VisaSupport from "@/components/visa-support";
 import CulturalAdaptation from "@/components/cultural-adaptation";
 import CareerDevelopment from "@/components/career-development";
-import IeltsPreparation from "@/components/ielts-preparation";
+import StandardizedTestPrep from "@/components/standardized-test-prep";
 import ScholarshipFinder from "@/components/scholarship-finder";
 import StudyRoadmap from "@/components/study-roadmap";
 import PricingPlans from "@/components/pricing-plans";
@@ -26,7 +26,7 @@ export default function Dashboard() {
   const renderSection = () => {
     switch (currentSection) {
       case 'ielts-preparation':
-        return <IeltsPreparation aiEnabled={aiEnabled} />;
+        return <StandardizedTestPrep aiEnabled={aiEnabled} />;
       case 'study-roadmap':
         return <StudyRoadmap />;
       case 'profile-evaluation':
@@ -48,7 +48,7 @@ export default function Dashboard() {
       case 'contact-team':
         return <ContactTeam />;
       default:
-        return <IeltsPreparation aiEnabled={aiEnabled} />;
+        return <StandardizedTestPrep aiEnabled={aiEnabled} />;
     }
   };
 

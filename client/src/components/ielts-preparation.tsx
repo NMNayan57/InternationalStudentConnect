@@ -49,7 +49,7 @@ interface IeltsResult {
   aiEnabled: boolean;
 }
 
-export default function IeltsPreparation({ aiEnabled }: IeltsPreparationProps) {
+export default function StandardizedTestPrep({ aiEnabled }: IeltsPreparationProps) {
   const [result, setResult] = useState<IeltsResult | null>(null);
 
   const form = useForm<IeltsFormData>({

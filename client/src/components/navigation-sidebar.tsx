@@ -20,7 +20,7 @@ export default function NavigationSidebar({
   isMobile = false 
 }: NavigationSidebarProps) {
   const menuItems = [
-    { id: 'ielts-preparation' as Section, label: 'IELTS Prep', icon: BookOpen },
+    { id: 'ielts-preparation' as Section, label: 'Test Prep', icon: BookOpen },
     { id: 'study-roadmap' as Section, label: 'Study Roadmap', icon: MapPin },
     { id: 'profile-evaluation' as Section, label: 'Profile Evaluation', icon: GraduationCap },
     { id: 'document-preparation' as Section, label: 'Document Prep', icon: FileText },
