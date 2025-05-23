@@ -1,0 +1,187 @@
+import streamlit as st
+import requests
+import re
+import logging
+import csv
+from datetime import datetime
+import time
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+# Hardcoded OpenRouter API key for DeepSeek R1 (replace with your actual key)
+OPENROUTER_API_KEY = "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"
+
+# Streamlit app configuration
+st.set_page_config(page_title="Math Tutor Agent (DeepSeek via OpenRouter)", layout="wide")
+st.title("Math Tutor Assistant Powered by DeepSeek R1 (OpenRouter)")
+st.markdown("Ask me any math question, and I'll help you understand the solution step by step.")
+
+# Guardrail: Relevance classifier for math-related inputs
+def is_math_related(query):
+    # Expanded list of math-related keywords
+    math_keywords = r"(solve|calculate|simplify|integrate|differentiate|equation|algebra|calculus|math|number|fraction|geometry|quadratic|derivative|limit|area|theorem)"
+    # Fallback: Check for math symbols or variables
+    math_symbols = r"[0-9x²+=]"
+    # Log the query for debugging
+    logger.debug(f"Guardrail input query: '{query}'")
+    # Strip whitespace and convert to lowercase
+    query_cleaned = query.strip().lower()
+    # Check for keywords or symbols
+    is_keyword_match = bool(re.search(math_keywords, query_cleaned, re.IGNORECASE))
+    is_symbol_match = bool(re.search(math_symbols, query_cleaned))
+    logger.debug(f"Keyword match: {is_keyword_match}, Symbol match: {is_symbol_match}")
+    return is_keyword_match or is_symbol_match
+
+# Initialize session state for chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Display chat history
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Function to save response to CSV (optional)
+def save_to_csv(prompt, response):
+    try:
+        with open("math_tutor_log.csv", mode="a", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerow([datetime.now().strftime("%Y-%m-%d %H:%M:%S"), prompt, response])
+    except Exception as e:
+        st.warning(f"Failed to save to CSV: {str(e)}")
+
+# Function to call OpenRouter API for DeepSeek R1 with retry mechanism
+def call_openrouter_api(prompt):
+    url = "https://openrouter.ai/api/v1/chat/completions"
+    system_prompt = """You are a helpful math tutor. When given a math problem:
+    1. Explain the concept involved
+    2. Break down the solution step by step
+    3. Show the complete working and answer
+    4. Provide additional practice tips if appropriate"""
+    
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "HTTP-Referer": "https://your-site-url.com",  # Optional: Replace with your site
+        "X-Title": "Math Tutor Agent"  # Optional: For OpenRouter leaderboards
+    }
+    
+    data = {
+        "model": "deepseek/deepseek-r1:free",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt}
+        ],
+        "max_tokens": 1500  # Worked previously
+    }
+    
+    # Retry mechanism for rate limits
+    max_retries = 3
+    retry_delay = 5  # seconds
+    for attempt in range(max_retries):
+        try:
+            logger.debug(f"Sending request to OpenRouter (Attempt {attempt + 1}): {data}")
+            response = requests.post(url, headers=headers, json=data, timeout=45)
+            response.raise_for_status()
+            response_data = response.json()
+            logger.debug(f"Raw API response: {response_data}")
+            
+            # Check if response contains expected structure
+            if "choices" not in response_data or not response_data["choices"]:
+                st.error("API response missing 'choices'. Check OpenRouter logs.")
+                return "Error: Invalid API response format."
+            
+            choice = response_data["choices"][0]
+            if "message" not in choice:
+                st.error("API response missing 'message'. Check OpenRouter logs.")
+                return "Error: Invalid API response format."
+            
+            message = choice["message"]
+            content = message.get("content", "")
+            reasoning = message.get("reasoning", "")
+            
+            # Handle finish_reason
+            finish_reason = choice.get("finish_reason", "unknown")
+            if finish_reason == "length":
+                st.warning("Response truncated due to token limit. Some details may be missing.")
+            
+            # Combine reasoning and content
+            response_text = ""
+            if reasoning:
+                response_text += f"**Reasoning:**\n{reasoning}\n\n"
+            if content:
+                response_text += f"**Final Answer:**\n{content}"
+            else:
+                if not reasoning:
+                    st.error("No content or reasoning in response. The API may have failed to generate an answer.")
+                    return "Error: Empty response from API."
+            
+            # Save to CSV (optional)
+            save_to_csv(prompt, response_text)
+            
+            return response_text
+        except requests.exceptions.Timeout:
+            st.error("Request timed out. OpenRouter may be slow or unreachable. Try again later.")
+            return "Error: Request timed out."
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 429:
+                if attempt < max_retries - 1:
+                    st.warning(f"429 Rate Limit Exceeded: Waiting {retry_delay} seconds before retrying...")
+                    time.sleep(retry_delay)
+                    continue
+                else:
+                    st.error(
+                        "429 Rate Limit Exceeded: OpenRouter's free tier limit reached. Wait a few minutes and try again."
+                    )
+            elif e.response.status_code == 401:
+                st.error("401 Unauthorized: Invalid API key. Check your OpenRouter API key in the code.")
+            elif e.response.status_code == 400:
+                st.error(
+                    "400 Bad Request: Invalid input. Check JSON format or model name. "
+                    "See https://openrouter.ai/docs."
+                )
+            else:
+                st.error(f"API Error: {e.response.status_code} - {e.response.text}")
+            return f"Error: {str(e)}"
+        except Exception as e:
+            st.error(f"Unexpected Error: {str(e)}")
+            logger.exception("Unexpected error during API call")
+            return f"Error: {str(e)}"
+    return "Error: Max retries reached due to rate limits."
+
+# Input area for user's question
+prompt = st.chat_input("Enter your math question here...", key="chat_input")
+if prompt:
+    # Apply guardrail
+    if not is_math_related(prompt):
+        st.error("Please enter a math-related query (e.g., solve an equation, simplify an expression).")
+        st.write(f"Debug: Input received: '{prompt}'")
+    else:
+        # Add user message to chat
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
+        
+        # Show thinking indicator
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                response = call_openrouter_api(prompt)
+                st.session_state.messages.append({"role": "assistant", "content": response})
+                st.markdown(response)
+
+# Example problems
+with st.expander("Example Math Problems"):
+    st.markdown("""
+    Try asking questions like:
+    - Solve the quadratic equation: 2x² + 5x - 3 = 0
+    - Find the derivative of f(x) = 3x² + 2x - 5
+    - What is the area of a circle with radius 5cm?
+    - Explain the Pythagorean theorem
+    - How do I find the limit of (sin x)/x as x approaches 0?
+    """)
+
+# Footer
+st.markdown("---")
+st.markdown("Built with Streamlit and OpenRouter's DeepSeek R1 API.")

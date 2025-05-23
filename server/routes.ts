@@ -2,11 +2,45 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY || "AIzaSyBKVVQe6CPQvzEr3dlvv6A0e0HIRlHVQ";
+const DEEPSEEK_API_KEY = "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";
 
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+async function callDeepSeekAPI(prompt: string): Promise<any> {
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${DEEPSEEK_API_KEY}`,
+      "HTTP-Referer": "https://studypath-ai.replit.app",
+      "X-Title": "StudyPath AI Platform"
+    },
+    body: JSON.stringify({
+      model: "deepseek/deepseek-r1:free",
+      messages: [
+        {
+          role: "system", 
+          content: "You are an AI assistant for international students. Provide helpful, accurate responses in JSON format as requested."
+        },
+        { role: "user", content: prompt }
+      ],
+      max_tokens: 1500
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`DeepSeek API error: ${response.status} ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  const content = data.choices[0].message.content;
+  
+  try {
+    return JSON.parse(content);
+  } catch {
+    // If response isn't valid JSON, return a structured response
+    return { error: "Invalid JSON response", content };
+  }
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Profile Evaluation Endpoint
@@ -25,9 +59,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (profileData.aiEnabled) {
-        // AI-powered analysis using Gemini
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        
+        // AI-powered analysis using DeepSeek
         const prompt = `Analyze this student profile and provide a strength score (0-100) and university recommendations:
         GPA: ${profileData.gpa}
         TOEFL: ${profileData.toeflScore}
@@ -38,9 +70,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         Return JSON with: strengthScore, universityMatches (array with name, program, cost, matchScore)`;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const aiAnalysis = JSON.parse(response.text());
+        const aiAnalysis = await callDeepSeekAPI(prompt);
 
         // Save to storage
         const profile = await storage.createProfile({
@@ -96,8 +126,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (documentData.aiEnabled) {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        
         const prompt = `Analyze and improve this ${documentData.documentType}:
         ${documentData.content}
         
@@ -105,9 +133,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         - suggestions: array of improvement suggestions
         - enhancedContent: improved version of the content`;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const aiAnalysis = JSON.parse(response.text());
+        const aiAnalysis = await callDeepSeekAPI(prompt);
 
         // Save to storage
         await storage.createDocument({
@@ -159,8 +185,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (researchData.aiEnabled) {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        
         const prompt = `Find professors matching these research interests:
         Primary Area: ${researchData.primaryArea}
         Topics: ${researchData.specificTopics}
@@ -168,9 +192,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         Return JSON with professorMatches array containing: name, university, specialization, matchScore, publications`;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const aiAnalysis = JSON.parse(response.text());
+        const aiAnalysis = await callDeepSeekAPI(prompt);
 
         // Save to storage
         const researchInterest = await storage.createResearchInterest({
@@ -221,8 +243,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (visaData.aiEnabled) {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        
         const prompt = `Provide visa requirements and interview tips for:
         Nationality: ${visaData.nationality}
         Destination: ${visaData.destinationCountry}
@@ -230,9 +250,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         Return JSON with: visaType, documentStatus, interviewTips array, processingInfo`;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const aiAnalysis = JSON.parse(response.text());
+        const aiAnalysis = await callDeepSeekAPI(prompt);
 
         // Save to storage
         await storage.createVisaApplication({
@@ -285,15 +303,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (culturalData.aiEnabled) {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        
         const prompt = `Provide cultural adaptation tips for someone from ${culturalData.originCountry} going to ${culturalData.destinationCountry}.
         
         Return JSON with: culturalTips array, communities array with student groups`;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const aiAnalysis = JSON.parse(response.text());
+        const aiAnalysis = await callDeepSeekAPI(prompt);
 
         // Save to storage
         await storage.createCulturalAdaptation({
@@ -347,8 +361,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (careerData.aiEnabled) {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        
         const prompt = `Provide career guidance for:
         Field: ${careerData.fieldOfStudy}
         Interests: ${careerData.careerInterests}
@@ -356,9 +368,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         Return JSON with: careerPaths array, jobMatches array, immigrationInfo`;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const aiAnalysis = JSON.parse(response.text());
+        const aiAnalysis = await callDeepSeekAPI(prompt);
 
         // Save to storage
         await storage.createCareerProfile({
