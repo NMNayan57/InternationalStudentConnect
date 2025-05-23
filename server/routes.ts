@@ -536,36 +536,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (careerData.aiEnabled) {
-        const prompt = `You are a career counselor specializing in international students. Provide REAL career guidance with actual companies and opportunities:
+        const prompt = `You are a career counselor with specialized knowledge of international student career development and immigration pathways. Provide REAL, SPECIFIC career guidance:
 
-        Student Background:
+        STUDENT PROFILE:
         - Field of Study: ${careerData.fieldOfStudy}
         - Career Interests: ${careerData.careerInterests}
         - Preferred Location: ${careerData.preferredLocation}
 
-        Please provide ACTUAL career information, not generic examples:
-        - Real companies hiring in this field and location
-        - Specific job titles and salary ranges
-        - Actual visa sponsorship information
-        - Real professional networks and organizations
-        - Specific skills most in-demand by employers
-
-        Return valid JSON format:
+        REQUIREMENTS:
+        1. Provide ACTUAL career progression paths for international students in this field
+        2. List REAL companies that frequently sponsor work visas in this field
+        3. Include SPECIFIC job titles with accurate salary ranges
+        4. Provide CURRENT visa and immigration information (OPT, STEM OPT, H-1B)
+        5. Recommend REAL professional organizations and networking events
+        6. List SPECIFIC skills and certifications that increase employability
+        
+        EXAMPLE OUTPUT FORMAT:
         {
-          "careerPaths": ["[Specific career progression paths]"],
+          "profile": "${careerData.fieldOfStudy} graduate interested in ${careerData.careerInterests} in ${careerData.preferredLocation}",
+          "goal": "Secure employment in ${careerData.careerInterests} with long-term immigration pathway",
+          "careerPaths": [
+            "Entry-Level ${careerData.careerInterests} Role (1-2 years) → Mid-Level Specialist (2-4 years) → Senior Role or Management (5+ years)",
+            "Research Assistant → Research Associate → Research Lead or PhD",
+            "Startup Role with broader responsibilities → Specialized role in larger company"
+          ],
           "jobMatches": [
             {
-              "title": "[Real Job Title]",
-              "company": "[Actual Company Name]",
-              "salary": "[Realistic salary range]",
-              "location": "[Specific city/area]",
-              "visaSponsorship": "[H1B/other visa info]",
-              "requirements": "[Specific skills needed]",
-              "website": "[Company careers page URL]"
+              "title": "Machine Learning Engineer",
+              "company": "Google",
+              "salary": "$120,000 - $150,000",
+              "location": "Mountain View, CA",
+              "visaSponsorship": "H-1B sponsor with high approval rate",
+              "requirements": "Python, TensorFlow, ML model deployment, MS/PhD preferred",
+              "website": "https://careers.google.com"
+            },
+            {
+              "title": "Data Scientist",
+              "company": "Microsoft",
+              "salary": "$110,000 - $140,000",
+              "location": "Redmond, WA",
+              "visaSponsorship": "H-1B sponsor, STEM OPT friendly",
+              "requirements": "Statistical analysis, Python/R, SQL, cloud platforms",
+              "website": "https://careers.microsoft.com"
             }
           ],
-          "immigrationInfo": "[Specific visa process information for this field]",
-          "networking": "[Real professional organizations and events]"
+          "immigrationInfo": "As a ${careerData.fieldOfStudy} graduate, you qualify for 12 months of OPT. If your program is STEM-designated, you can apply for a 24-month STEM OPT extension. During this time, seek employers willing to sponsor H-1B visas. The annual H-1B lottery typically opens in March with approximately 85,000 visas available. Companies with research facilities may offer cap-exempt H-1B opportunities.",
+          "networking": {
+            "professionalOrganizations": [
+              "Association for Computing Machinery (ACM)",
+              "Women in Technology International",
+              "American Statistical Association"
+            ],
+            "events": [
+              "Grace Hopper Celebration (Annual tech conference)",
+              "Regional tech meetups on Meetup.com",
+              "University career fairs with employer visa sponsorship info"
+            ],
+            "onlinePlatforms": [
+              "LinkedIn - Join groups specific to international professionals",
+              "GitHub - Build portfolio and network with potential employers",
+              "Handshake - Filter for companies with sponsorship history"
+            ]
+          },
+          "skillsToHighlight": [
+            "Programming languages: Python, R, SQL",
+            "Cloud platforms: AWS, Azure, Google Cloud",
+            "Data visualization: Tableau, Power BI",
+            "Machine learning frameworks: TensorFlow, PyTorch"
+          ]
         }`;
 
         const aiAnalysis = await callDeepSeekAPI(prompt);
