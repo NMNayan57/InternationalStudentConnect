@@ -1,0 +1,71 @@
+Unrecognized feature: 'oversized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'publickey-credentials'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'speaker-selection'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unoptimized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unsized-media'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowfullscreen'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowpaymentrequest'.Understand this warning
+Console.js:61 Test prep error: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+Mt.forEach.n.<computed> @ Console.js:61Understand this error
+Console.js:61 Mutation error: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+Mt.forEach.n.<computed> @ Console.js:61Understand this error
+
+                
+          
+          
+          
+         Chrome is moving towards a new experience that allows users to choose to browse without third-party cookies.Understand this warning
+Console.js:61 Test prep error: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+Mt.forEach.n.<computed> @ Console.js:61
+mutationFn @ standardized-test-prep.tsx:90
+await in mutationFn
+fn @ @tanstack_react-query.js?v=6db08933:1189
+run @ @tanstack_react-query.js?v=6db08933:494
+start @ @tanstack_react-query.js?v=6db08933:536
+execute @ @tanstack_react-query.js?v=6db08933:1225
+await in execute
+mutate @ @tanstack_react-query.js?v=6db08933:2630
+(anonymous) @ @tanstack_react-query.js?v=6db08933:3295
+onSubmit @ standardized-test-prep.tsx:104
+(anonymous) @ chunk-CXJMC5RA.js?v=6db08933:1465
+await in (anonymous)
+callCallback2 @ chunk-WERSD76P.js?v=6db08933:3674
+invokeGuardedCallbackDev @ chunk-WERSD76P.js?v=6db08933:3699
+invokeGuardedCallback @ chunk-WERSD76P.js?v=6db08933:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-WERSD76P.js?v=6db08933:3736
+executeDispatch @ chunk-WERSD76P.js?v=6db08933:7014
+processDispatchQueueItemsInOrder @ chunk-WERSD76P.js?v=6db08933:7034
+processDispatchQueue @ chunk-WERSD76P.js?v=6db08933:7043
+dispatchEventsForPlugins @ chunk-WERSD76P.js?v=6db08933:7051
+(anonymous) @ chunk-WERSD76P.js?v=6db08933:7174
+batchedUpdates$1 @ chunk-WERSD76P.js?v=6db08933:18913
+batchedUpdates @ chunk-WERSD76P.js?v=6db08933:3579
+dispatchEventForPluginEventSystem @ chunk-WERSD76P.js?v=6db08933:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-WERSD76P.js?v=6db08933:5478
+dispatchEvent @ chunk-WERSD76P.js?v=6db08933:5472
+dispatchDiscreteEvent @ chunk-WERSD76P.js?v=6db08933:5449Understand this error
+Console.js:61 Mutation error: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+Mt.forEach.n.<computed> @ Console.js:61
+onError @ standardized-test-prep.tsx:99
+execute @ @tanstack_react-query.js?v=6db08933:1254
+await in execute
+mutate @ @tanstack_react-query.js?v=6db08933:2630
+(anonymous) @ @tanstack_react-query.js?v=6db08933:3295
+onSubmit @ standardized-test-prep.tsx:104
+(anonymous) @ chunk-CXJMC5RA.js?v=6db08933:1465
+await in (anonymous)
+callCallback2 @ chunk-WERSD76P.js?v=6db08933:3674
+invokeGuardedCallbackDev @ chunk-WERSD76P.js?v=6db08933:3699
+invokeGuardedCallback @ chunk-WERSD76P.js?v=6db08933:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-WERSD76P.js?v=6db08933:3736
+executeDispatch @ chunk-WERSD76P.js?v=6db08933:7014
+processDispatchQueueItemsInOrder @ chunk-WERSD76P.js?v=6db08933:7034
+processDispatchQueue @ chunk-WERSD76P.js?v=6db08933:7043
+dispatchEventsForPlugins @ chunk-WERSD76P.js?v=6db08933:7051
+(anonymous) @ chunk-WERSD76P.js?v=6db08933:7174
+batchedUpdates$1 @ chunk-WERSD76P.js?v=6db08933:18913
+batchedUpdates @ chunk-WERSD76P.js?v=6db08933:3579
+dispatchEventForPluginEventSystem @ chunk-WERSD76P.js?v=6db08933:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-WERSD76P.js?v=6db08933:5478
+dispatchEvent @ chunk-WERSD76P.js?v=6db08933:5472
+dispatchDiscreteEvent @ chunk-WERSD76P.js?v=6db08933:5449Understand this error

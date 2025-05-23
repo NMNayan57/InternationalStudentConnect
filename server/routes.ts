@@ -76,6 +76,8 @@ async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<a
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Ensure API routes are registered first before any middleware
+  console.log('Registering API routes...');
   // Chat API for StudyPathAI Chatbot
   app.post("/api/chat", async (req, res) => {
     try {
@@ -731,8 +733,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Test preparation endpoint
+  // Test preparation endpoint - MUST be before other middleware
   app.post('/api/test-preparation', async (req, res) => {
+    console.log('Test preparation API hit with body:', req.body);
     try {
       const { testType, currentLevel, targetScore, timeframe, studyHours, strengths, weaknesses, previousExperience, studyPreference, aiEnabled } = req.body;
 
