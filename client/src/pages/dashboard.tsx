@@ -20,7 +20,7 @@ import { useAIToggle } from "@/hooks/use-ai-toggle";
 type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'study-roadmap' | 'pricing' | 'contact-team';
 
 export default function Dashboard() {
-  const [currentSection, setCurrentSection] = useState<Section>('profile-evaluation');
+  const [currentSection, setCurrentSection] = useState<Section>('study-roadmap');
   const { aiEnabled, toggleAI } = useAIToggle();
 
   const renderSection = () => {

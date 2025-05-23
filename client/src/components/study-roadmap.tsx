@@ -197,7 +197,11 @@ const categoryColors = {
   departure: 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400'
 };
 
-export default function StudyRoadmap() {
+interface StudyRoadmapProps {
+  onSectionChange?: (section: string) => void;
+}
+
+export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}) {
   const [steps, setSteps] = useState<RoadmapStep[]>(roadmapSteps);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
