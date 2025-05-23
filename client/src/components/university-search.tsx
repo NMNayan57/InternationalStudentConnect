@@ -88,7 +88,7 @@ export default function UniversitySearch({ aiEnabled }: UniversitySearchProps) {
   });
 
   const onSubmit = (data: UniversitySearchFormData) => {
-    mutation.mutate({ ...data, aiEnabled });
+    mutation.mutate(data);
   };
 
   const countries = [

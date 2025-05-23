@@ -23,6 +23,7 @@ export default function NavigationSidebar({
     { id: 'study-roadmap' as Section, label: 'Study Roadmap', icon: MapPin },
     { id: 'ielts-preparation' as Section, label: 'Test Prep', icon: BookOpen },
     { id: 'profile-evaluation' as Section, label: 'Profile Evaluation', icon: GraduationCap },
+    { id: 'university-search' as Section, label: 'University Search', icon: GraduationCap },
     { id: 'document-preparation' as Section, label: 'Document Prep', icon: FileText },
     { id: 'research-matching' as Section, label: 'Research Matching', icon: Microscope },
     { id: 'scholarship-finder' as Section, label: 'Scholarships', icon: DollarSign },
