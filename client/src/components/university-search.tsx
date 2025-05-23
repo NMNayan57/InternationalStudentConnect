@@ -13,11 +13,18 @@ import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 
 const universitySearchSchema = z.object({
-  country: z.string().min(1, 'Please select a country'),
-  department: z.string().min(1, 'Please select a department'),
-  degree: z.string().min(1, 'Please select degree level'),
+  region: z.string().optional(),
+  location: z.string().optional(),
+  city: z.string().optional(),
+  studyLevel: z.string().min(1, 'Please select study level'),
+  subject: z.string().min(1, 'Please select subject'),
+  university: z.string().optional(),
   ranking: z.string().optional(),
-  budget: z.string().optional(),
+  duration: z.string().optional(),
+  tuitionFee: z.string().optional(),
+  programType: z.string().optional(),
+  qualifyingExam: z.string().optional(),
+  deliveryMode: z.string().optional(),
 });
 
 type UniversitySearchFormData = z.infer<typeof universitySearchSchema>;
@@ -60,11 +67,18 @@ export default function UniversitySearch({ aiEnabled }: UniversitySearchProps) {
   const form = useForm<UniversitySearchFormData>({
     resolver: zodResolver(universitySearchSchema),
     defaultValues: {
-      country: '',
-      department: '',
-      degree: '',
+      region: '',
+      location: '',
+      city: '',
+      studyLevel: '',
+      subject: '',
+      university: '',
       ranking: '',
-      budget: '',
+      duration: '',
+      tuitionFee: '',
+      programType: '',
+      qualifyingExam: '',
+      deliveryMode: '',
     }
   });
 
@@ -91,20 +105,34 @@ export default function UniversitySearch({ aiEnabled }: UniversitySearchProps) {
     mutation.mutate(data);
   };
 
-  const countries = [
+  const regions = ['North America', 'Europe', 'Asia-Pacific', 'Middle East', 'Latin America', 'Africa'];
+  
+  const locations = [
     'United States', 'United Kingdom', 'Canada', 'Australia', 'Germany', 
     'Netherlands', 'Sweden', 'Switzerland', 'France', 'Singapore',
     'Japan', 'South Korea', 'New Zealand', 'Ireland', 'Denmark'
   ];
 
-  const departments = [
+  const cities = [
+    'New York', 'London', 'Toronto', 'Sydney', 'Berlin', 'Amsterdam',
+    'Stockholm', 'Zurich', 'Paris', 'Singapore', 'Tokyo', 'Seoul'
+  ];
+
+  const studyLevels = ['Bachelor', 'Master', 'PhD', 'Diploma', 'Certificate'];
+
+  const subjects = [
     'Computer Science', 'Engineering', 'Business Administration', 'Medicine',
     'Law', 'Psychology', 'Economics', 'Mathematics', 'Physics', 'Chemistry',
     'Biology', 'Environmental Science', 'International Relations', 'Art & Design',
     'Architecture', 'Education', 'Social Work', 'Public Health', 'Data Science'
   ];
 
-  const degrees = ['Bachelor', 'Master', 'PhD', 'Diploma'];
+  const rankingRanges = ['01 - 100', '101 - 300', '301 - 500', '501 - 1,000'];
+  const durations = ['6 Months', '12 Months', '24 Months', '36 Months'];
+  const tuitionRanges = ['500 - 1,000', '1,001 - 5,000', '5001 - 10,000', 'More than 20,000'];
+  const programTypes = ['Full-time', 'Part-time', 'Online', 'Hybrid'];
+  const qualifyingExams = ['IELTS', 'TOEFL', 'GRE', 'GMAT', 'SAT'];
+  const deliveryModes = ['On-campus', 'Online', 'Blended', 'Distance Learning'];
 
   return (
     <div className="space-y-8">
@@ -128,102 +156,257 @@ export default function UniversitySearch({ aiEnabled }: UniversitySearchProps) {
         </CardHeader>
         <CardContent>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Primary Filters - First Row */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="country">Country</Label>
-                <Select onValueChange={(value) => form.setValue('country', value)}>
+                <Select onValueChange={(value) => form.setValue('region', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select country" />
+                    <SelectValue placeholder="Region" />
                   </SelectTrigger>
                   <SelectContent>
-                    {countries.map((country) => (
-                      <SelectItem key={country} value={country}>
-                        {country}
+                    {regions.map((region) => (
+                      <SelectItem key={region} value={region}>
+                        {region}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                {form.formState.errors.country && (
-                  <p className="text-sm text-red-500">{form.formState.errors.country.message}</p>
-                )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="department">Department/Field</Label>
-                <Select onValueChange={(value) => form.setValue('department', value)}>
+                <Select onValueChange={(value) => form.setValue('location', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select department" />
+                    <SelectValue placeholder="Location" />
                   </SelectTrigger>
                   <SelectContent>
-                    {departments.map((dept) => (
-                      <SelectItem key={dept} value={dept}>
-                        {dept}
+                    {locations.map((location) => (
+                      <SelectItem key={location} value={location}>
+                        {location}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                {form.formState.errors.department && (
-                  <p className="text-sm text-red-500">{form.formState.errors.department.message}</p>
-                )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="degree">Degree Level</Label>
-                <Select onValueChange={(value) => form.setValue('degree', value)}>
+                <Select onValueChange={(value) => form.setValue('city', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select degree level" />
+                    <SelectValue placeholder="City" />
                   </SelectTrigger>
                   <SelectContent>
-                    {degrees.map((degree) => (
-                      <SelectItem key={degree} value={degree}>
-                        {degree}
+                    {cities.map((city) => (
+                      <SelectItem key={city} value={city}>
+                        {city}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                {form.formState.errors.degree && (
-                  <p className="text-sm text-red-500">{form.formState.errors.degree.message}</p>
+              </div>
+
+              <div className="space-y-2">
+                <Select onValueChange={(value) => form.setValue('studyLevel', value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Study Level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {studyLevels.map((level) => (
+                      <SelectItem key={level} value={level}>
+                        {level}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {form.formState.errors.studyLevel && (
+                  <p className="text-sm text-red-500">{form.formState.errors.studyLevel.message}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Secondary Filters - Second Row */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Select onValueChange={(value) => form.setValue('subject', value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Subject" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {subjects.map((subject) => (
+                      <SelectItem key={subject} value={subject}>
+                        {subject}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {form.formState.errors.subject && (
+                  <p className="text-sm text-red-500">{form.formState.errors.subject.message}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="ranking">Ranking Preference (Optional)</Label>
+                <Select onValueChange={(value) => form.setValue('university', value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="University" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="harvard">Harvard University</SelectItem>
+                    <SelectItem value="mit">MIT</SelectItem>
+                    <SelectItem value="stanford">Stanford University</SelectItem>
+                    <SelectItem value="oxford">University of Oxford</SelectItem>
+                    <SelectItem value="cambridge">University of Cambridge</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
                 <Select onValueChange={(value) => form.setValue('ranking', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select ranking range" />
+                    <SelectValue placeholder="More Filters" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="top10">Top 10</SelectItem>
-                    <SelectItem value="top50">Top 50</SelectItem>
-                    <SelectItem value="top100">Top 100</SelectItem>
-                    <SelectItem value="any">Any Ranking</SelectItem>
+                    <SelectItem value="advanced">Advanced Filters</SelectItem>
+                    <SelectItem value="reset">Reset All</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="budget">Annual Budget (USD, Optional)</Label>
-              <Select onValueChange={(value) => form.setValue('budget', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select budget range" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="0-20000">$0 - $20,000</SelectItem>
-                  <SelectItem value="20000-40000">$20,000 - $40,000</SelectItem>
-                  <SelectItem value="40000-60000">$40,000 - $60,000</SelectItem>
-                  <SelectItem value="60000+">$60,000+</SelectItem>
-                </SelectContent>
-              </Select>
+            {/* Advanced Filters Section */}
+            <div className="border-t pt-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <Filter className="h-5 w-5 mr-2" />
+                More Filters
+              </h3>
+              
+              <div className="space-y-6">
+                {/* Rankings */}
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">Rankings</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {rankingRanges.map((range) => (
+                      <Button
+                        key={range}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => form.setValue('ranking', range)}
+                        className="text-xs"
+                      >
+                        {range}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Duration */}
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">Duration</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {durations.map((duration) => (
+                      <Button
+                        key={duration}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => form.setValue('duration', duration)}
+                        className="text-xs"
+                      >
+                        {duration}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tuition Fees */}
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">Tuition Fees <span className="text-xs text-gray-500">in USD/year</span></Label>
+                  <div className="flex flex-wrap gap-2">
+                    {tuitionRanges.map((range) => (
+                      <Button
+                        key={range}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => form.setValue('tuitionFee', range)}
+                        className="text-xs"
+                      >
+                        {range}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Program Type & Qualifying Exam */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <Label className="text-sm font-medium mb-3 block">Program Type</Label>
+                    <Select onValueChange={(value) => form.setValue('programType', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select program type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {programTypes.map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {type}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label className="text-sm font-medium mb-3 block">Qualifying Exam</Label>
+                    <Select onValueChange={(value) => form.setValue('qualifyingExam', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select exam" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {qualifyingExams.map((exam) => (
+                          <SelectItem key={exam} value={exam}>
+                            {exam}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Delivery Mode */}
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">Delivery Mode</Label>
+                  <Select onValueChange={(value) => form.setValue('deliveryMode', value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select delivery mode" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {deliveryModes.map((mode) => (
+                        <SelectItem key={mode} value={mode}>
+                          {mode}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
             </div>
 
-            <Button 
-              type="submit" 
-              className="w-full" 
-              disabled={mutation.isPending}
-            >
-              {mutation.isPending ? 'Searching Universities...' : 'Search Universities'}
-            </Button>
+            {/* Action Buttons */}
+            <div className="flex space-x-4 pt-4">
+              <Button 
+                type="button" 
+                variant="outline" 
+                className="flex-1"
+                onClick={() => form.reset()}
+              >
+                Reset Filters
+              </Button>
+              <Button 
+                type="submit" 
+                className="flex-1 bg-orange-500 hover:bg-orange-600" 
+                disabled={mutation.isPending}
+              >
+                {mutation.isPending ? 'Searching...' : 'Apply Filter'}
+              </Button>
+            </div>
           </form>
         </CardContent>
       </Card>
