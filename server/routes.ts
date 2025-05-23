@@ -1467,6 +1467,328 @@ Focus on practical course planning that optimizes graduation timeline while main
     }
   });
 
+  // Enhanced Document Preparation endpoint
+  app.post('/api/document-preparation-enhanced', async (req, res) => {
+    try {
+      const { documentType, department, level, university, personalInfo, templateChoice, aiEnabled } = req.body;
+      
+      if (aiEnabled) {
+        const prompt = `You are a professional document consultant specializing in academic applications. Create a compelling ${documentType} for a ${level} application in ${department}${university ? ` at ${university}` : ''}:
+
+Student Information:
+${personalInfo}
+
+Requirements:
+1. Use professional formatting appropriate for ${department} field
+2. Tailor content specifically for ${level} level applications
+3. Include department-specific terminology and requirements
+4. Ensure the document is compelling and competitive
+5. Focus on achievements, skills, and fit for the program
+
+Please create a polished, professional document that stands out to admissions committees.`;
+
+        const aiResponse = await callDeepSeekAPI(prompt, false);
+        
+        const enhancedContent = generateEnhancedDocument(documentType, department, level, personalInfo, university);
+        
+        res.json({
+          documentType,
+          department,
+          level,
+          template: getTemplateInfo(documentType, department, level),
+          enhancedContent,
+          suggestions: [
+            "Strengthen your opening paragraph with a more compelling hook",
+            "Add specific metrics and quantifiable achievements",
+            "Include more department-specific terminology",
+            "Enhance the connection between your background and future goals",
+            "Consider adding a brief research interest section"
+          ],
+          improvementTips: getDepartmentSpecificTips(documentType, department, level),
+          aiEnabled: true
+        });
+      } else {
+        const enhancedContent = generateEnhancedDocument(documentType, department, level, personalInfo, university);
+        
+        res.json({
+          documentType,
+          department,
+          level,
+          template: getTemplateInfo(documentType, department, level),
+          enhancedContent,
+          suggestions: [
+            "Consider adding more specific examples from your experience",
+            "Strengthen the connection to your chosen field of study",
+            "Include relevant skills and achievements",
+            "Tailor the content to the specific program requirements"
+          ],
+          improvementTips: getDepartmentSpecificTips(documentType, department, level),
+          aiEnabled: false
+        });
+      }
+    } catch (error) {
+      console.error('Enhanced document preparation error:', error);
+      res.status(500).json({ error: 'Failed to prepare document' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
+}
+
+function generateEnhancedDocument(docType: string, department: string, level: string, info: string, university?: string): string {
+  const templates = {
+    cv: generateCVTemplate(department, level, info, university),
+    resume: generateResumeTemplate(department, level, info, university),
+    sop: generateSOPTemplate(department, level, info, university),
+    lor: generateLORTemplate(department, level, info, university),
+    'personal-statement': generatePersonalStatementTemplate(department, level, info, university),
+    'motivation-letter': generateMotivationLetterTemplate(department, level, info, university),
+    'research-proposal': generateResearchProposalTemplate(department, level, info, university)
+  };
+  
+  return templates[docType as keyof typeof templates] || templates.cv;
+}
+
+function generateCVTemplate(department: string, level: string, info: string, university?: string): string {
+  return `[YOUR NAME]
+Email: your.email@example.com | Phone: +1-234-567-8900
+LinkedIn: linkedin.com/in/yourname | Portfolio: yourwebsite.com
+
+PROFESSIONAL SUMMARY
+${level} candidate in ${department} with proven experience in [relevant skills]. Seeking to leverage academic background and practical experience in advanced ${department.toLowerCase()} studies${university ? ` at ${university}` : ''}.
+
+EDUCATION
+Bachelor of Science in ${department}
+[University Name], [City, Country] | [Graduation Year]
+GPA: [X.X/4.0] | Relevant Coursework: [Course 1, Course 2, Course 3]
+
+TECHNICAL SKILLS
+${getDepartmentSkills(department)}
+
+PROFESSIONAL EXPERIENCE
+[Position Title] | [Company Name] | [Dates]
+• [Achievement with quantifiable result]
+• [Relevant responsibility aligned with ${department}]
+• [Impact or improvement you made]
+
+PROJECTS
+[Project Name] | [Date]
+• [Brief description of project relevant to ${department}]
+• [Technologies/methodologies used]
+• [Results or impact achieved]
+
+RESEARCH EXPERIENCE
+[Research Title] | [Institution] | [Date]
+• [Research focus related to ${department}]
+• [Methodology or approach used]
+• [Findings or contributions]
+
+AWARDS & CERTIFICATIONS
+• [Relevant certification or award]
+• [Academic honor or recognition]
+• [Professional achievement]
+
+PUBLICATIONS & PRESENTATIONS
+• [Any relevant publications]
+• [Conference presentations]
+• [Research contributions]
+
+---
+Note: Please customize this template with your specific information, achievements, and experiences.`;
+}
+
+function generateSOPTemplate(department: string, level: string, info: string, university?: string): string {
+  return `Statement of Purpose
+${level} in ${department}${university ? ` - ${university}` : ''}
+
+INTRODUCTION
+My passion for ${department.toLowerCase()} was ignited during [specific experience]. This pivotal moment led me to pursue a ${level} degree, where I can deepen my understanding of [specific area] and contribute meaningfully to the field.
+
+ACADEMIC BACKGROUND
+During my undergraduate studies in [field] at [university], I maintained a strong academic record while actively engaging in [relevant activities]. My coursework in [specific subjects] provided me with a solid foundation in [key concepts]. Particularly notable was my work on [specific project/research], which taught me [key learning].
+
+PROFESSIONAL EXPERIENCE
+My role as [position] at [company] has provided invaluable hands-on experience in [relevant area]. I have successfully [specific achievement], resulting in [measurable outcome]. This experience has strengthened my [relevant skills] and confirmed my commitment to advancing in ${department.toLowerCase()}.
+
+RESEARCH INTERESTS
+I am particularly drawn to [specific research area] within ${department.toLowerCase()}. My interest was sparked by [specific experience/observation], and I am eager to explore [specific questions/problems]. ${university ? `The research conducted by [specific professor/lab] at ${university} aligns perfectly with my interests.` : 'I am excited to contribute to cutting-edge research in this area.'}
+
+WHY THIS PROGRAM
+${university ? `${university}'s` : 'This'} ${level} program in ${department} is ideal for my goals because [specific reasons]. The [curriculum/faculty/resources] particularly appeal to me as they will enable me to [specific objectives]. I am especially interested in [specific courses/opportunities] that will enhance my expertise in [relevant area].
+
+CAREER GOALS
+Upon completion of my ${level}, I plan to [short-term career goal]. My long-term vision is to [long-term aspiration], where I can apply my advanced knowledge in ${department.toLowerCase()} to [specific impact/contribution]. This program will provide me with the [specific skills/knowledge] necessary to achieve these objectives.
+
+CONCLUSION
+My academic foundation, professional experience, and research interests have prepared me for the rigors of graduate study in ${department}. I am excited about the opportunity to contribute to the academic community${university ? ` at ${university}` : ''} while pursuing my passion for [specific area]. I am confident that this program will be instrumental in achieving my career aspirations and making meaningful contributions to the field.
+
+---
+Note: Please personalize this template with your specific experiences, achievements, and goals.`;
+}
+
+function generateLORTemplate(department: string, level: string, info: string, university?: string): string {
+  return `Letter of Recommendation
+${level} Application in ${department}
+
+To Whom It May Concern:
+
+I am writing to provide my strongest recommendation for [Student Name] for admission to your ${level} program in ${department}. As [Your Title] at [Your Institution], I have had the pleasure of working with [Student Name] for [duration] in my capacity as [relationship - professor/supervisor/mentor].
+
+ACADEMIC PERFORMANCE
+[Student Name] has consistently demonstrated exceptional academic ability in ${department.toLowerCase()}. In my [course/research project], they achieved [specific grade/recognition] and showed particular strength in [specific areas]. Their [specific skills/qualities] set them apart from their peers.
+
+RESEARCH CAPABILITIES
+During their work on [specific project/research], [Student Name] displayed remarkable [qualities - analytical thinking, creativity, persistence]. They successfully [specific achievement] and contributed to [specific outcome]. Their approach to [methodology/problem-solving] was particularly impressive.
+
+PERSONAL QUALITIES
+Beyond academic excellence, [Student Name] possesses the personal qualities essential for success in graduate study. They are [specific qualities - motivated, collaborative, intellectually curious] and demonstrate strong [relevant skills]. Their ability to [specific example] exemplifies their potential for advanced study.
+
+PROFESSIONAL POTENTIAL
+Based on my experience with [Student Name], I am confident they will excel in your ${level} program and make significant contributions to the field of ${department.toLowerCase()}. Their combination of [academic strengths] and [personal qualities] positions them well for [future career/research goals].
+
+RECOMMENDATION
+I give [Student Name] my highest recommendation for admission to your program. They have my complete confidence, and I believe they will be a valuable addition to your academic community. Please feel free to contact me if you require any additional information.
+
+Sincerely,
+
+[Recommender Name]
+[Title]
+[Institution]
+[Contact Information]
+
+---
+Note: This template should be customized by the recommender with specific examples and details.`;
+}
+
+function getDepartmentSkills(department: string): string {
+  const skillsMap: { [key: string]: string } = {
+    'Computer Science': 'Programming Languages: Python, Java, C++, JavaScript\nFrameworks: React, Node.js, Django, Spring\nDatabases: MySQL, PostgreSQL, MongoDB\nTools: Git, Docker, AWS, Jenkins',
+    'Engineering': 'Technical Software: AutoCAD, MATLAB, SolidWorks\nProgramming: Python, C++, R\nAnalysis Tools: ANSYS, LabVIEW\nProject Management: Agile, Lean Six Sigma',
+    'Business Administration': 'Analytics: Excel, Tableau, Power BI, SQL\nProject Management: Scrum, Kanban, PMP\nMarketing: Google Analytics, HubSpot, Salesforce\nFinancial Modeling: Bloomberg, Reuters',
+    'Data Science': 'Programming: Python, R, SQL, Scala\nMachine Learning: TensorFlow, PyTorch, Scikit-learn\nVisualization: Tableau, matplotlib, ggplot2\nBig Data: Spark, Hadoop, Kafka',
+    'Medicine': 'Clinical Skills: Patient care, diagnostics, treatment planning\nResearch: Clinical trials, data analysis, literature review\nTechnology: EMR systems, medical imaging software\nCertifications: BLS, ACLS, relevant medical licenses'
+  };
+  
+  return skillsMap[department] || 'Relevant technical and analytical skills for the field';
+}
+
+function getDepartmentSpecificTips(docType: string, department: string, level: string): string[] {
+  const tips: { [key: string]: string[] } = {
+    'Computer Science': [
+      'Highlight programming projects with GitHub links',
+      'Include open-source contributions and technical blog posts',
+      'Mention specific algorithms, data structures, or systems you\'ve worked with',
+      'Demonstrate problem-solving skills through coding challenges or hackathons'
+    ],
+    'Business Administration': [
+      'Quantify business impact with specific metrics and ROI',
+      'Highlight leadership roles and team management experience',
+      'Include case study analysis and strategic thinking examples',
+      'Demonstrate understanding of business fundamentals and market dynamics'
+    ],
+    'Engineering': [
+      'Include technical projects with detailed methodologies',
+      'Highlight hands-on experience with industry-standard tools',
+      'Mention any patents, publications, or technical presentations',
+      'Demonstrate problem-solving through real-world engineering challenges'
+    ],
+    'Data Science': [
+      'Showcase data analysis projects with clear business impact',
+      'Include experience with machine learning models and algorithms',
+      'Highlight data visualization and storytelling capabilities',
+      'Mention experience with big data technologies and statistical methods'
+    ]
+  };
+  
+  return tips[department] || [
+    'Highlight relevant academic and professional achievements',
+    'Include specific examples that demonstrate your expertise',
+    'Show progression and growth in your chosen field',
+    'Connect your background to future academic and career goals'
+  ];
+}
+
+function getTemplateInfo(docType: string, department: string, level: string) {
+  return {
+    id: `${docType}-${department.toLowerCase().replace(/\s+/g, '-')}-${level.toLowerCase()}`,
+    name: `${department} ${level} ${docType.toUpperCase()}`,
+    description: `Professional ${docType} template optimized for ${department} ${level} applications`,
+    sections: getDocumentSections(docType),
+    tips: getDepartmentSpecificTips(docType, department, level)
+  };
+}
+
+function getDocumentSections(docType: string): string[] {
+  const sectionsMap: { [key: string]: string[] } = {
+    cv: ['Contact Info', 'Professional Summary', 'Education', 'Technical Skills', 'Experience', 'Projects', 'Research', 'Awards'],
+    resume: ['Contact Info', 'Summary', 'Education', 'Skills', 'Experience', 'Projects', 'Certifications'],
+    sop: ['Introduction', 'Academic Background', 'Professional Experience', 'Research Interests', 'Why This Program', 'Career Goals', 'Conclusion'],
+    lor: ['Introduction', 'Academic Performance', 'Research Capabilities', 'Personal Qualities', 'Professional Potential', 'Recommendation'],
+    'personal-statement': ['Personal Background', 'Academic Journey', 'Professional Growth', 'Future Aspirations', 'Program Fit'],
+    'motivation-letter': ['Motivation', 'Academic Preparation', 'Professional Experience', 'Program Interest', 'Future Plans'],
+    'research-proposal': ['Abstract', 'Background', 'Research Questions', 'Methodology', 'Timeline', 'Expected Outcomes']
+  };
+  
+  return sectionsMap[docType] || sectionsMap.cv;
+}
+
+function generateResumeTemplate(department: string, level: string, info: string, university?: string): string {
+  return generateCVTemplate(department, level, info, university);
+}
+
+function generatePersonalStatementTemplate(department: string, level: string, info: string, university?: string): string {
+  return generateSOPTemplate(department, level, info, university);
+}
+
+function generateMotivationLetterTemplate(department: string, level: string, info: string, university?: string): string {
+  return generateSOPTemplate(department, level, info, university);
+}
+
+function generateResearchProposalTemplate(department: string, level: string, info: string, university?: string): string {
+  return `Research Proposal
+${level} in ${department}${university ? ` - ${university}` : ''}
+
+TITLE
+[Research Title Related to ${department}]
+
+ABSTRACT
+This research proposal outlines a comprehensive study in ${department.toLowerCase()} focusing on [specific research area]. The proposed research aims to [primary objective] through [methodology approach]. Expected outcomes include [anticipated results] with implications for [broader impact].
+
+1. BACKGROUND AND LITERATURE REVIEW
+Recent developments in ${department.toLowerCase()} have highlighted the need for [research gap]. Previous studies by [relevant researchers] have established [existing knowledge], but gaps remain in [specific areas]. This research will address these gaps by [proposed approach].
+
+2. RESEARCH QUESTIONS
+Primary Research Question: [Main question related to ${department}]
+Secondary Questions:
+- [Sub-question 1]
+- [Sub-question 2]
+- [Sub-question 3]
+
+3. METHODOLOGY
+This study will employ [research approach - quantitative/qualitative/mixed methods] to investigate [research focus]. The methodology includes:
+- Data Collection: [methods and sources]
+- Analysis Framework: [analytical approach]
+- Validation Techniques: [quality assurance methods]
+
+4. TIMELINE
+Year 1: Literature review, methodology refinement, preliminary data collection
+Year 2: Data collection and initial analysis
+Year 3: Data analysis, results interpretation, dissertation writing
+
+5. EXPECTED OUTCOMES
+This research is expected to contribute to ${department.toLowerCase()} by:
+- [Theoretical contribution]
+- [Practical application]
+- [Policy implications]
+- [Future research directions]
+
+6. SIGNIFICANCE AND IMPACT
+The findings will have implications for [stakeholders] and contribute to [field advancement]. The research aligns with current priorities in ${department.toLowerCase()} and addresses [relevant challenges].
+
+REFERENCES
+[Relevant academic references in the field]
+
+---
+Note: Please customize this template with your specific research interests and methodological approach.`;
 }

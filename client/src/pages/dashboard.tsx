@@ -1,7 +1,7 @@
 import { useState } from "react";
 import NavigationSidebar from "@/components/navigation-sidebar";
 import ProfileEvaluation from "@/components/profile-evaluation";
-import DocumentPreparation from "@/components/document-preparation";
+import EnhancedDocumentPreparation from "@/components/enhanced-document-preparation";
 import ResearchMatching from "@/components/research-matching";
 import VisaSupport from "@/components/visa-support";
 import CulturalAdaptation from "@/components/cultural-adaptation";
@@ -34,7 +34,7 @@ export default function Dashboard() {
       case 'profile-evaluation':
         return <ProfileEvaluation aiEnabled={aiEnabled} />;
       case 'document-preparation':
-        return <DocumentPreparation aiEnabled={aiEnabled} />;
+        return <EnhancedDocumentPreparation aiEnabled={aiEnabled} />;
       case 'research-matching':
         return <ResearchMatching aiEnabled={aiEnabled} />;
       case 'scholarship-finder':
