@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { GraduationCap, FileText, Microscope, Tickets, Globe, Briefcase, BookOpen, DollarSign, MapPin, CreditCard, Users } from "lucide-react";
 
-type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'study-roadmap' | 'pricing' | 'contact-team';
+type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'pricing' | 'contact-team';
 
 interface NavigationSidebarProps {
   currentSection: Section;
@@ -24,6 +24,7 @@ export default function NavigationSidebar({
     { id: 'ielts-preparation' as Section, label: 'Test Prep', icon: BookOpen },
     { id: 'profile-evaluation' as Section, label: 'Profile Evaluation', icon: GraduationCap },
     { id: 'university-search' as Section, label: 'University Search', icon: GraduationCap },
+    { id: 'course-planning' as Section, label: 'Course Planning', icon: BookOpen },
     { id: 'document-preparation' as Section, label: 'Document Prep', icon: FileText },
     { id: 'research-matching' as Section, label: 'Research Matching', icon: Microscope },
     { id: 'scholarship-finder' as Section, label: 'Scholarships', icon: DollarSign },

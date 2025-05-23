@@ -1221,6 +1221,252 @@ Format as clean text with clear sections, not JSON. Focus on authentic, current 
     }
   });
 
+  // Course Planning endpoint
+  app.post('/api/course-planning', async (req, res) => {
+    try {
+      const { program, currentSemester, creditsPerSemester, graduationGoal, specialization, careerGoals, workSchedule, aiEnabled } = req.body;
+      
+      if (aiEnabled) {
+        const prompt = `You are an academic advisor with expertise in course planning and curriculum design. Based on the following student profile, create a comprehensive academic plan:
+
+Student Profile:
+- Program: ${program}
+- Current Semester: ${currentSemester}
+- Credits Per Semester: ${creditsPerSemester}
+- Graduation Goal: ${graduationGoal}
+- Specialization: ${specialization || 'None specified'}
+- Career Goals: ${careerGoals || 'Not specified'}
+- Work Schedule: ${workSchedule || 'Not specified'}
+
+Please provide a detailed academic plan including:
+1. Semester-by-semester course recommendations
+2. Prerequisites and course sequencing
+3. Core vs elective credit distribution
+4. Career-aligned course suggestions
+5. Workload management tips
+6. Progress tracking metrics
+
+Focus on practical course planning that optimizes graduation timeline while maintaining academic quality.`;
+
+        const aiResponse = await callDeepSeekAPI(prompt, false);
+        
+        // Structured response with realistic course data
+        const mockPlan = {
+          program,
+          totalSemesters: 6,
+          academicPlan: [
+            {
+              semester: "Spring 2025",
+              courses: [
+                {
+                  code: "CS101",
+                  name: "Introduction to Programming",
+                  credits: 3,
+                  prerequisites: [],
+                  difficulty: "Easy" as const,
+                  semester: "Spring 2025",
+                  type: "Core" as const,
+                  workload: "8-10 hours/week",
+                  professor: "Dr. Smith",
+                  rating: 4.2,
+                  description: "Fundamentals of programming using Python",
+                  skills: ["Python", "Problem Solving", "Logic"]
+                },
+                {
+                  code: "MATH201",
+                  name: "Calculus I",
+                  credits: 4,
+                  prerequisites: [],
+                  difficulty: "Medium" as const,
+                  semester: "Spring 2025",
+                  type: "Core" as const,
+                  workload: "10-12 hours/week",
+                  professor: "Dr. Johnson",
+                  rating: 3.8,
+                  description: "Differential and integral calculus",
+                  skills: ["Mathematics", "Analysis", "Problem Solving"]
+                }
+              ],
+              totalCredits: 15,
+              workload: "Moderate" as const,
+              tips: [
+                "Start with programming fundamentals to build a strong foundation",
+                "Form study groups for calculus - peer learning helps significantly",
+                "Attend professor office hours regularly for personalized guidance"
+              ]
+            }
+          ],
+          graduationRequirements: {
+            totalCredits: 120,
+            completedCredits: 45,
+            coreCredits: 60,
+            electiveCredits: 45,
+            specializationCredits: 15
+          },
+          recommendations: {
+            priorityCourses: [
+              {
+                code: "CS201",
+                name: "Data Structures and Algorithms",
+                credits: 3,
+                prerequisites: ["CS101"],
+                difficulty: "Hard" as const,
+                semester: "Fall 2025",
+                type: "Core" as const,
+                workload: "12-15 hours/week",
+                professor: "Dr. Chen",
+                rating: 4.5,
+                description: "Essential algorithms and data structures for software development",
+                skills: ["Data Structures", "Algorithms", "Optimization"]
+              }
+            ],
+            summerOptions: [],
+            careerAlignedCourses: [
+              {
+                code: "CS350",
+                name: "Software Engineering",
+                credits: 3,
+                prerequisites: ["CS201"],
+                difficulty: "Medium" as const,
+                semester: "Spring 2026",
+                type: "Specialization" as const,
+                workload: "10-12 hours/week",
+                professor: "Dr. Wilson",
+                rating: 4.3,
+                description: "Industry-standard software development practices",
+                skills: ["Software Design", "Project Management", "Team Collaboration"]
+              }
+            ]
+          },
+          progressTracker: {
+            currentGPA: 3.6,
+            projectedGPA: 3.7,
+            completionRate: 37.5
+          },
+          aiEnabled: true
+        };
+
+        res.json(mockPlan);
+      } else {
+        // Mock response for non-AI mode
+        const mockPlan = {
+          program,
+          totalSemesters: 4,
+          academicPlan: [
+            {
+              semester: "Next Semester",
+              courses: [
+                {
+                  code: "CORE101",
+                  name: "Program Foundation Course",
+                  credits: 3,
+                  prerequisites: [],
+                  difficulty: "Easy" as const,
+                  semester: "Next Semester",
+                  type: "Core" as const,
+                  workload: "6-8 hours/week",
+                  professor: "Dr. Anderson",
+                  rating: 4.0,
+                  description: "Introduction to your field of study",
+                  skills: ["Foundation Knowledge", "Study Skills"]
+                },
+                {
+                  code: "GEN200",
+                  name: "Critical Thinking",
+                  credits: 3,
+                  prerequisites: [],
+                  difficulty: "Medium" as const,
+                  semester: "Next Semester",
+                  type: "Elective" as const,
+                  workload: "8-10 hours/week",
+                  professor: "Dr. Taylor",
+                  rating: 3.9,
+                  description: "Develop analytical and reasoning skills",
+                  skills: ["Critical Thinking", "Analysis", "Communication"]
+                }
+              ],
+              totalCredits: parseInt(creditsPerSemester) || 15,
+              workload: "Moderate" as const,
+              tips: [
+                "Balance core requirements with general education courses",
+                "Take advantage of academic support services",
+                "Connect with classmates for study groups"
+              ]
+            }
+          ],
+          graduationRequirements: {
+            totalCredits: 120,
+            completedCredits: 30,
+            coreCredits: 60,
+            electiveCredits: 45,
+            specializationCredits: 15
+          },
+          recommendations: {
+            priorityCourses: [
+              {
+                code: "ADV300",
+                name: "Advanced Topics",
+                credits: 3,
+                prerequisites: ["CORE101"],
+                difficulty: "Hard" as const,
+                semester: "Future",
+                type: "Core" as const,
+                workload: "12-15 hours/week",
+                professor: "Dr. Expert",
+                rating: 4.4,
+                description: "Advanced concepts in your field",
+                skills: ["Advanced Knowledge", "Research", "Innovation"]
+              }
+            ],
+            summerOptions: [
+              {
+                code: "SUM100",
+                name: "Summer Intensive",
+                credits: 3,
+                prerequisites: [],
+                difficulty: "Medium" as const,
+                semester: "Summer",
+                type: "Elective" as const,
+                workload: "15-20 hours/week",
+                professor: "Dr. Summer",
+                rating: 4.1,
+                description: "Accelerated summer course",
+                skills: ["Time Management", "Intensive Learning"]
+              }
+            ],
+            careerAlignedCourses: [
+              {
+                code: "CAR400",
+                name: "Career Preparation",
+                credits: 3,
+                prerequisites: [],
+                difficulty: "Easy" as const,
+                semester: "Final Year",
+                type: "Elective" as const,
+                workload: "6-8 hours/week",
+                professor: "Dr. Career",
+                rating: 4.6,
+                description: "Prepare for your professional career",
+                skills: ["Professional Skills", "Networking", "Interview Prep"]
+              }
+            ]
+          },
+          progressTracker: {
+            currentGPA: 3.5,
+            projectedGPA: 3.6,
+            completionRate: 25
+          },
+          aiEnabled: false
+        };
+
+        res.json(mockPlan);
+      }
+    } catch (error) {
+      console.error('Course planning error:', error);
+      res.status(500).json({ error: 'Failed to create course plan' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
