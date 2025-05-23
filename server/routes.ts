@@ -71,36 +71,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (profileData.aiEnabled) {
         // AI-powered analysis using DeepSeek
-        const prompt = `You are an expert international student admission counselor. Analyze this student profile and recommend REAL universities with actual programs and costs:
+        const prompt = `You are an expert admission counselor with access to current university data. Analyze this SPECIFIC student profile dynamically and provide REAL university recommendations:
 
-        Student Profile:
-        - GPA: ${profileData.gpa}
-        - TOEFL Score: ${profileData.toeflScore}
-        - SAT/GRE Score: ${profileData.satGreScore}
-        - Budget: $${profileData.budget} USD
-        - Field of Study: ${profileData.fieldOfStudy}
-        - Extracurriculars: ${profileData.extracurriculars}
+        STUDENT PROFILE ANALYSIS:
+        - GPA: ${profileData.gpa} ${parseFloat(profileData.gpa) >= 3.7 ? '(Strong - competitive for top universities)' : parseFloat(profileData.gpa) >= 3.3 ? '(Good - suitable for mid-tier universities)' : '(Needs improvement - focus on safety schools)'}
+        - TOEFL: ${profileData.toeflScore} ${profileData.toeflScore >= 100 ? '(Excellent)' : profileData.toeflScore >= 90 ? '(Good)' : '(Needs improvement)'}
+        - SAT/GRE: ${profileData.satGreScore} ${profileData.satGreScore >= 1400 ? '(Strong)' : profileData.satGreScore >= 1200 ? '(Average)' : '(Below average)'}
+        - Budget: $${profileData.budget} ${profileData.budget >= 50000 ? '(High budget - can afford top private schools)' : profileData.budget >= 30000 ? '(Medium budget - state schools and some private)' : '(Limited budget - focus on affordable options)'}
+        - Field: ${profileData.fieldOfStudy}
+        - Activities: ${profileData.extracurriculars}
 
-        Please provide ACTUAL university recommendations, not generic examples. Include:
-        - Real university names that match this profile
-        - Specific program names in their field
-        - Accurate tuition costs for international students
-        - Realistic admission chances based on scores
-        - University websites or application links when possible
+        REQUIREMENTS:
+        1. Calculate a DYNAMIC strength score based on actual scores (not generic 75)
+        2. Recommend REAL universities that actually match this profile level
+        3. Provide ACTUAL university names, not "Sample University"
+        4. Include real tuition costs for international students
+        5. Match universities to budget and score range appropriately
 
-        Return valid JSON format:
+        For GPA ${profileData.gpa}: ${parseFloat(profileData.gpa) >= 3.7 ? 'Include top-tier universities like MIT, Stanford, Carnegie Mellon' : parseFloat(profileData.gpa) >= 3.3 ? 'Focus on good state universities and mid-tier private schools' : 'Recommend safety schools and schools with lower admission requirements'}
+
+        Return ONLY valid JSON:
         {
-          "strengthScore": [realistic score 0-100],
+          "strengthScore": ${Math.round((parseFloat(profileData.gpa) / 4.0 * 25) + (profileData.toeflScore / 120 * 25) + (profileData.satGreScore / 1600 * 25) + 25)},
           "universityMatches": [
             {
-              "name": "[Real University Name]",
-              "program": "[Specific Program/Major Name]",
-              "cost": [actual annual tuition for international students],
-              "matchScore": [80-95],
-              "location": "[City, State/Country]",
-              "requirements": "[GPA/Test score requirements]",
-              "website": "[University website URL]",
-              "deadline": "[Application deadline if known]"
+              "name": "University of California, Berkeley",
+              "program": "Computer Science MS",
+              "cost": 44000,
+              "matchScore": 78,
+              "location": "Berkeley, CA",
+              "requirements": "GPA 3.5+, TOEFL 90+",
+              "website": "https://eecs.berkeley.edu"
             }
           ]
         }`;
@@ -220,35 +221,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (researchData.aiEnabled) {
-        const prompt = `You are a research advisor with access to academic databases. Find REAL professors at the specified universities who match these research interests:
+        const prompt = `You are a research database expert with access to current faculty information. Find REAL, SPECIFIC professors currently working at these exact universities:
 
-        Primary Research Area: ${researchData.primaryArea}
-        Specific Topics: ${researchData.specificTopics}
-        Target Universities: ${researchData.preferredUniversities.join(", ")}
+        RESEARCH QUERY:
+        - Primary Area: ${researchData.primaryArea}
+        - Specific Topics: ${researchData.specificTopics}
+        - Target Universities: ${researchData.preferredUniversities.join(", ")}
 
-        Please provide ACTUAL professor names, not generic examples. Include:
-        - Real professor names currently working at these universities
-        - Their specific research specializations
-        - Recent publication titles if known
-        - University department affiliations
-        - Contact information or academic profile links when possible
+        CRITICAL REQUIREMENTS:
+        1. Provide ACTUAL professor names currently employed at these universities
+        2. Use REAL department names and contact information
+        3. Include SPECIFIC research focus areas that match the topics
+        4. Provide ACTUAL university email addresses (format: name@university.edu)
+        5. Include recent publication titles or research projects if known
 
-        Return valid JSON format:
+        EXAMPLE OUTPUT FORMAT (use real data):
         {
           "professorMatches": [
             {
-              "name": "Dr. [Real Name]",
-              "university": "[Actual University]",
-              "department": "[Department Name]",
-              "specialization": "[Specific Research Area]",
-              "matchScore": [80-95],
-              "recentWork": "[Recent research or publications]",
-              "profileLink": "[University profile URL if known]",
-              "email": "[Academic email if public]"
+              "name": "Dr. Christopher Manning",
+              "university": "Stanford University", 
+              "department": "Computer Science Department",
+              "specialization": "Natural Language Processing, Deep Learning",
+              "matchScore": 92,
+              "recentWork": "Recent work on transformer models and semantic parsing",
+              "profileLink": "https://nlp.stanford.edu/~manning/",
+              "email": "manning@cs.stanford.edu"
+            },
+            {
+              "name": "Dr. Dan Klein", 
+              "university": "UC Berkeley",
+              "department": "EECS Department", 
+              "specialization": "Natural Language Processing, Machine Learning",
+              "matchScore": 89,
+              "recentWork": "Research on neural parsing and machine translation",
+              "profileLink": "https://people.eecs.berkeley.edu/~klein/",
+              "email": "klein@cs.berkeley.edu"
             }
           ],
-          "proposalEnhancement": "[Specific advice for research proposal in this field]"
-        }`;
+          "proposalEnhancement": "For ${researchData.primaryArea} research, focus on current trends like transformer architectures and attention mechanisms. Consider interdisciplinary applications to strengthen your proposal."
+        }
+
+        Search these EXACT universities: ${researchData.preferredUniversities.join(", ")} for professors specializing in: ${researchData.specificTopics}`;
 
         const aiAnalysis = await callDeepSeekAPI(prompt);
 
