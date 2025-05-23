@@ -731,6 +731,212 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Test preparation endpoint
+  app.post('/api/test-preparation', async (req, res) => {
+    try {
+      const { testType, currentLevel, targetScore, timeframe, studyHours, strengths, weaknesses, previousExperience, studyPreference, aiEnabled } = req.body;
+
+      if (!aiEnabled) {
+        // Mock response
+        const mockResult = {
+          testType,
+          currentLevel,
+          targetScore,
+          studyPlan: {
+            totalWeeks: 12,
+            dailyTasks: [
+              "Complete 1 hour of vocabulary practice",
+              "Practice speaking with native speaker", 
+              "Review grammar fundamentals",
+              "Take practice test sections"
+            ],
+            weeklyGoals: [
+              "Master 100 new vocabulary words",
+              "Complete 2 practice tests", 
+              "Improve weak areas identified",
+              "Build test-taking stamina"
+            ],
+            practiceTests: [
+              "Official Practice Test 1",
+              "Cambridge Mock Test",
+              "Kaplan Practice Exam", 
+              "Barron's Test Series"
+            ]
+          },
+          resources: {
+            books: [
+              `Official ${testType} Practice Materials`,
+              `Cambridge ${testType} Academic/General Training`,
+              `Barron's ${testType} Superpack`,
+              `Collins Writing for ${testType}`
+            ],
+            onlineCourses: [
+              `British Council ${testType} Preparation`,
+              `Magoosh ${testType} Prep`,
+              `${testType} Liz Free Lessons`,
+              `E2Language ${testType} Course`
+            ],
+            practiceWebsites: [
+              `${testType}OnlineTests.com`,
+              `${testType}-Exam.net`,
+              `Road to ${testType}`,
+              `${testType}Practice.org`
+            ],
+            apps: [
+              `${testType} Prep App by British Council`,
+              `${testType} Skills - Free`,
+              `Magoosh ${testType} Speaking`,
+              `${testType} Word Power`
+            ]
+          },
+          timeline: [
+            {
+              week: 1,
+              focus: "Assessment and Foundation",
+              activities: [
+                "Take diagnostic test",
+                "Identify strengths and weaknesses", 
+                "Set up study schedule",
+                "Begin vocabulary building"
+              ]
+            },
+            {
+              week: 2,
+              focus: "Skill Development",
+              activities: [
+                "Practice different sections",
+                "Note-taking techniques",
+                "Strategy development",
+                "Timed practice sessions"
+              ]
+            }
+          ],
+          scoreImprovement: {
+            currentEstimate: currentLevel === 'beginner' ? '5.0' : currentLevel === 'intermediate' ? '6.0' : '7.0',
+            targetGoal: targetScore,
+            improvementNeeded: `${parseFloat(targetScore) - (currentLevel === 'beginner' ? 5.0 : currentLevel === 'intermediate' ? 6.0 : 7.0)} points improvement needed`,
+            achievabilityScore: 85
+          },
+          aiEnabled: false
+        };
+        return res.json(mockResult);
+      }
+
+      // AI-powered test preparation plan
+      const prompt = `Create a comprehensive ${testType} study plan for an international student:
+
+Current Level: ${currentLevel}
+Target Score: ${targetScore}
+Study Timeframe: ${timeframe}
+Daily Study Hours: ${studyHours}
+Strengths: ${strengths || 'Not specified'}
+Weaknesses: ${weaknesses}
+Previous Experience: ${previousExperience}
+Study Preference: ${studyPreference}
+
+Provide detailed recommendations for:
+1. Weekly study timeline with specific goals
+2. Daily study tasks tailored to their level
+3. Recommended resources (books, websites, apps)
+4. Practice test schedule
+5. Score improvement analysis
+6. Specific strategies for weak areas
+
+Focus on real, actionable advice considering their current level and target score.`;
+
+      const aiResult = await callDeepSeekAPI(prompt, false);
+      
+      const testPrepResult = {
+        testType,
+        currentLevel,
+        targetScore,
+        studyPlan: {
+          totalWeeks: timeframe.includes('1') ? 4 : timeframe.includes('2') ? 8 : timeframe.includes('3') ? 12 : 24,
+          dailyTasks: [
+            "Complete focused practice sessions based on AI analysis",
+            "Work on identified weak areas with targeted exercises",
+            "Build vocabulary using personalized word lists", 
+            "Practice timed sections to improve speed and accuracy"
+          ],
+          weeklyGoals: [
+            "Achieve incremental score improvements",
+            "Master test-specific strategies",
+            "Build confidence through practice",
+            "Refine time management skills"
+          ],
+          practiceTests: [
+            `Official ${testType} Practice Tests`,
+            "AI-recommended mock exams",
+            "Section-specific practice",
+            "Full-length timed tests"
+          ]
+        },
+        resources: {
+          books: [
+            `Official ${testType} Study Guide`,
+            `Kaplan ${testType} Premier`, 
+            `Princeton Review ${testType} Prep`,
+            `Barron's ${testType} Preparation`
+          ],
+          onlineCourses: [
+            `${testType} Masterclass - Premium Course`,
+            "AI-Powered Prep Platform",
+            "Official Test Creator Course", 
+            "Personalized Tutoring Sessions"
+          ],
+          practiceWebsites: [
+            `Official ${testType} Practice Portal`,
+            "AdaptivePrep.com",
+            "ScoreBooster Platform",
+            "AI Study Companion"
+          ],
+          apps: [
+            `${testType} Official App`,
+            "VocabBuilder Pro",
+            "Practice Test Simulator",
+            "Progress Tracker"
+          ]
+        },
+        timeline: [
+          {
+            week: 1,
+            focus: "Diagnostic Assessment & Foundation",
+            activities: [
+              "Complete comprehensive diagnostic test",
+              "AI analysis of strengths and weaknesses",
+              "Personalized study plan creation", 
+              "Resource selection and setup"
+            ]
+          },
+          {
+            week: 2,
+            focus: "Skill Building Phase", 
+            activities: [
+              "Target weak areas with focused practice",
+              "Learn test-specific strategies",
+              "Build essential vocabulary",
+              "Practice time management"
+            ]
+          }
+        ],
+        scoreImprovement: {
+          currentEstimate: currentLevel === 'beginner' ? (testType === 'IELTS' ? '5.0' : testType === 'TOEFL' ? '60' : '140') : 
+                          currentLevel === 'intermediate' ? (testType === 'IELTS' ? '6.5' : testType === 'TOEFL' ? '85' : '155') : 
+                          (testType === 'IELTS' ? '7.5' : testType === 'TOEFL' ? '105' : '165'),
+          targetGoal: targetScore,
+          improvementNeeded: "Significant improvement achievable with focused study",
+          achievabilityScore: 92
+        },
+        aiEnabled: true
+      };
+
+      res.json(testPrepResult);
+    } catch (error) {
+      console.error('Test preparation error:', error);
+      res.status(500).json({ error: 'Failed to create study plan' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
