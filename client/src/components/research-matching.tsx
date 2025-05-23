@@ -211,7 +211,7 @@ export default function ResearchMatching({ aiEnabled }: ResearchMatchingProps) {
               </div>
             ) : (
               <div className="space-y-4">
-                {researchResult.professorMatches.map((professor, index) => (
+                {researchResult.professorMatches && researchResult.professorMatches.length > 0 ? researchResult.professorMatches.map((professor, index) => (
                   <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                     <div className="flex items-start space-x-4">
                       <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
@@ -235,13 +235,19 @@ export default function ResearchMatching({ aiEnabled }: ResearchMatchingProps) {
                       </div>
                     </div>
                   </div>
-                ))}
+                )) : (
+                  <div className="text-center text-gray-500 py-8">
+                    <p>No professor matches found. Try adjusting your research interests.</p>
+                  </div>
+                )}
 
                 {/* Research Proposal Enhancement */}
-                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <h4 className="font-medium text-blue-900 dark:text-blue-300 mb-2">Proposal Enhancement Tip</h4>
-                  <p className="text-sm text-blue-800 dark:text-blue-400">{researchResult.proposalEnhancement}</p>
-                </div>
+                {researchResult.proposalEnhancement && (
+                  <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <h4 className="font-medium text-blue-900 dark:text-blue-300 mb-2">Proposal Enhancement Tip</h4>
+                    <p className="text-sm text-blue-800 dark:text-blue-400">{researchResult.proposalEnhancement}</p>
+                  </div>
+                )}
               </div>
             )}
           </CardContent>
