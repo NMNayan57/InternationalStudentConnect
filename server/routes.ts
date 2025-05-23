@@ -71,15 +71,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (profileData.aiEnabled) {
         // AI-powered analysis using DeepSeek
-        const prompt = `Analyze this student profile and provide a strength score (0-100) and university recommendations:
-        GPA: ${profileData.gpa}
-        TOEFL: ${profileData.toeflScore}
-        SAT/GRE: ${profileData.satGreScore}
-        Budget: $${profileData.budget}
-        Field: ${profileData.fieldOfStudy}
-        Extracurriculars: ${profileData.extracurriculars}
-        
-        Return JSON with: strengthScore, universityMatches (array with name, program, cost, matchScore)`;
+        const prompt = `You are an expert international student admission counselor. Analyze this student profile and recommend REAL universities with actual programs and costs:
+
+        Student Profile:
+        - GPA: ${profileData.gpa}
+        - TOEFL Score: ${profileData.toeflScore}
+        - SAT/GRE Score: ${profileData.satGreScore}
+        - Budget: $${profileData.budget} USD
+        - Field of Study: ${profileData.fieldOfStudy}
+        - Extracurriculars: ${profileData.extracurriculars}
+
+        Please provide ACTUAL university recommendations, not generic examples. Include:
+        - Real university names that match this profile
+        - Specific program names in their field
+        - Accurate tuition costs for international students
+        - Realistic admission chances based on scores
+        - University websites or application links when possible
+
+        Return valid JSON format:
+        {
+          "strengthScore": [realistic score 0-100],
+          "universityMatches": [
+            {
+              "name": "[Real University Name]",
+              "program": "[Specific Program/Major Name]",
+              "cost": [actual annual tuition for international students],
+              "matchScore": [80-95],
+              "location": "[City, State/Country]",
+              "requirements": "[GPA/Test score requirements]",
+              "website": "[University website URL]",
+              "deadline": "[Application deadline if known]"
+            }
+          ]
+        }`;
 
         const aiAnalysis = await callDeepSeekAPI(prompt);
 
@@ -196,12 +220,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (researchData.aiEnabled) {
-        const prompt = `Find professors matching these research interests:
-        Primary Area: ${researchData.primaryArea}
-        Topics: ${researchData.specificTopics}
-        Universities: ${researchData.preferredUniversities.join(", ")}
-        
-        Return JSON with professorMatches array containing: name, university, specialization, matchScore, publications`;
+        const prompt = `You are a research advisor with access to academic databases. Find REAL professors at the specified universities who match these research interests:
+
+        Primary Research Area: ${researchData.primaryArea}
+        Specific Topics: ${researchData.specificTopics}
+        Target Universities: ${researchData.preferredUniversities.join(", ")}
+
+        Please provide ACTUAL professor names, not generic examples. Include:
+        - Real professor names currently working at these universities
+        - Their specific research specializations
+        - Recent publication titles if known
+        - University department affiliations
+        - Contact information or academic profile links when possible
+
+        Return valid JSON format:
+        {
+          "professorMatches": [
+            {
+              "name": "Dr. [Real Name]",
+              "university": "[Actual University]",
+              "department": "[Department Name]",
+              "specialization": "[Specific Research Area]",
+              "matchScore": [80-95],
+              "recentWork": "[Recent research or publications]",
+              "profileLink": "[University profile URL if known]",
+              "email": "[Academic email if public]"
+            }
+          ],
+          "proposalEnhancement": "[Specific advice for research proposal in this field]"
+        }`;
 
         const aiAnalysis = await callDeepSeekAPI(prompt);
 
@@ -372,12 +419,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (careerData.aiEnabled) {
-        const prompt = `Provide career guidance for:
-        Field: ${careerData.fieldOfStudy}
-        Interests: ${careerData.careerInterests}
-        Location: ${careerData.preferredLocation}
-        
-        Return JSON with: careerPaths array, jobMatches array, immigrationInfo`;
+        const prompt = `You are a career counselor specializing in international students. Provide REAL career guidance with actual companies and opportunities:
+
+        Student Background:
+        - Field of Study: ${careerData.fieldOfStudy}
+        - Career Interests: ${careerData.careerInterests}
+        - Preferred Location: ${careerData.preferredLocation}
+
+        Please provide ACTUAL career information, not generic examples:
+        - Real companies hiring in this field and location
+        - Specific job titles and salary ranges
+        - Actual visa sponsorship information
+        - Real professional networks and organizations
+        - Specific skills most in-demand by employers
+
+        Return valid JSON format:
+        {
+          "careerPaths": ["[Specific career progression paths]"],
+          "jobMatches": [
+            {
+              "title": "[Real Job Title]",
+              "company": "[Actual Company Name]",
+              "salary": "[Realistic salary range]",
+              "location": "[Specific city/area]",
+              "visaSponsorship": "[H1B/other visa info]",
+              "requirements": "[Specific skills needed]",
+              "website": "[Company careers page URL]"
+            }
+          ],
+          "immigrationInfo": "[Specific visa process information for this field]",
+          "networking": "[Real professional organizations and events]"
+        }`;
 
         const aiAnalysis = await callDeepSeekAPI(prompt);
 
