@@ -80,9 +80,9 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: TestPrepFormData) => {
+    mutationFn: async (data: TestPrepFormData): Promise<TestPrepResult> => {
       const response = await apiRequest('POST', '/api/test-preparation', { ...data, aiEnabled });
-      return response.json();
+      return await response.json();
     },
     onSuccess: (data: TestPrepResult) => {
       setResult(data);

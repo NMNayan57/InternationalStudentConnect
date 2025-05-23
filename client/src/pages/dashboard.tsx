@@ -28,7 +28,7 @@ export default function Dashboard() {
       case 'ielts-preparation':
         return <StandardizedTestPrep aiEnabled={aiEnabled} />;
       case 'study-roadmap':
-        return <StudyRoadmap />;
+        return <StudyRoadmap onSectionChange={(section) => setCurrentSection(section as Section)} />;
       case 'profile-evaluation':
         return <ProfileEvaluation aiEnabled={aiEnabled} />;
       case 'document-preparation':
