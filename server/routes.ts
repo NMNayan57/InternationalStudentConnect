@@ -54,6 +54,55 @@ async function callDeepSeekAPI(prompt: string): Promise<any> {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Chat API for StudyPathAI Chatbot
+  app.post("/api/chat", async (req, res) => {
+    try {
+      // Ensure the request body is properly parsed
+      if (!req.body || typeof req.body !== 'object') {
+        return res.status(400).json({ message: "Invalid request format" });
+      }
+      
+      const message = req.body.message;
+      
+      if (!message) {
+        return res.status(400).json({ message: "Message is required" });
+      }
+      
+      const prompt = `You are StudyPathAI, an educational assistant chatbot focused on helping international students.
+      
+      USER QUERY: ${message}
+      
+      RULES:
+      1. ONLY provide information related to education, academics, and student life
+      2. Focus on helping with university selection, application processes, student visas, and academic guidance
+      3. If asked about non-educational topics, politely redirect the conversation to educational topics
+      4. Keep responses concise, helpful, and informative - maximum 3 paragraphs
+      5. If you don't know something, admit it and suggest where the student might find the information
+      
+      Respond in a friendly, supportive tone as if you're a knowledgeable academic advisor.`;
+      
+      const aiResponse = await callDeepSeekAPI(prompt);
+      
+      // If the response is already in the expected format with a message property
+      if (aiResponse && aiResponse.message) {
+        return res.json(aiResponse);
+      }
+      
+      // If we received a text-only response, format it properly
+      if (typeof aiResponse === 'string') {
+        return res.json({ message: aiResponse });
+      }
+      
+      // For other formats, send the content property or fallback to a default message
+      const responseText = aiResponse?.content || 
+                          "I'm here to help with your educational queries. What would you like to know about study programs, applications, or student life?";
+      
+      res.json({ message: responseText });
+    } catch (error) {
+      console.error("Chat API error:", error);
+      res.status(500).json({ message: "Sorry, I couldn't process your request right now. Please try again later." });
+    }
+  });
   // Profile Evaluation Endpoint
   app.post("/api/profile-evaluation", async (req, res) => {
     try {

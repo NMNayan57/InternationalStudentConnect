@@ -6,6 +6,7 @@ import ResearchMatching from "@/components/research-matching";
 import VisaSupport from "@/components/visa-support";
 import CulturalAdaptation from "@/components/cultural-adaptation";
 import CareerDevelopment from "@/components/career-development";
+import { ChatBot } from "@/components/chat-bot";
 import { Button } from "@/components/ui/button";
 import { Bell, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -132,6 +133,9 @@ export default function Dashboard() {
           </button>
         </div>
       </div>
+      
+      {/* StudyPathAI Chatbot */}
+      <ChatBot />
     </div>
   );
 }
