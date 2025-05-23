@@ -265,7 +265,7 @@ export default function VisaSupport({ aiEnabled }: VisaSupportProps) {
                 <div>
                   <h4 className="font-medium text-gray-900 dark:text-white mb-3">Interview Preparation Tips</h4>
                   <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
-                    {visaResult.interviewTips.map((tip, index) => (
+                    {visaResult.interviewTips?.map((tip, index) => (
                       <li key={index} className="flex items-start space-x-2">
                         <i className="fas fa-chevron-right text-primary mt-1 text-xs"></i>
                         <span>{tip}</span>

@@ -1,0 +1,49 @@
+[vite] connected.
+Test prep result: 
+Object {testType: "GRE", currentLevel: "beginner", targetScore: "330", studyPlan: {…}, resources: {…}, …}
+Setting result: 
+Object {testType: "GRE", currentLevel: "beginner", targetScore: "330", studyPlan: {…}, resources: {…}, …}
+Scholarship error: 
+SyntaxError {}
+
+at t.value (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+Scholarship mutation error: 
+SyntaxError {}
+
+at t.value (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+Cannot read properties of undefined (reading 'map')
+at VisaSupport (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/src/components/visa-support.tsx:580:246)
+at renderWithHooks (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-WERSD76P.js?v=6db08933:11548:26)
+at updateFunctionComponent (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-WERSD76P.js?v=6db08933:14582:28)
+at beginWork (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-WERSD76P.js?v=6db08933:15924:22)
+at HTMLUnknownElement.callCallback2 (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-WERSD76P.js?v=6db08933:3674:22)
+at Object.invokeGuardedCallbackDev (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-WERSD76P.js?v=6db08933:3699:24)
+at invokeGuardedCallback (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-WERSD76P.js?v=6db08933:3733:39)
+at beginWork$1 (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-WERSD76P.js?v=6db08933:19765:15)
+at performUnitOfWork (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-WERSD76P.js?v=6db08933:19198:20)
+at workLoopSync (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-WERSD76P.js?v=6db08933:19137:13)
+Cannot read properties of undefined (reading 'map')
+The above error occurred in the <VisaSupport> component:
+
+    at VisaSupport (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/src/components/visa-support.tsx:35:39)
+    at main
+    at div
+    at div
+    at Dashboard (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/src/pages/dashboard.tsx?t=1748030991550:39:47)
+    at Route (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=6db08933:323:16)
+    at Switch (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=6db08933:379:17)
+    at Router
+    at Provider (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-PLT6GTVM.js?v=6db08933:38:15)
+    at TooltipProvider (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=6db08933:64:5)
+    at QueryClientProvider (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=6db08933:2805:3)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+Cannot read properties of undefined (reading 'map')
