@@ -436,17 +436,50 @@ export default function CareerDevelopment({ aiEnabled }: CareerDevelopmentProps)
               </div>
             )}
 
+            {/* Career Advice & Skill Development */}
+            {careerResult && careerResult.careerAdvice && careerResult.careerAdvice.length > 0 && (
+              <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <h4 className="font-medium text-blue-900 dark:text-blue-300 mb-3">💡 Career Development Tips</h4>
+                <div className="space-y-2">
+                  {careerResult.careerAdvice.map((advice, index) => (
+                    <div key={index} className="flex items-start space-x-2">
+                      <span className="text-blue-600 dark:text-blue-400 text-sm">•</span>
+                      <p className="text-sm text-blue-800 dark:text-blue-400">{advice}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Skill Gap Analysis */}
+            {careerResult && careerResult.skillGaps && careerResult.skillGaps.length > 0 && (
+              <div className="mt-6 p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg">
+                <h4 className="font-medium text-orange-900 dark:text-orange-300 mb-3">🎯 Skills to Develop</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {careerResult.skillGaps.map((skill, index) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      <Badge variant="outline" className="text-xs border-orange-300 text-orange-800 dark:text-orange-400">
+                        {skill}
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Post-Graduation Immigration */}
             <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-              <h4 className="font-medium text-green-900 dark:text-green-300 mb-2">Post-Graduation Immigration</h4>
+              <h4 className="font-medium text-green-900 dark:text-green-300 mb-2">📋 Post-Graduation Immigration</h4>
               <p className="text-sm text-green-800 dark:text-green-400 mb-2">
-                {careerResult?.immigrationInfo || "As a CS graduate, you're eligible for:"}
+                {careerResult?.immigrationInfo || "Immigration guidance based on your field of study:"}
               </p>
-              <ul className="text-sm text-green-800 dark:text-green-400 space-y-1">
-                <li>• <strong>OPT</strong>: 12 months work authorization</li>
-                <li>• <strong>STEM Extension</strong>: Additional 24 months for CS degrees</li>
-                <li>• <strong>H1B Sponsorship</strong>: Path to long-term work visa</li>
-              </ul>
+              {!careerResult && (
+                <ul className="text-sm text-green-800 dark:text-green-400 space-y-1">
+                  <li>• <strong>OPT</strong>: 12 months work authorization</li>
+                  <li>• <strong>STEM Extension</strong>: Additional 24 months for STEM degrees</li>
+                  <li>• <strong>H1B Sponsorship</strong>: Path to long-term work visa</li>
+                </ul>
+              )}
             </div>
           </CardContent>
         </Card>

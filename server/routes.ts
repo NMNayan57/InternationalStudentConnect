@@ -764,18 +764,24 @@ Format as clean text with clear sections, not JSON. Focus on accuracy and practi
         fieldOfStudy: z.string(),
         careerInterests: z.string(),
         preferredLocation: z.string(),
+        currentLocation: z.string(),
+        workHours: z.string(),
+        experienceLevel: z.string(),
         aiEnabled: z.boolean().default(false)
       }).parse(req.body);
 
       const userId = 1; // Mock user ID
 
       if (careerData.aiEnabled) {
-        const prompt = `You are a career counselor with specialized knowledge of international student career development and immigration pathways. Provide REAL, SPECIFIC career guidance:
+        const prompt = `You are a career counselor with access to real job posting data from global platforms like jobs.ac.uk, Indeed, LinkedIn, and local job boards. Provide comprehensive career guidance with REAL job opportunities:
 
         STUDENT PROFILE:
         - Field of Study: ${careerData.fieldOfStudy}
         - Career Interests: ${careerData.careerInterests}
         - Preferred Location: ${careerData.preferredLocation}
+        - Current Location: ${careerData.currentLocation}
+        - Work Availability: ${careerData.workHours}
+        - Experience Level: ${careerData.experienceLevel}
 
         REQUIREMENTS:
         1. Provide ACTUAL career progression paths for international students in this field
@@ -785,36 +791,99 @@ Format as clean text with clear sections, not JSON. Focus on accuracy and practi
         5. Recommend REAL professional organizations and networking events
         6. List SPECIFIC skills and certifications that increase employability
         
+        PROVIDE TWO SEPARATE JOB CATEGORIES:
+        1. GLOBAL JOB OPPORTUNITIES (from jobs.ac.uk, international platforms)
+        2. LOCAL JOB OPPORTUNITIES (near student's current location)
+
         EXAMPLE OUTPUT FORMAT:
         {
-          "profile": "${careerData.fieldOfStudy} graduate interested in ${careerData.careerInterests} in ${careerData.preferredLocation}",
+          "profile": "${careerData.fieldOfStudy} graduate interested in ${careerData.careerInterests}",
           "goal": "Secure employment in ${careerData.careerInterests} with long-term immigration pathway",
           "careerPaths": [
             "Entry-Level ${careerData.careerInterests} Role (1-2 years) → Mid-Level Specialist (2-4 years) → Senior Role or Management (5+ years)",
             "Research Assistant → Research Associate → Research Lead or PhD",
             "Startup Role with broader responsibilities → Specialized role in larger company"
           ],
-          "jobMatches": [
+          "globalJobMatches": [
             {
-              "title": "Machine Learning Engineer",
-              "company": "Google",
-              "salary": "$120,000 - $150,000",
-              "location": "Mountain View, CA",
-              "visaSponsorship": "H-1B sponsor with high approval rate",
-              "requirements": "Python, TensorFlow, ML model deployment, MS/PhD preferred",
-              "website": "https://careers.google.com"
+              "id": "job1",
+              "title": "Research Software Engineer",
+              "company": "University of Oxford",
+              "location": "Oxford, UK",
+              "salary": "£45,000 - £55,000",
+              "type": "${careerData.workHours}",
+              "experience": "${careerData.experienceLevel}",
+              "description": "Join our computational research team developing cutting-edge algorithms for climate modeling and data analysis.",
+              "requirements": ["PhD in Computer Science", "Python programming", "Machine learning experience"],
+              "posted": "2 days ago",
+              "deadline": "30 days",
+              "source": "jobs.ac.uk",
+              "url": "https://jobs.ac.uk/job/example1"
             },
             {
-              "title": "Data Scientist",
-              "company": "Microsoft",
-              "salary": "$110,000 - $140,000",
-              "location": "Redmond, WA",
-              "visaSponsorship": "H-1B sponsor, STEM OPT friendly",
-              "requirements": "Statistical analysis, Python/R, SQL, cloud platforms",
-              "website": "https://careers.microsoft.com"
+              "id": "job2", 
+              "title": "Postdoctoral Research Fellow",
+              "company": "ETH Zurich",
+              "location": "Zurich, Switzerland",
+              "salary": "CHF 85,000 - 95,000",
+              "type": "${careerData.workHours}",
+              "experience": "${careerData.experienceLevel}",
+              "description": "Research position in artificial intelligence and robotics with international collaboration opportunities.",
+              "requirements": ["PhD in relevant field", "Research publications", "International experience preferred"],
+              "posted": "1 week ago",
+              "deadline": "45 days",
+              "source": "jobs.ac.uk",
+              "url": "https://jobs.ac.uk/job/example2"
+            }
+          ],
+          "localJobMatches": [
+            {
+              "id": "local1",
+              "title": "Software Developer",
+              "company": "Local Tech Solutions",
+              "location": "${careerData.currentLocation}",
+              "salary": "$70,000 - $85,000",
+              "type": "${careerData.workHours}",
+              "experience": "${careerData.experienceLevel}",
+              "description": "Join our growing team developing web applications for local businesses and startups.",
+              "requirements": ["Bachelor's degree", "JavaScript/React", "2+ years experience"],
+              "posted": "3 days ago",
+              "deadline": "21 days",
+              "source": "Local job board",
+              "url": "https://localjobs.example.com/job1",
+              "distance": "5 miles"
+            },
+            {
+              "id": "local2",
+              "title": "Data Analyst",
+              "company": "Regional Healthcare System",
+              "location": "Near ${careerData.currentLocation}",
+              "salary": "$65,000 - $80,000", 
+              "type": "${careerData.workHours}",
+              "experience": "${careerData.experienceLevel}",
+              "description": "Analyze healthcare data to improve patient outcomes and operational efficiency.",
+              "requirements": ["Statistics background", "SQL/Python", "Healthcare experience preferred"],
+              "posted": "5 days ago",
+              "deadline": "28 days",
+              "source": "Indeed",
+              "url": "https://indeed.com/job/example",
+              "distance": "12 miles"
             }
           ],
           "immigrationInfo": "As a ${careerData.fieldOfStudy} graduate, you qualify for 12 months of OPT. If your program is STEM-designated, you can apply for a 24-month STEM OPT extension. During this time, seek employers willing to sponsor H-1B visas. The annual H-1B lottery typically opens in March with approximately 85,000 visas available. Companies with research facilities may offer cap-exempt H-1B opportunities.",
+          "careerAdvice": [
+            "Build a strong portfolio showcasing your ${careerData.fieldOfStudy} projects",
+            "Network with professionals in ${careerData.careerInterests} through LinkedIn and industry events",
+            "Consider obtaining relevant certifications to enhance your qualifications",
+            "Apply for internships or co-op programs to gain practical experience",
+            "Join professional organizations related to your field for networking opportunities"
+          ],
+          "skillGaps": [
+            "Industry-specific software proficiency",
+            "Advanced communication skills for international workplace",
+            "Project management methodologies",
+            "Cross-cultural collaboration experience"
+          ],
           "networking": {
             "professionalOrganizations": [
               "Association for Computing Machinery (ACM)",
@@ -854,25 +923,118 @@ Format as clean text with clear sections, not JSON. Focus on accuracy and practi
         });
 
         res.json({
-          profile: careerData.fieldOfStudy,
-          goal: careerData.careerInterests,
+          profile: aiAnalysis.profile,
+          goal: aiAnalysis.goal,
           careerPaths: aiAnalysis.careerPaths,
-          jobMatches: aiAnalysis.jobMatches,
+          globalJobMatches: aiAnalysis.globalJobMatches,
+          localJobMatches: aiAnalysis.localJobMatches,
           immigrationInfo: aiAnalysis.immigrationInfo,
+          careerAdvice: aiAnalysis.careerAdvice,
+          skillGaps: aiAnalysis.skillGaps,
           aiEnabled: true
         });
       } else {
-        // Mock response
-        const careerPaths = ["Software Engineer", "Data Scientist"];
-        const jobMatches = ["Google", "Microsoft"];
-        const immigrationInfo = "Eligible for OPT in USA";
+        // Mock response with realistic job postings
+        const careerPaths = [
+          `Entry-Level ${careerData.careerInterests} (1-2 years) → Mid-Level Specialist (3-5 years) → Senior Role (5+ years)`,
+          "Research Assistant → Research Associate → Research Lead",
+          "Industry Intern → Full-time Professional → Team Lead"
+        ];
+
+        const globalJobMatches = [
+          {
+            id: "job1",
+            title: "Research Software Engineer",
+            company: "University of Cambridge",
+            location: "Cambridge, UK",
+            salary: "£42,000 - £52,000",
+            type: careerData.workHours,
+            experience: careerData.experienceLevel,
+            description: "Join our computational research team developing algorithms for climate modeling and data analysis.",
+            requirements: ["PhD in Computer Science", "Python programming", "Machine learning experience"],
+            posted: "3 days ago",
+            deadline: "28 days",
+            source: "jobs.ac.uk",
+            url: "https://jobs.ac.uk/job/example1"
+          },
+          {
+            id: "job2",
+            title: "Postdoctoral Research Fellow",
+            company: "Max Planck Institute",
+            location: "Berlin, Germany",
+            salary: "€48,000 - €55,000",
+            type: careerData.workHours,
+            experience: careerData.experienceLevel,
+            description: "Research position in artificial intelligence with international collaboration opportunities.",
+            requirements: ["PhD in relevant field", "Research publications", "International experience preferred"],
+            posted: "1 week ago",
+            deadline: "42 days",
+            source: "jobs.ac.uk",
+            url: "https://jobs.ac.uk/job/example2"
+          }
+        ];
+
+        const localJobMatches = [
+          {
+            id: "local1",
+            title: "Software Developer",
+            company: "TechFlow Solutions",
+            location: careerData.currentLocation,
+            salary: "$68,000 - $82,000",
+            type: careerData.workHours,
+            experience: careerData.experienceLevel,
+            description: "Develop web applications for local businesses and growing startups in our community.",
+            requirements: ["Bachelor's degree", "JavaScript/React", "2+ years experience"],
+            posted: "2 days ago",
+            deadline: "25 days",
+            source: "Indeed",
+            url: "https://indeed.com/job/example1",
+            distance: "4.2 miles"
+          },
+          {
+            id: "local2",
+            title: "Data Analyst",
+            company: "Regional Medical Center",
+            location: `Near ${careerData.currentLocation}`,
+            salary: "$62,000 - $78,000",
+            type: careerData.workHours,
+            experience: careerData.experienceLevel,
+            description: "Analyze healthcare data to improve patient outcomes and operational efficiency.",
+            requirements: ["Statistics background", "SQL/Python", "Healthcare experience preferred"],
+            posted: "4 days ago",
+            deadline: "30 days",
+            source: "Healthcare Jobs",
+            url: "https://healthcarejobs.com/job/example",
+            distance: "8.7 miles"
+          }
+        ];
+
+        const immigrationInfo = `As a ${careerData.fieldOfStudy} graduate, you're eligible for 12 months of OPT work authorization. STEM graduates can apply for an additional 24-month extension, providing up to 3 years of work experience in the US.`;
+
+        const careerAdvice = [
+          `Build a strong portfolio showcasing your ${careerData.fieldOfStudy} projects and achievements`,
+          `Network with professionals in ${careerData.careerInterests} through industry events and LinkedIn`,
+          "Consider obtaining relevant certifications to enhance your marketability",
+          "Apply for internships or part-time roles to gain practical experience",
+          "Join professional organizations related to your field for networking opportunities"
+        ];
+
+        const skillGaps = [
+          "Industry-specific software proficiency",
+          "Advanced communication skills for international workplace",
+          "Project management methodologies",
+          "Cross-cultural collaboration experience"
+        ];
 
         res.json({
-          profile: careerData.fieldOfStudy,
-          goal: careerData.careerInterests,
+          profile: `${careerData.fieldOfStudy} graduate interested in ${careerData.careerInterests}`,
+          goal: `Secure employment in ${careerData.careerInterests} with long-term career growth`,
           careerPaths,
-          jobMatches,
+          globalJobMatches,
+          localJobMatches,
           immigrationInfo,
+          careerAdvice,
+          skillGaps,
           aiEnabled: false
         });
       }
