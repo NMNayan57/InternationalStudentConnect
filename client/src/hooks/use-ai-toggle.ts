@@ -12,7 +12,7 @@ export function useAIToggle() {
     toast({
       title: newState ? "AI Mode Enabled" : "AI Mode Disabled",
       description: newState 
-        ? "Dynamic responses using Gemini AI are now active" 
+        ? "Dynamic responses using DeepSeek AI are now active" 
         : "Using mock data for demonstrations",
       duration: 2000,
     });
