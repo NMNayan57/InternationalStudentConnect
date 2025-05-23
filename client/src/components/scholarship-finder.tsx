@@ -67,7 +67,16 @@ export default function ScholarshipFinder({ aiEnabled }: ScholarshipFinderProps)
   const mutation = useMutation({
     mutationFn: async (data: ScholarshipFormData) => {
       try {
-        const response = await apiRequest('POST', '/api/scholarship-finder', { ...data, aiEnabled });
+        const response = await fetch('/api/scholarship-finder', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...data, aiEnabled }),
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const result = await response.json();
         console.log('Scholarship result:', result);
         return result;

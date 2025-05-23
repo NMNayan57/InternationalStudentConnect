@@ -1,0 +1,33 @@
+`DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
+
+If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
+
+For more information, see https://radix-ui.com/primitives/docs/components/dialog
+
+If you want to hide the &#x60;DialogTitle&#x60;, you can wrap it with our VisuallyHidden component.
+
+For more information, see https://radix-ui.com/primitives/docs/components/dialog
+at t.value (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+Scholarship error: 
+SyntaxError {}
+message: "Unexpected token '<', "<!DOCTYPE "... is not valid JSON"
+stack: "SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON"
+get stack: ƒ ()
+set stack: ƒ ()
+[[Prototype]]: Object
+
+at t.value (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://3c63f210-7e38-4a0e-bce3-79251f140dee-00-duwtuic7f0d0.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+Scholarship mutation error: 
+SyntaxError {}
+message: "Unexpected token '<', "<!DOCTYPE "... is not valid JSON"
+stack: "SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON"
+get stack: ƒ ()
+set stack: ƒ ()
+[[Prototype]]: Object
