@@ -26,7 +26,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (profileData.aiEnabled) {
         // AI-powered analysis using Gemini
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         
         const prompt = `Analyze this student profile and provide a strength score (0-100) and university recommendations:
         GPA: ${profileData.gpa}
@@ -96,7 +96,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (documentData.aiEnabled) {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         
         const prompt = `Analyze and improve this ${documentData.documentType}:
         ${documentData.content}
@@ -159,7 +159,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (researchData.aiEnabled) {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         
         const prompt = `Find professors matching these research interests:
         Primary Area: ${researchData.primaryArea}
@@ -221,7 +221,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (visaData.aiEnabled) {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         
         const prompt = `Provide visa requirements and interview tips for:
         Nationality: ${visaData.nationality}
@@ -285,7 +285,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (culturalData.aiEnabled) {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         
         const prompt = `Provide cultural adaptation tips for someone from ${culturalData.originCountry} going to ${culturalData.destinationCountry}.
         
@@ -347,7 +347,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (careerData.aiEnabled) {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         
         const prompt = `Provide career guidance for:
         Field: ${careerData.fieldOfStudy}
