@@ -1,0 +1,147 @@
+Prompt: Develop the International Student AI Platform
+
+Objective:
+
+Create a cloud-based, scalable, and secure AI-powered platform to support international students from pre-application to post-graduation. The platform should be globally accessible, user-friendly, and deliver error-free, runnable code for a functional application.
+
+Gemini API Key:
+
+AlzaSyBKVVQe6CPQvzEr3dlvv6A0e0HIRlHVQ (Ensure this is securely integrated into the application for AI model calls.)
+
+Core Features and Feature-Specific Prompts:
+
+Each feature should include a mock template (static response) and an AI-enabled mode (dynamic response when toggled). Below are the features with precise prompts to generate the best results.
+
+Profile Evaluation and University Matching
+Description: Analyze student profiles (academic records, test scores, extracurriculars) to calculate a strength score and match students with universities based on preferences, budget, and goals.
+Prompt for AI Agent:
+"Generate a module that accepts student profile data (GPA, test scores, extracurriculars, preferences, budget) via a form. Use a multi-modal classification model to compute a profile strength score (0-100). Implement a hybrid recommendation system (collaborative and content-based filtering) to suggest 5-10 universities with program details, costs, and admission requirements. Ensure results are ranked by match likelihood. Include a mock template showing a static sample output (e.g., GPA: 3.8, TOEFL: 100, Budget: $30,000/year → Strength Score: 85, Matches: [University A, University B]). When AI-enabled is toggled, query the Gemini API to generate dynamic, personalized university matches. Handle errors for invalid inputs and ensure output is formatted as JSON for API integration."
+Mock Template Example:
+json
+
+Copy
+{
+  "profile": {
+    "gpa": 3.8,
+    "toefl": 100,
+    "budget": 30000,
+    "extracurriculars": ["debate club", "volunteering"]
+  },
+  "strength_score": 85,
+  "university_matches": [
+    {"name": "University A", "program": "Computer Science", "cost": 28000, "match_score": 90},
+    {"name": "University B", "program": "Engineering", "cost": 29000, "match_score": 85}
+  ]
+}
+Document Preparation and Improvement
+Description: Assist students in creating and enhancing application documents (CV, personal statement, research proposal) with content suggestions and language improvements.
+Prompt for AI Agent:
+"Develop a module that accepts user-uploaded documents (CV, personal statement, research proposal) as text or PDF. Use a BERT-based NLP model for document analysis and a fine-tuned generative AI model (via Gemini API) to suggest improvements (e.g., rephrasing, structure, keywords). Provide a mock template with a static sample (e.g., input: 'I am passionate about AI,' output: 'I am deeply committed to advancing AI through innovative research'). When AI-enabled is toggled, use the Gemini API to generate real-time suggestions. Ensure error handling for unsupported file formats and return results in a clean, editable text format."
+Mock Template Example:
+json
+
+Copy
+{
+  "document_type": "personal_statement",
+  "input": "I am passionate about AI.",
+  "suggestions": [
+    "Rephrase: I am deeply committed to advancing AI through innovative research.",
+    "Add: Highlight a specific AI project to strengthen impact."
+  ]
+}
+Research and Professor Matching
+Description: Match student research interests with professor specializations and enhance research proposals.
+Prompt for AI Agent:
+"Create a module that takes student research interests (e.g., 'machine learning, NLP') as input. Use semantic similarity and topic modeling to match with professor profiles (name, specialization, university). Enhance research proposals using a generative AI model. Provide a mock template with static output (e.g., Interest: 'NLP' → Matches: [Prof. Smith, Prof. Jones]). When AI-enabled, use the Gemini API for dynamic professor matching and proposal enhancements. Ensure error-free parsing of inputs and JSON output."
+Mock Template Example:
+json
+
+Copy
+{
+  "research_interest": "NLP",
+  "professor_matches": [
+    {"name": "Prof. Smith", "specialization": "NLP", "university": "University A"},
+    {"name": "Prof. Jones", "specialization": "Machine Learning", "university": "University B"}
+  ],
+  "proposal_enhancement": "Add a section on recent NLP trends to strengthen proposal."
+}
+Visa and Immigration Support
+Description: Determine visa requirements, verify documents, and prepare students for visa interviews.
+Prompt for AI Agent:
+"Build a module that accepts student details (nationality, program, destination country) and uploaded documents. Use a rule-based system with ML components for visa requirement analysis and a computer vision/NLP hybrid model for document verification. Include a conversational AI for visa interview preparation. Provide a mock template (e.g., Nationality: India, Program: MS, Country: USA → Visa: F-1, Documents: Valid). When AI-enabled, use the Gemini API for dynamic visa guidance and interview simulations. Ensure error handling for missing data and return results as JSON."
+Mock Template Example:
+json
+
+Copy
+{
+  "nationality": "India",
+  "program": "MS",
+  "country": "USA",
+  "visa_type": "F-1",
+  "document_status": "Valid",
+  "interview_tips": ["Practice questions about study plans", "Bring financial proof"]
+}
+Cultural Adaptation and Integration
+Description: Provide guidance for cultural adaptation and connect students with communities.
+Prompt for AI Agent:
+"Develop a module that takes student origin and destination countries as input. Use a knowledge graph with neural network components for cultural adaptation tips and a graph-based recommendation system for community matching. Provide a mock template (e.g., Origin: Nigeria, Destination: Canada → Tips: [Winter clothing, Academic norms], Communities: [Nigerian Students Association]). When AI-enabled, use the Gemini API for personalized tips and community suggestions. Ensure robust error handling and JSON output."
+Mock Template Example:
+json
+
+Copy
+{
+  "origin": "Nigeria",
+  "destination": "Canada",
+  "cultural_tips": ["Purchase winter clothing", "Understand academic norms"],
+  "communities": ["Nigerian Students Association", "International Student Group"]
+}
+Career Development and Post-Graduation
+Description: Suggest career paths, match with job opportunities, and provide post-graduation immigration info.
+Prompt for AI Agent:
+"Create a module that accepts student profile and career goals. Use a hybrid recommendation system with predictive components for career path suggestions and job matching. Provide post-graduation immigration guidance using a rule-based system. Include a mock template (e.g., Profile: CS Graduate, Goal: Software Engineer → Jobs: [Google, Microsoft], Immigration: OPT). When AI-enabled, use the Gemini API for dynamic job matches and immigration advice. Ensure error-free input processing and JSON output."
+Mock Template Example:
+json
+
+Copy
+{
+  "profile": "CS Graduate",
+  "goal": "Software Engineer",
+  "career_paths": ["Software Engineer", "Data Scientist"],
+  "job_matches": ["Google", "Microsoft"],
+  "immigration_info": "Eligible for OPT in USA"
+}
+Required AI Capabilities:
+
+Integrate these AI models using the Gemini API:
+
+Multi-modal classification for profile analysis.
+Hybrid recommendation systems for university, professor, job, and community matching.
+Probabilistic classification for admission probability.
+NLP (BERT-based for analysis, generative AI for content) for document improvement, research proposals, and language support.
+Semantic similarity for research matching.
+Rule-based and ML systems for visa and immigration.
+Computer vision/NLP for document verification.
+Conversational AI for interview preparation and 24/7 chatbot support.
+Knowledge graph for cultural intelligence.
+Predictive analytics for admissions, funding, and careers.
+Data Requirements:
+
+Include these datasets (mock or API-sourced) for training and functionality:
+
+University data (programs, costs, requirements).
+Student profiles (academics, test scores, preferences).
+Application documents (CVs, statements, templates).
+Professor profiles (specializations, publications).
+Visa regulations (country-specific rules).
+Cultural knowledge (norms, adaptation tips).
+Job market data (openings, trends).
+Community networks (student groups, events).
+Application Requirements:
+
+Frontend: Simple, responsive UI with forms for input and a toggle for AI-enabled mode (static vs. dynamic output).
+Backend: REST API to handle requests, integrate Gemini API, and return JSON responses.
+AI Integration: Securely use the provided Gemini API key for dynamic responses when AI-enabled is toggled.
+Error Handling: Validate inputs, handle unsupported formats, and provide clear error messages.
+Output Format: All responses in JSON for consistency and API compatibility.
+Mock Templates: Each feature must include a static mock response (as shown above) when AI is disabled.
+Runnable on Replit: Ensure the code is lightweight, compatible with Replit’s environment, and includes setup instructions (e.g., environment variables for API key).
