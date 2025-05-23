@@ -162,12 +162,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (documentData.aiEnabled) {
-        const prompt = `Analyze and improve this ${documentData.documentType}:
+        const prompt = `You are an expert academic writing consultant for international students. Analyze and significantly improve this ${documentData.documentType} with SPECIFIC, TAILORED recommendations:
+
+        ORIGINAL CONTENT:
         ${documentData.content}
         
-        Provide JSON response with:
-        - suggestions: array of improvement suggestions
-        - enhancedContent: improved version of the content`;
+        REQUIREMENTS:
+        1. Provide SPECIFIC improvement suggestions (not generic advice)
+        2. Include DETAILED rewrites of weak sections
+        3. Suggest REAL academic phrases and terminology for the field
+        4. Identify ACTUAL grammar and structure issues with corrections
+        5. Recommend CONCRETE examples and evidence to strengthen arguments
+        
+        For ${documentData.documentType}, focus particularly on:
+        ${documentData.documentType === 'Statement of Purpose' ? 
+          '- Creating a compelling narrative arc\n- Highlighting specific academic achievements\n- Connecting past experiences to future goals\n- Demonstrating program fit with specific details' : 
+          documentData.documentType === 'Research Proposal' ? 
+          '- Clearly articulating research questions\n- Providing specific methodology details\n- Connecting to existing literature with citations\n- Highlighting feasibility and significance' : 
+          documentData.documentType === 'CV/Resume' ? 
+          '- Using strong action verbs for achievements\n- Quantifying accomplishments with metrics\n- Tailoring skills to academic/industry expectations\n- Proper formatting and organization' : 
+          '- Clarity and logical flow\n- Academic tone and terminology\n- Proper citation and referencing\n- Evidence-based arguments'}
+        
+        EXAMPLE OUTPUT FORMAT:
+        {
+          "suggestions": [
+            {
+              "section": "Introduction",
+              "issue": "Vague research motivation",
+              "improvement": "Replace 'I am interested in AI' with 'My research focuses on solving ethical challenges in neural network development, specifically addressing bias in facial recognition systems through novel training methodologies.'",
+              "explanation": "This revision provides specific research focus and demonstrates expertise in a specialized area."
+            },
+            {
+              "section": "Academic Background",
+              "issue": "Generic description of coursework",
+              "improvement": "Instead of 'I took many computer science courses', specify: 'I completed advanced coursework in Neural Networks (A+), Advanced Algorithms (A), and a specialized seminar in Ethical AI Development where I led a team project examining bias mitigation techniques.'",
+              "explanation": "This provides concrete evidence of relevant academic preparation with specific courses and achievements."
+            }
+          ],
+          "enhancedContent": "Complete revised document with all improvements implemented...",
+          "keyStrengths": [
+            "Clear research objective focused on a specific problem",
+            "Strong methodology section with appropriate techniques"
+          ],
+          "additionalResources": [
+            "Academic Phrasebank - University of Manchester",
+            "Purdue OWL Guide to Personal Statements"
+          ]
+        }`;
 
         const aiAnalysis = await callDeepSeekAPI(prompt);
 
@@ -315,12 +356,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (visaData.aiEnabled) {
-        const prompt = `Provide visa requirements and interview tips for:
-        Nationality: ${visaData.nationality}
-        Destination: ${visaData.destinationCountry}
-        Program: ${visaData.programType}
+        const prompt = `You are an international student visa expert with comprehensive knowledge of current visa regulations. Provide SPECIFIC, ACCURATE visa information for:
+
+        VISA APPLICATION:
+        - Nationality: ${visaData.nationality}
+        - Destination Country: ${visaData.destinationCountry}
+        - Program Type: ${visaData.programType}
         
-        Return JSON with: visaType, documentStatus, interviewTips array, processingInfo`;
+        REQUIREMENTS:
+        1. Provide the EXACT visa type required for this specific situation
+        2. Include CURRENT document requirements (list SPECIFIC documents)
+        3. Provide REAL processing times based on current embassy data
+        4. Include ACTUAL interview questions asked at embassies
+        5. Specify REAL financial requirements with exact amounts
+
+        EXAMPLE OUTPUT FORMAT:
+        {
+          "visaType": "F-1 Student Visa",
+          "documentStatus": "Required documents: Valid passport, I-20 form from university, DS-160 confirmation, SEVIS fee payment receipt, visa application fee payment receipt",
+          "interviewTips": [
+            "Clearly explain why you chose your specific program and university",
+            "Demonstrate strong ties to your home country (property, family business, job offer after graduation)",
+            "Prepare evidence of financial ability to cover tuition and living expenses",
+            "Be ready to answer: 'Why did you choose this university over options in your home country?'",
+            "Practice explaining your post-graduation plans to return to your home country"
+          ],
+          "processingInfo": {
+            "averageProcessingTime": "3-4 weeks after interview (may vary seasonally)",
+            "financialRequirements": "Proof of funds covering first-year tuition ($25,000-45,000) plus living expenses ($12,000-24,000)",
+            "validityPeriod": "Duration of program (typically multi-entry)",
+            "applicationFees": "SEVIS fee: $350, Visa application fee: $160"
+          },
+          "embassyContact": {
+            "website": "https://[country].usembassy.gov/visas/",
+            "appointmentSystem": "https://ais.usvisa-info.com/",
+            "emergencyContact": "+1-555-555-5555 (Consular section)"
+          }
+        }`;
 
         const aiAnalysis = await callDeepSeekAPI(prompt);
 
@@ -375,9 +447,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = 1; // Mock user ID
 
       if (culturalData.aiEnabled) {
-        const prompt = `Provide cultural adaptation tips for someone from ${culturalData.originCountry} going to ${culturalData.destinationCountry}.
+        const prompt = `You are a cultural adaptation specialist with extensive experience helping international students adjust to new countries. Provide ACTUAL, SPECIFIC cultural adaptation information:
+
+        STUDENT TRANSITION:
+        - Origin Country: ${culturalData.originCountry}
+        - Destination Country: ${culturalData.destinationCountry}
         
-        Return JSON with: culturalTips array, communities array with student groups`;
+        REQUIREMENTS:
+        1. Provide SPECIFIC cultural differences (social norms, etiquette, academic expectations)
+        2. Include REAL local customs and traditions in ${culturalData.destinationCountry}
+        3. Recommend ACTUAL communities and student organizations at major universities
+        4. Include PRACTICAL adaptation tips (weather preparation, transportation, housing, banking)
+        5. Provide REAL resources (websites, apps, community centers, cultural organizations)
+        
+        EXAMPLE OUTPUT FORMAT:
+        {
+          "culturalTips": [
+            "In ${culturalData.destinationCountry}, punctuality is highly valued. Arrive 5-10 minutes early for appointments and classes.",
+            "The academic system emphasizes independent research and critical thinking rather than memorization.",
+            "Weather in ${culturalData.destinationCountry} varies seasonally; prepare for temperatures ranging from X°C to Y°C.",
+            "Public transportation is excellent in major cities; consider getting a student transit pass."
+          ],
+          "communities": [
+            "${culturalData.originCountry} Student Association at University of Toronto",
+            "International Student Support Group at York University",
+            "Cultural Exchange Network - national organization with local chapters",
+            "Language Exchange Meetups - held weekly at major universities"
+          ],
+          "resources": [
+            "International Student Office at universities",
+            "Settlement.org - comprehensive resource for newcomers",
+            "Study Permit Extension Process Guide",
+            "Housing Resources for International Students"
+          ]
+        }`;
 
         const aiAnalysis = await callDeepSeekAPI(prompt);
 
