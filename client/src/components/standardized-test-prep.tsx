@@ -151,13 +151,13 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
           <div className="lg:col-span-1 space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Test Overview</h3>
             {Object.entries(testInfo).map(([key, test]) => (
-              <Card key={key} className="bg-white border-l-4 border-l-[#2DD4BF] border-gray-200">
-                <CardHeader className="pb-2 bg-white">
-                  <CardTitle className="text-sm text-[#1E3A8A]">{test.name}</CardTitle>
-                  <CardDescription className="text-xs text-gray-600">{test.description}</CardDescription>
+              <Card key={key} className="border-l-4 border-l-blue-500">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm">{test.name}</CardTitle>
+                  <CardDescription className="text-xs">{test.description}</CardDescription>
                 </CardHeader>
-                <CardContent className="pt-0 bg-white">
-                  <div className="space-y-1 text-xs text-gray-600">
+                <CardContent className="pt-0">
+                  <div className="space-y-1 text-xs">
                     <p><strong>Sections:</strong> {test.sections.join(", ")}</p>
                     <p><strong>Score:</strong> {test.scoreRange}</p>
                     <p><strong>Duration:</strong> {test.duration}</p>
@@ -169,14 +169,14 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
 
           {/* Form */}
           <div className="lg:col-span-2">
-            <Card className="bg-white border-gray-200">
-              <CardHeader className="bg-white">
-                <CardTitle className="text-[#1E3A8A]">Create Your Study Plan</CardTitle>
-                <CardDescription className="text-gray-600">
+            <Card>
+              <CardHeader>
+                <CardTitle>Create Your Study Plan</CardTitle>
+                <CardDescription>
                   Tell us about your goals and current level to get a personalized preparation roadmap
                 </CardDescription>
               </CardHeader>
-              <CardContent className="bg-white">
+              <CardContent>
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <div className="grid md:grid-cols-2 gap-4">
@@ -188,7 +188,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                             <FormLabel>Test Type</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger className="bg-white border-gray-300 text-gray-700">
+                                <SelectTrigger>
                                   <SelectValue placeholder="Select test" />
                                 </SelectTrigger>
                               </FormControl>
@@ -212,7 +212,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                             <FormLabel>Current Level</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger className="bg-white border-gray-300 text-gray-700">
+                                <SelectTrigger>
                                   <SelectValue placeholder="Select current level" />
                                 </SelectTrigger>
                               </FormControl>
@@ -250,7 +250,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                             <FormLabel>Study Timeframe</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger className="bg-white border-gray-300 text-gray-700">
+                                <SelectTrigger>
                                   <SelectValue placeholder="How long to prepare?" />
                                 </SelectTrigger>
                               </FormControl>
@@ -275,7 +275,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                             <FormLabel>Daily Study Hours</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger className="bg-white border-gray-300 text-gray-700">
+                                <SelectTrigger>
                                   <SelectValue placeholder="Hours per day" />
                                 </SelectTrigger>
                               </FormControl>
@@ -299,7 +299,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                             <FormLabel>Previous Test Experience</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger className="bg-white border-gray-300 text-gray-700">
+                                <SelectTrigger>
                                   <SelectValue placeholder="Have you taken this test before?" />
                                 </SelectTrigger>
                               </FormControl>
@@ -351,7 +351,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                           <FormLabel>Study Preference</FormLabel>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
-                              <SelectTrigger className="bg-white border-gray-300 text-gray-700">
+                              <SelectTrigger>
                                 <SelectValue placeholder="How do you prefer to study?" />
                               </SelectTrigger>
                             </FormControl>
@@ -370,7 +370,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                     <Button 
                       type="submit" 
                       disabled={mutation.isPending}
-                      className="w-full btn-primary bg-[#1E3A8A] hover:bg-[#2DD4BF] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105"
+                      className="w-full"
                     >
                       {mutation.isPending ? 'Creating Study Plan...' : 'Generate Study Plan'}
                     </Button>

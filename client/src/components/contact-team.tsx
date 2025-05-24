@@ -54,21 +54,21 @@ const offices = [
     city: 'New York',
     address: '123 Education Ave, Suite 500, New York, NY 10001',
     phone: '+1 (555) 123-4567',
-    email: 'ny@edujiin.com',
+    email: 'ny@studypathai.com',
     hours: 'Mon-Fri: 9AM-6PM EST'
   },
   {
     city: 'London',
     address: '45 Academic Street, London EC1A 1BB, United Kingdom',
     phone: '+44 20 1234 5678',
-    email: 'london@edujiin.com',
+    email: 'london@studypathai.com',
     hours: 'Mon-Fri: 9AM-5PM GMT'
   },
   {
     city: 'Sydney',
     address: '78 University Road, Sydney NSW 2000, Australia',
     phone: '+61 2 1234 5678',
-    email: 'sydney@edujiin.com',
+    email: 'sydney@studypathai.com',
     hours: 'Mon-Fri: 9AM-5PM AEST'
   }
 ];

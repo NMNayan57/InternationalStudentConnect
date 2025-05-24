@@ -191,10 +191,10 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  preparation: 'bg-[#A7F3D0] text-[#1E3A8A] border-[#2DD4BF]',
-  applications: 'bg-[#F9FAFB] text-[#2DD4BF] border-[#60A5FA]', 
-  visa: 'bg-[#A7F3D0] text-[#1E3A8A] border-[#2DD4BF]',
-  departure: 'bg-[#F9FAFB] text-[#60A5FA] border-[#2DD4BF]'
+  preparation: 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400',
+  applications: 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400',
+  visa: 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400',
+  departure: 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400'
 };
 
 interface StudyRoadmapProps {
@@ -228,14 +228,14 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
       </div>
 
       {/* Progress Overview */}
-      <Card className="bg-white border-gray-200">
-        <CardHeader className="bg-white">
-          <CardTitle className="flex items-center text-gray-900">
-            <MapPin className="mr-2 h-5 w-5 text-[#2DD4BF]" />
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <MapPin className="mr-2 h-5 w-5" />
             Your Progress
           </CardTitle>
         </CardHeader>
-        <CardContent className="bg-white">
+        <CardContent>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Overall Progress</span>
@@ -265,15 +265,12 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
       </Card>
 
       {/* Category Filter */}
-      <Card className="bg-white border-gray-200">
-        <CardContent className="pt-6 bg-white">
+      <Card>
+        <CardContent className="pt-6">
           <div className="flex flex-wrap gap-2">
             <Button
-              variant="outline"
+              variant={selectedCategory === 'all' ? 'default' : 'outline'}
               size="sm"
-              className={selectedCategory === 'all' 
-                ? 'bg-[#1E3A8A] text-white border-[#1E3A8A] hover:bg-[#2DD4BF]' 
-                : 'bg-white text-[#1E3A8A] border-gray-200 hover:bg-[#A7F3D0] hover:text-[#1E3A8A]'}
               onClick={() => setSelectedCategory('all')}
             >
               All Steps ({steps.length})
@@ -281,11 +278,8 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
             {Object.keys(categoryColors).map((category) => (
               <Button
                 key={category}
-                variant="outline"
+                variant={selectedCategory === category ? 'default' : 'outline'}
                 size="sm"
-                className={selectedCategory === category 
-                  ? 'bg-[#2DD4BF] text-white border-[#2DD4BF] hover:bg-[#1E3A8A]' 
-                  : 'bg-white text-[#1E3A8A] border-gray-200 hover:bg-[#A7F3D0] hover:text-[#1E3A8A]'}
                 onClick={() => setSelectedCategory(category)}
               >
                 <span className="capitalize">{category}</span> ({steps.filter(s => s.category === category).length})
@@ -298,11 +292,7 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
       {/* Roadmap Steps */}
       <div className="space-y-4">
         {filteredSteps.map((step, index) => (
-          <Card key={step.id} className={`transition-all duration-200 ${
-            step.completed 
-              ? 'bg-gradient-to-r from-green-50 to-emerald-50 dark:bg-green-900/10 border-green-200 dark:border-green-800' 
-              : 'bg-gradient-to-r from-blue-50 to-cyan-50 dark:bg-slate-800 border-blue-200 dark:border-slate-700 hover:shadow-lg'
-          }`}>
+          <Card key={step.id} className={`transition-all duration-200 ${step.completed ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-800' : ''}`}>
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-start space-x-3">
@@ -354,28 +344,28 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
       </div>
 
       {/* Quick Actions */}
-      <Card className="bg-white border-gray-200">
-        <CardHeader className="bg-white">
-          <CardTitle className="text-gray-900">Quick Actions</CardTitle>
+      <Card>
+        <CardHeader>
+          <CardTitle>Quick Actions</CardTitle>
         </CardHeader>
-        <CardContent className="bg-white">
+        <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button variant="outline" className="flex items-center justify-center p-4 h-auto bg-white border-gray-200 hover:bg-[#A7F3D0] hover:border-[#2DD4BF] text-gray-700 hover:text-[#1E3A8A]">
-              <BookOpen className="mr-2 h-5 w-5 text-[#2DD4BF]" />
+            <Button variant="outline" className="flex items-center justify-center p-4 h-auto">
+              <BookOpen className="mr-2 h-5 w-5" />
               <div className="text-left">
                 <div className="font-semibold">IELTS Preparation</div>
                 <div className="text-xs text-gray-500">Start your language test prep</div>
               </div>
             </Button>
-            <Button variant="outline" className="flex items-center justify-center p-4 h-auto bg-white border-gray-200 hover:bg-[#A7F3D0] hover:border-[#2DD4BF] text-gray-700 hover:text-[#1E3A8A]">
-              <GraduationCap className="mr-2 h-5 w-5 text-[#2DD4BF]" />
+            <Button variant="outline" className="flex items-center justify-center p-4 h-auto">
+              <GraduationCap className="mr-2 h-5 w-5" />
               <div className="text-left">
                 <div className="font-semibold">Find Scholarships</div>
                 <div className="text-xs text-gray-500">Discover funding opportunities</div>
               </div>
             </Button>
-            <Button variant="outline" className="flex items-center justify-center p-4 h-auto bg-white border-gray-200 hover:bg-[#A7F3D0] hover:border-[#2DD4BF] text-gray-700 hover:text-[#1E3A8A]">
-              <FileText className="mr-2 h-5 w-5 text-[#2DD4BF]" />
+            <Button variant="outline" className="flex items-center justify-center p-4 h-auto">
+              <FileText className="mr-2 h-5 w-5" />
               <div className="text-left">
                 <div className="font-semibold">Document Checklist</div>
                 <div className="text-xs text-gray-500">Prepare application documents</div>
@@ -386,33 +376,33 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
       </Card>
 
       {/* Tips Section */}
-      <Card className="bg-white border-gray-200">
-        <CardHeader className="bg-white">
-          <CardTitle className="text-gray-900">Pro Tips for Success</CardTitle>
+      <Card>
+        <CardHeader>
+          <CardTitle>Pro Tips for Success</CardTitle>
         </CardHeader>
-        <CardContent className="bg-white">
+        <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-              <h4 className="font-semibold text-[#1E3A8A] mb-2">Start Early</h4>
-              <p className="text-sm text-gray-600">
+            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">Start Early</h4>
+              <p className="text-sm text-blue-600 dark:text-blue-400">
                 Begin your preparation at least 12-18 months before your intended start date. This gives you time for multiple test attempts and thorough research.
               </p>
             </div>
-            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-              <h4 className="font-semibold text-[#2DD4BF] mb-2">Stay Organized</h4>
-              <p className="text-sm text-gray-600">
+            <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              <h4 className="font-semibold text-green-700 dark:text-green-300 mb-2">Stay Organized</h4>
+              <p className="text-sm text-green-600 dark:text-green-400">
                 Keep track of deadlines, requirements, and application status using spreadsheets or apps. Set reminders for important dates.
               </p>
             </div>
-            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-              <h4 className="font-semibold text-[#1E3A8A] mb-2">Apply Broadly</h4>
-              <p className="text-sm text-gray-600">
+            <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+              <h4 className="font-semibold text-purple-700 dark:text-purple-300 mb-2">Apply Broadly</h4>
+              <p className="text-sm text-purple-600 dark:text-purple-400">
                 Apply to a mix of reach, match, and safety schools. Don't put all your hopes on just one or two universities.
               </p>
             </div>
-            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-              <h4 className="font-semibold text-[#2DD4BF] mb-2">Seek Help</h4>
-              <p className="text-sm text-gray-600">
+            <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+              <h4 className="font-semibold text-orange-700 dark:text-orange-300 mb-2">Seek Help</h4>
+              <p className="text-sm text-orange-600 dark:text-orange-400">
                 Don't hesitate to ask for help from counselors, current students, or professionals. Join online communities for guidance and support.
               </p>
             </div>

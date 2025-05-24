@@ -99,11 +99,11 @@ export default function ProfileEvaluation({ aiEnabled }: ProfileEvaluationProps)
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Input Form */}
-        <Card className="bg-white border-[#60A5FA]">
-          <CardHeader className="bg-white">
-            <CardTitle className="text-[#1E3A8A]">Your Academic Profile</CardTitle>
+        <Card>
+          <CardHeader>
+            <CardTitle>Your Academic Profile</CardTitle>
           </CardHeader>
-          <CardContent className="bg-white">
+          <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -209,7 +209,7 @@ export default function ProfileEvaluation({ aiEnabled }: ProfileEvaluationProps)
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-[#1E3A8A] hover:bg-[#2DD4BF] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105" 
+                  className="w-full" 
                   disabled={analyzeProfileMutation.isPending}
                 >
                   {analyzeProfileMutation.isPending ? (
@@ -227,10 +227,10 @@ export default function ProfileEvaluation({ aiEnabled }: ProfileEvaluationProps)
         </Card>
 
         {/* Results Panel */}
-        <Card className="bg-white border-[#60A5FA]">
-          <CardHeader className="bg-white">
+        <Card>
+          <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-[#1E3A8A]">Profile Analysis</CardTitle>
+              <CardTitle>Profile Analysis</CardTitle>
               {analysisResult && (
                 <div className="flex items-center space-x-2">
                   <span className="text-sm text-gray-500 dark:text-gray-400">Strength Score:</span>
@@ -244,7 +244,7 @@ export default function ProfileEvaluation({ aiEnabled }: ProfileEvaluationProps)
               )}
             </div>
           </CardHeader>
-          <CardContent className="bg-white">
+          <CardContent>
             {!analysisResult ? (
               <div className="text-center py-8">
                 <p className="text-gray-500 dark:text-gray-400">
@@ -262,9 +262,9 @@ export default function ProfileEvaluation({ aiEnabled }: ProfileEvaluationProps)
                   </ul>
                 </div>
 
-                <div className="p-4 bg-edujiin-light-green/20 dark:bg-edujiin-light-green/10 rounded-lg">
-                  <h4 className="font-medium text-edujiin-primary dark:text-edujiin-secondary mb-2">Areas for Improvement</h4>
-                  <ul className="text-sm text-edujiin-primary dark:text-edujiin-secondary space-y-1">
+                <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+                  <h4 className="font-medium text-amber-900 dark:text-amber-300 mb-2">Areas for Improvement</h4>
+                  <ul className="text-sm text-amber-800 dark:text-amber-400 space-y-1">
                     <li>• Consider retaking standardized tests</li>
                     <li>• Add more research experience</li>
                   </ul>

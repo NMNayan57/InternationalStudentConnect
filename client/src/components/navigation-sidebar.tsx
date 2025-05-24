@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Link } from "wouter";
 import { GraduationCap, FileText, Microscope, Tickets, Globe, Briefcase, BookOpen, DollarSign, MapPin, CreditCard, Users } from "lucide-react";
 
 type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'pricing' | 'contact-team';
@@ -37,23 +36,8 @@ export default function NavigationSidebar({
   ];
 
   return (
-    <aside className={`bg-primary text-primary-foreground shadow-lg border-r border-primary/20 ${isMobile ? 'w-full' : 'w-64'}`}>
-      {/* Edujiin Header */}
-      <div className="p-6 border-b border-primary-foreground/20">
-        <Link href="/">
-          <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 bg-edujiin-secondary rounded-lg flex items-center justify-center">
-              <GraduationCap className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold">Edujiin</h1>
-              <p className="text-xs opacity-80">Your Smart Path to Global Education</p>
-            </div>
-          </div>
-        </Link>
-      </div>
-      
-      <nav className="mt-6 px-4">
+    <aside className={`bg-white dark:bg-gray-800 shadow-sm border-r border-gray-200 dark:border-gray-700 ${isMobile ? 'w-full' : 'w-64'}`}>
+      <nav className="mt-8 px-4">
         <div className="space-y-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
@@ -63,10 +47,10 @@ export default function NavigationSidebar({
               <Button
                 key={item.id}
                 variant={isActive ? "default" : "ghost"}
-                className={`w-full justify-start text-sm font-medium transition-all duration-200 ${
+                className={`w-full justify-start text-sm font-medium ${
                   isActive 
-                    ? 'bg-edujiin-secondary text-white shadow-md hover:bg-edujiin-secondary/90' 
-                    : 'text-primary-foreground/80 hover:bg-edujiin-light-green/20 hover:text-white'
+                    ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
+                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`}
                 onClick={() => onSectionChange(item.id)}
               >
@@ -78,17 +62,17 @@ export default function NavigationSidebar({
         </div>
         
         {/* AI Toggle Section */}
-        <div className="mt-8 p-4 bg-primary-foreground/10 rounded-lg border border-primary-foreground/20">
+        <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-primary-foreground">AI Mode</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">AI Mode</span>
             <Switch
               checked={aiEnabled}
               onCheckedChange={onToggleAI}
-              className="data-[state=checked]:bg-secondary"
+              className="data-[state=checked]:bg-primary"
             />
           </div>
-          <p className="text-xs text-primary-foreground/70 mt-2">
-            Enhanced AI-powered personalized guidance
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+            Toggle between mock data and AI-powered responses
           </p>
         </div>
       </nav>

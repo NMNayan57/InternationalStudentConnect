@@ -204,7 +204,7 @@ export default function VisaSupport({ aiEnabled }: VisaSupportProps) {
                     {doc.status === "completed" ? (
                       <CheckCircle className="h-5 w-5 text-green-500" />
                     ) : (
-                      <Clock className="h-5 w-5 text-edujiin-secondary" />
+                      <Clock className="h-5 w-5 text-amber-500" />
                     )}
                     <span className="text-sm text-gray-700 dark:text-gray-300">{doc.name}</span>
                   </div>
