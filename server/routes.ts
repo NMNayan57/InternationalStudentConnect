@@ -1924,6 +1924,7 @@ Please create a polished, professional document that stands out to admissions co
 
   app.post("/api/applications", async (req, res) => {
     try {
+      console.log("Creating application:", req.body);
       const applicationData = req.body;
       // For demo purposes, return the created application with an ID
       const newApplication = {
@@ -1931,6 +1932,8 @@ Please create a polished, professional document that stands out to admissions co
         ...applicationData,
         createdAt: new Date().toISOString()
       };
+      console.log("Returning application:", newApplication);
+      res.setHeader('Content-Type', 'application/json');
       res.json(newApplication);
     } catch (error) {
       console.error("Create application error:", error);
