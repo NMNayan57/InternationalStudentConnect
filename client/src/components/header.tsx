@@ -17,7 +17,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-[#1E3A8A] to-[#2DD4BF] border-b-2 border-[#60A5FA] shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 py-2">
+        <div className="flex items-center justify-between h-30 py-2">
           {/* Logo and Brand with Enhanced Visual Prominence */}
           <Link href="/" className="flex items-center space-x-4 group relative">
             <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-all duration-300 shadow-lg">

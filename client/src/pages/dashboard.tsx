@@ -66,7 +66,7 @@ export default function Dashboard() {
       {/* Professional Header Component */}
       <Header />
 
-      <div className="flex mt-20">
+      <div className="flex mt-30">
         {/* Desktop Sidebar */}
         <div className="hidden lg:block">
           <NavigationSidebar 
