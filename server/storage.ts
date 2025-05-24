@@ -77,6 +77,12 @@ export interface IStorage {
   createCampusResource(resource: InsertCampusResource): Promise<CampusResource>;
   getCampusResources(): Promise<CampusResource[]>;
   getCampusResourcesByUniversity(university: string): Promise<CampusResource[]>;
+
+  // Application tracker
+  createApplication(application: InsertApplication): Promise<Application>;
+  getApplications(): Promise<Application[]>;
+  getApplicationsByUserId(userId: number): Promise<Application[]>;
+  updateApplication(id: number, application: Partial<InsertApplication>): Promise<Application>;
 }
 
 export class MemStorage implements IStorage {
@@ -98,6 +104,7 @@ export class MemStorage implements IStorage {
   private culturalResources: Map<number, CulturalResource> = new Map();
   private campusEvents: Map<number, CampusEvent> = new Map();
   private campusResources: Map<number, CampusResource> = new Map();
+  private applications: Map<number, Application> = new Map();
   
   private currentUserId = 1;
   private currentProfileId = 1;

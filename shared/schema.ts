@@ -170,6 +170,18 @@ export const campusResources = pgTable("campus_resources", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const applications = pgTable("applications", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id"),
+  university: text("university").notNull(),
+  program: text("program").notNull(),
+  deadline: text("deadline").notNull(),
+  status: text("status").notNull().default("not-started"),
+  documents: text("documents").array(),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({ id: true });
 export const insertProfileSchema = createInsertSchema(profiles).omit({ id: true, createdAt: true });
@@ -185,6 +197,7 @@ export const insertJobSchema = createInsertSchema(jobs).omit({ id: true, created
 export const insertCulturalResourceSchema = createInsertSchema(culturalResources).omit({ id: true, createdAt: true });
 export const insertCampusEventSchema = createInsertSchema(campusEvents).omit({ id: true, createdAt: true });
 export const insertCampusResourceSchema = createInsertSchema(campusResources).omit({ id: true, createdAt: true });
+export const insertApplicationSchema = createInsertSchema(applications).omit({ id: true, createdAt: true });
 
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -215,3 +228,5 @@ export type InsertCampusEvent = z.infer<typeof insertCampusEventSchema>;
 export type CampusEvent = typeof campusEvents.$inferSelect;
 export type InsertCampusResource = z.infer<typeof insertCampusResourceSchema>;
 export type CampusResource = typeof campusResources.$inferSelect;
+export type InsertApplication = z.infer<typeof insertApplicationSchema>;
+export type Application = typeof applications.$inferSelect;
