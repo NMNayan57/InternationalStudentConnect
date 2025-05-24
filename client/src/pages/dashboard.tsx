@@ -69,7 +69,7 @@ export default function Dashboard() {
                 <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
                   <i className="fas fa-graduation-cap text-white text-sm"></i>
                 </div>
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white">StudyPath AI</h1>
+                <h1 className="text-xl font-bold text-gray-900 dark:text-white">Edujiin</h1>
               </div>
             </div>
             <div className="flex items-center space-x-4">
