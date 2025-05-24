@@ -99,11 +99,11 @@ export default function ProfileEvaluation({ aiEnabled }: ProfileEvaluationProps)
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Input Form */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Your Academic Profile</CardTitle>
+        <Card className="bg-white border-[#60A5FA]">
+          <CardHeader className="bg-white">
+            <CardTitle className="text-[#1E3A8A]">Your Academic Profile</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="bg-white">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -209,7 +209,7 @@ export default function ProfileEvaluation({ aiEnabled }: ProfileEvaluationProps)
 
                 <Button 
                   type="submit" 
-                  className="w-full" 
+                  className="w-full bg-[#1E3A8A] hover:bg-[#2DD4BF] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-105" 
                   disabled={analyzeProfileMutation.isPending}
                 >
                   {analyzeProfileMutation.isPending ? (
@@ -227,10 +227,10 @@ export default function ProfileEvaluation({ aiEnabled }: ProfileEvaluationProps)
         </Card>
 
         {/* Results Panel */}
-        <Card>
-          <CardHeader>
+        <Card className="bg-white border-[#60A5FA]">
+          <CardHeader className="bg-white">
             <div className="flex items-center justify-between">
-              <CardTitle>Profile Analysis</CardTitle>
+              <CardTitle className="text-[#1E3A8A]">Profile Analysis</CardTitle>
               {analysisResult && (
                 <div className="flex items-center space-x-2">
                   <span className="text-sm text-gray-500 dark:text-gray-400">Strength Score:</span>
@@ -244,7 +244,7 @@ export default function ProfileEvaluation({ aiEnabled }: ProfileEvaluationProps)
               )}
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="bg-white">
             {!analysisResult ? (
               <div className="text-center py-8">
                 <p className="text-gray-500 dark:text-gray-400">
