@@ -259,19 +259,19 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
           </div>
         ))}
 
-        {/* Initial Quick Prompts */}
+        {/* Clean Action Buttons with Proper Spacing */}
         {showQuickPrompts && messages.length === 1 && (
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-3 mt-4 px-2">
             {quickPrompts.map((prompt, index) => (
               <Button
                 key={index}
                 variant="outline"
                 size="sm"
                 onClick={() => sendQuickReply(prompt.text)}
-                className="flex items-center space-x-2 text-xs bg-white hover:bg-[#A7F3D0] text-[#1E3A8A] border-[#60A5FA] hover:border-[#2DD4BF] p-2"
+                className="flex items-center justify-center space-x-2 text-xs bg-white hover:bg-[#A7F3D0] text-gray-700 hover:text-[#1E3A8A] border-gray-200 hover:border-[#2DD4BF] p-3 rounded-lg min-h-[2.8rem] transition-all duration-300 shadow-sm"
               >
-                {prompt.icon}
-                <span>{prompt.text}</span>
+                <div className="flex-shrink-0">{prompt.icon}</div>
+                <span className="text-center leading-tight truncate">{prompt.text}</span>
               </Button>
             ))}
           </div>
