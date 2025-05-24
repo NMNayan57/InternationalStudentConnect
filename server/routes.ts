@@ -2027,6 +2027,76 @@ Please create a polished, professional document that stands out to admissions co
   });
   
   console.log('Real-time chat support enabled with WebSocket server');
+  // EduBot Chat API endpoint  
+  app.post('/api/edubot/chat', async (req, res) => {
+    try {
+      const { message, context } = req.body;
+      
+      if (!message) {
+        return res.status(400).json({ error: 'Message is required' });
+      }
+
+      // Enhanced EduBot prompt for comprehensive assistance
+      const eduBotPrompt = `You are EduBot, the AI assistant for Edujiin platform - "Your Smart Path to Global Education". You help international students with:
+
+- University matching and applications
+- Visa guidance and requirements  
+- Scholarship discovery and applications
+- Document preparation (SOP, CV, LOR)
+- Cultural adaptation tips
+- Mental health and wellness support
+- Career development and job matching
+- Professor research matching
+- Financial planning for studying abroad
+
+Student's question: "${message}"
+
+Provide a helpful, encouraging, and actionable response. Be supportive and positive. If relevant, suggest specific next steps they can take on the Edujiin platform. Keep responses concise but comprehensive.`;
+
+      const response = await callDeepSeekAPI(eduBotPrompt, false);
+      
+      // Generate context-aware quick replies
+      const quickReplies = generateQuickReplies(message, response);
+      
+      res.json({ 
+        response: response || "I'm here to help with your study abroad journey! Could you tell me more about what you need assistance with?",
+        quickReplies: quickReplies
+      });
+    } catch (error) {
+      console.error('EduBot API error:', error);
+      res.status(500).json({ 
+        response: "I apologize, but I'm having trouble connecting right now. Please try again in a moment!",
+        quickReplies: ['Try again', 'Explore features', 'Contact support']
+      });
+    }
+  });
+
+  // Helper function to generate contextual quick replies
+  function generateQuickReplies(userMessage: string, aiResponse: string): string[] {
+    const message = userMessage.toLowerCase();
+    
+    if (message.includes('university') || message.includes('college')) {
+      return ['Show me universities', 'Application requirements', 'Admission tips'];
+    }
+    if (message.includes('visa') || message.includes('immigration')) {
+      return ['Visa requirements', 'Document checklist', 'Processing times'];
+    }
+    if (message.includes('scholarship') || message.includes('funding')) {
+      return ['Find scholarships', 'Application deadlines', 'Eligibility criteria'];
+    }
+    if (message.includes('culture') || message.includes('adapt')) {
+      return ['Cultural tips', 'Local customs', 'Student communities'];
+    }
+    if (message.includes('document') || message.includes('sop') || message.includes('cv')) {
+      return ['Help with SOP', 'CV templates', 'Letter of recommendation'];
+    }
+    if (message.includes('mental health') || message.includes('stress') || message.includes('anxiety')) {
+      return ['Wellness resources', 'Support groups', 'Coping strategies'];
+    }
+    
+    return ['Yes, tell me more', 'Show alternatives', 'What else can you help with?'];
+  }
+
   return httpServer;
 }
 

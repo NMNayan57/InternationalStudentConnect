@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { X, Send, MessageCircle, Bot, User, Headphones } from 'lucide-react';
+import { X, Send, MessageCircle, Bot, User, Headphones, GraduationCap, FileText, Award, Globe, Heart, BookOpen } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -9,6 +9,7 @@ interface Message {
   senderName?: string;
   message: string;
   timestamp: string;
+  quickReplies?: string[];
 }
 
 interface RealTimeChatProps {
@@ -22,10 +23,21 @@ export default function RealTimeChat({ isOpen, onClose }: RealTimeChatProps) {
   const [isConnected, setIsConnected] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'disconnected'>('disconnected');
+  const [showQuickPrompts, setShowQuickPrompts] = useState(true);
   
   const ws = useRef<WebSocket | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const sessionId = useRef<string>(`session_${Date.now()}`);
+
+  // Quick reply prompts for EduBot
+  const quickPrompts = [
+    { text: "Find a university", icon: <GraduationCap className="h-4 w-4" /> },
+    { text: "Help with visa application", icon: <FileText className="h-4 w-4" /> },
+    { text: "Find a scholarship", icon: <Award className="h-4 w-4" /> },
+    { text: "Cultural tips", icon: <Globe className="h-4 w-4" /> },
+    { text: "Mental health support", icon: <Heart className="h-4 w-4" /> },
+    { text: "Document preparation", icon: <BookOpen className="h-4 w-4" /> }
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
