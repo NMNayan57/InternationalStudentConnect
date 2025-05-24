@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { GraduationCap, FileText, Microscope, Tickets, Globe, Briefcase, BookOpen, DollarSign, MapPin, CreditCard, Users } from "lucide-react";
+import { GraduationCap, FileText, Microscope, Tickets, Globe, Briefcase, BookOpen, DollarSign, MapPin, CreditCard, Users, Building, Calendar } from "lucide-react";
 
-type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'pricing' | 'contact-team';
+type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'on-campus-support' | 'pricing' | 'contact-team';
 
 interface NavigationSidebarProps {
   currentSection: Section;
@@ -31,6 +31,7 @@ export default function NavigationSidebar({
     { id: 'visa-support' as Section, label: 'Visa Support', icon: Tickets },
     { id: 'cultural-adaptation' as Section, label: 'Cultural Tips', icon: Globe },
     { id: 'career-development' as Section, label: 'Career Development', icon: Briefcase },
+    { id: 'on-campus-support' as Section, label: 'Campus Support', icon: Building },
     { id: 'pricing' as Section, label: 'Pricing Plans', icon: CreditCard },
     { id: 'contact-team' as Section, label: 'Contact & Team', icon: Users },
   ];

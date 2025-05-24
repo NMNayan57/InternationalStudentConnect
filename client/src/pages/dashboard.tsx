@@ -11,6 +11,7 @@ import ScholarshipFinder from "@/components/scholarship-finder";
 import UniversitySearch from "@/components/university-search";
 import CoursePlanning from "@/components/course-planning";
 import StudyRoadmap from "@/components/study-roadmap";
+import OnCampusSupport from "@/components/on-campus-support";
 import PricingPlans from "@/components/pricing-plans";
 import ContactTeam from "@/components/contact-team";
 import { ChatBot } from "@/components/chat-bot";
@@ -19,7 +20,7 @@ import { Bell, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useAIToggle } from "@/hooks/use-ai-toggle";
 
-type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'pricing' | 'contact-team';
+type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'on-campus-support' | 'pricing' | 'contact-team';
 
 export default function Dashboard() {
   const [currentSection, setCurrentSection] = useState<Section>('study-roadmap');
@@ -49,6 +50,8 @@ export default function Dashboard() {
         return <CulturalAdaptation aiEnabled={aiEnabled} />;
       case 'career-development':
         return <CareerDevelopment aiEnabled={aiEnabled} />;
+      case 'on-campus-support':
+        return <OnCampusSupport />;
       case 'pricing':
         return <PricingPlans />;
       case 'contact-team':
