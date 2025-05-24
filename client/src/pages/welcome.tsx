@@ -319,7 +319,7 @@ export default function Welcome() {
                 Start Your Journey <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-edujiin-primary px-8 py-4 text-lg">
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-edujiin-primary px-8 py-4 text-lg bg-edujiin-secondary hover:bg-white">
               Schedule Demo
             </Button>
           </div>

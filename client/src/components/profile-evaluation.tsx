@@ -262,9 +262,9 @@ export default function ProfileEvaluation({ aiEnabled }: ProfileEvaluationProps)
                   </ul>
                 </div>
 
-                <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
-                  <h4 className="font-medium text-amber-900 dark:text-amber-300 mb-2">Areas for Improvement</h4>
-                  <ul className="text-sm text-amber-800 dark:text-amber-400 space-y-1">
+                <div className="p-4 bg-edujiin-light-green/20 dark:bg-edujiin-light-green/10 rounded-lg">
+                  <h4 className="font-medium text-edujiin-primary dark:text-edujiin-secondary mb-2">Areas for Improvement</h4>
+                  <ul className="text-sm text-edujiin-primary dark:text-edujiin-secondary space-y-1">
                     <li>• Consider retaking standardized tests</li>
                     <li>• Add more research experience</li>
                   </ul>
