@@ -44,20 +44,20 @@ export default function Welcome() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-primary text-primary-foreground shadow-lg">
+      <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <img src={logoImage} alt="Edujiin Logo" className="h-12 w-auto" />
               <div>
-                <h1 className="text-2xl font-bold">Edujiin</h1>
-                <p className="text-sm opacity-90">Your Smart Path to Global Education</p>
+                <h1 className="text-2xl font-bold text-edujiin-primary">Edujiin</h1>
+                <p className="text-sm text-gray-600">Your Smart Path to Global Education</p>
               </div>
             </div>
             <nav className="hidden md:flex items-center space-x-6">
-              <a href="#features" className="hover:text-secondary transition-colors">Features</a>
-              <a href="#pricing" className="hover:text-secondary transition-colors">Pricing</a>
-              <a href="#contact" className="hover:text-secondary transition-colors">Contact</a>
+              <a href="#features" className="text-gray-600 hover:text-edujiin-primary transition-colors">Features</a>
+              <a href="#pricing" className="text-gray-600 hover:text-edujiin-primary transition-colors">Pricing</a>
+              <a href="#contact" className="text-gray-600 hover:text-edujiin-primary transition-colors">Contact</a>
             </nav>
           </div>
         </div>
@@ -68,30 +68,30 @@ export default function Welcome() {
         <div className="absolute inset-0 edujiin-swirl"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold text-edujiin-primary mb-6 edujiin-dots">
+            <h1 className="text-5xl md:text-6xl font-bold text-edujiin-primary mb-6">
               Start Your Journey Today!
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
               Transform your international education dreams into reality with AI-powered guidance, 
               personalized recommendations, and comprehensive support at every step.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg">
+              <Button size="lg" className="bg-edujiin-primary hover:bg-edujiin-primary/90 text-white px-8 py-4 text-lg">
                 <Link href="/dashboard" className="flex items-center">
                   Get Started Free <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg">
+              <Button variant="outline" size="lg" className="border-edujiin-primary text-edujiin-primary hover:bg-edujiin-primary hover:text-white px-8 py-4 text-lg">
                 Learn More
               </Button>
             </div>
             <div className="mt-8 flex items-center justify-center space-x-6 text-sm text-gray-600">
               <div className="flex items-center">
-                <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                 No credit card required
               </div>
               <div className="flex items-center">
-                <Star className="h-4 w-4 text-yellow-500 mr-2" />
+                <Star className="h-4 w-4 text-edujiin-secondary mr-2" />
                 Trusted by 10,000+ students
               </div>
             </div>
@@ -100,7 +100,7 @@ export default function Welcome() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-background">
+      <section id="features" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-edujiin-primary mb-4">
@@ -134,7 +134,7 @@ export default function Welcome() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-muted">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -147,7 +147,7 @@ export default function Welcome() {
               <div className="space-y-4">
                 {benefits.map((benefit, index) => (
                   <div key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="h-5 w-5 text-secondary flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-edujiin-secondary flex-shrink-0" />
                     <span className="text-gray-700">{benefit}</span>
                   </div>
                 ))}
@@ -159,11 +159,11 @@ export default function Welcome() {
                 <div className="text-gray-600 mb-6">Students Successfully Guided</div>
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-secondary">95%</div>
+                    <div className="text-2xl font-bold text-edujiin-secondary">95%</div>
                     <div className="text-sm text-gray-600">Success Rate</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-secondary">50+</div>
+                    <div className="text-2xl font-bold text-edujiin-secondary">50+</div>
                     <div className="text-sm text-gray-600">Countries</div>
                   </div>
                 </div>
@@ -174,7 +174,7 @@ export default function Welcome() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-background">
+      <section id="pricing" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-edujiin-primary mb-4">
@@ -190,25 +190,25 @@ export default function Welcome() {
             <Card className="relative">
               <CardHeader className="text-center">
                 <CardTitle className="text-edujiin-primary">Free</CardTitle>
-                <div className="text-3xl font-bold text-secondary">$0</div>
+                <div className="text-3xl font-bold text-edujiin-secondary">$0</div>
                 <CardDescription>Perfect for getting started</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">Basic university search</span>
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">Static recommendations</span>
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">Basic document templates</span>
                   </div>
                 </div>
-                <Button className="w-full bg-primary hover:bg-primary/90">
+                <Button className="w-full bg-edujiin-primary hover:bg-edujiin-primary/90">
                   <Link href="/dashboard">Get Started</Link>
                 </Button>
               </CardContent>

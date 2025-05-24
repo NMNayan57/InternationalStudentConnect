@@ -95,11 +95,11 @@
   
   /* Edujiin Custom Components */
   .bg-edujiin-gradient {
-    background: linear-gradient(135deg, rgb(30, 58, 138) 0%, rgb(45, 212, 191) 50%, rgb(167, 243, 208) 100%);
+    background: linear-gradient(135deg, rgb(30, 58, 138) 0%, rgb(45, 212, 191) 100%);
   }
   
   .bg-edujiin-hero {
-    background: linear-gradient(135deg, rgb(167, 243, 208) 0%, rgb(45, 212, 191) 100%);
+    background: linear-gradient(135deg, rgb(241, 245, 249) 0%, rgb(226, 232, 240) 100%);
   }
   
   .text-edujiin-primary {
@@ -108,6 +108,18 @@
   
   .text-edujiin-secondary {
     color: rgb(45, 212, 191);
+  }
+  
+  .bg-edujiin-primary {
+    background-color: rgb(30, 58, 138);
+  }
+  
+  .hover\:bg-edujiin-primary\/90:hover {
+    background-color: rgba(30, 58, 138, 0.9);
+  }
+  
+  .border-edujiin-primary {
+    border-color: rgb(30, 58, 138);
   }
   
   .border-edujiin-accent {
