@@ -1,0 +1,51 @@
+Update the 'Welcome & Account Hub' first page of the StudyPathAI Platform to reflect the new branding for Edujiin with the slogan "Your Smart Path to Global Education". The design should be modern, clean, professional, user-friendly, and vibrant, directly inspired by the aesthetic of the Edujiin logo (assume a logo with swirls and dots in a vibrant, modern style). Ensure the design aligns with the brand identity, is visually engaging, easy to navigate, and maintains high readability and accessibility. Use the following color palette strictly:
+
+Color Palette and Usage:
+
+Primary Color 1 (Deep Blue: #1E3A8A): Main navigation bar, primary call-to-action buttons (e.g., "Sign Up", "Login", "Logout"), main headings (e.g., "Start Your Journey Today!"), footer background.
+Primary Color 2 (Medium Teal: #2DD4BF): Secondary buttons (e.g., "Forget Password?"), icons, highlighted active states (e.g., active menu items), accent panels, or illustrative elements (e.g., decorative lines or dots).
+Accent Color 1 (Light Minty Green: #A7F3D0): Background highlights for sections (e.g., pricing section background), subtle gradient effects (e.g., in the hero banner), decorative elements, or informational graphics.
+Accent Color 2 (Lighter Medium Blue: #60A5FA): Tertiary accents, icons (e.g., in feature buttons), or specific highlights (e.g., hover effects on cards).
+Neutral - Background (White/Off-White: #F9FAFB): Main content area backgrounds (e.g., sign-up/login forms, dashboard, pricing cards).
+Neutral - Text (Dark Gray: #1F2937): Main body text on light backgrounds. Use white text (#FFFFFF) on Deep Blue or Medium Teal backgrounds (e.g., in the navigation bar, footer).
+Design Updates for Existing Sections:
+
+Header:
+Update the logo text to Edujiin and add the slogan "Your Smart Path to Global Education" below it in smaller text (use Dark Gray for the slogan). If the Edujiin logo image is available, replace the text with the logo image.
+Use Deep Blue (#1E3A8A) for the header background, with white text for the logo and navigation links ("Features", "Pricing", "Contact").
+On hover, navigation links should transition to Medium Teal (#2DD4BF).
+Hero Section (Welcome Banner):
+Keep the headline "Start Your Journey Today!" in Deep Blue (#1E3A8A).
+Apply a subtle gradient background transitioning from Light Minty Green (#A7F3D0) to Medium Teal (#2DD4BF).
+Add a decorative swirl element (inspired by the Edujiin logo) in Lighter Medium Blue (#60A5FA) behind the headline, and small dots in Medium Teal (#2DD4BF) around the headline for a vibrant touch.
+Sign-Up/Login Forms and Dashboard:
+Use White/Off-White (#F9FAFB) for the background of the forms and dashboard section.
+Form headings (e.g., "Create Profile", "Login", "Welcome to Your Dashboard") should be in Deep Blue (#1E3A8A).
+Input fields should have a border in Lighter Medium Blue (#60A5FA) and a hover/focus state in Medium Teal (#2DD4BF).
+Primary buttons (e.g., "Sign Up", "Login", "Logout") should use Deep Blue (#1E3A8A) with white text, transitioning to a Medium Teal (#2DD4BF) hover state.
+The "Forget Password?" link should be in Medium Teal (#2DD4BF).
+Dashboard feature buttons (e.g., "Study Roadmap", "University Search") should have icons in Medium Teal (#2DD4BF) and borders in Lighter Medium Blue (#60A5FA).
+Pricing Section:
+Use a Light Minty Green (#A7F3D0) background for the pricing section.
+Pricing cards should have a White/Off-White (#F9FAFB) background with a subtle shadow.
+Card headings (e.g., "Free", "Paid", "Premium") should be in Deep Blue (#1E3A8A), with pricing details (e.g., "$0/month") in Medium Teal (#2DD4BF).
+Use Dark Gray (#1F2937) for the feature list text on cards.
+Add small dot decorations (in Medium Teal #2DD4BF) above each card heading to reflect the Edujiin logo’s style.
+Footer:
+Use Deep Blue (#1E3A8A) for the footer background, with white text (#FFFFFF) for links ("About Us", "Terms of Service", "Privacy Policy") and social media icons.
+On hover, footer links should transition to Medium Teal (#2DD4BF).
+Overall Style and Feel:
+
+Create a modern, minimalist design with a vibrant touch, using the specified colors to reflect the Edujiin brand.
+Ensure a spacious layout with clear visual hierarchy (e.g., larger headings, adequate padding).
+Use subtle gradients (e.g., Deep Blue to Medium Teal in buttons, Light Minty Green to Medium Teal in backgrounds) and swirl/dot elements inspired by the Edujiin logo.
+Maintain high contrast for accessibility (e.g., white text on Deep Blue, Dark Gray text on White/Off-White).
+The design should feel innovative, trustworthy, and engaging, appealing to international students.
+Things to Avoid:
+
+Overly complex patterns, dated design elements (e.g., heavy shadows), or colors outside the specified palette.
+Additional Notes:
+
+Use Tailwind CSS and shadcn/ui components for styling to ensure responsiveness (desktop, tablet, mobile) and dark/light mode support.
+Ensure the design integrates seamlessly with the existing functionality (e.g., sign-up, login, dashboard, pricing logic, database connectivity).
+Test the updated design for visual consistency and accessibility (e.g., using a contrast checker tool).
