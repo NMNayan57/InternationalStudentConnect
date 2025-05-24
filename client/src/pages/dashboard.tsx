@@ -14,6 +14,7 @@ import StudyRoadmap from "@/components/study-roadmap";
 import PricingPlans from "@/components/pricing-plans";
 import ContactTeam from "@/components/contact-team";
 import { ChatBot } from "@/components/chat-bot";
+import ChatWidget from "@/components/chat-widget";
 import { Button } from "@/components/ui/button";
 import { Bell, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -157,6 +158,9 @@ export default function Dashboard() {
       
       {/* StudyPathAI Chatbot */}
       <ChatBot />
+      
+      {/* Real-time Chat Support */}
+      <ChatWidget />
     </div>
   );
 }
