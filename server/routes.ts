@@ -1809,8 +1809,223 @@ Please create a polished, professional document that stands out to admissions co
     }
   });
 
+  // Research Collaboration Endpoints
+  app.get("/api/research-projects", async (req, res) => {
+    try {
+      const projects = await storage.getResearchProjects();
+      res.json(projects);
+    } catch (error) {
+      console.error("Get research projects error:", error);
+      res.status(500).json({ message: "Failed to fetch research projects" });
+    }
+  });
+
+  app.get("/api/grants", async (req, res) => {
+    try {
+      const grants = await storage.getGrants();
+      res.json(grants);
+    } catch (error) {
+      console.error("Get grants error:", error);
+      res.status(500).json({ message: "Failed to fetch grants" });
+    }
+  });
+
+  app.post("/api/collaboration-request", async (req, res) => {
+    try {
+      const requestData = z.object({
+        projectId: z.number(),
+        studentName: z.string(),
+        studentEmail: z.string(),
+        message: z.string(),
+      }).parse(req.body);
+
+      const request = await storage.createCollaborationRequest({
+        ...requestData,
+        studentId: 1,
+        status: "pending"
+      });
+
+      res.json(request);
+    } catch (error) {
+      console.error("Collaboration request error:", error);
+      res.status(500).json({ message: "Failed to submit collaboration request" });
+    }
+  });
+
+  // Enhanced Job Search Endpoints
+  app.get("/api/jobs", async (req, res) => {
+    try {
+      const { spouseFriendly } = req.query;
+      const jobs = await storage.getJobsByType(spouseFriendly === 'true');
+      res.json(jobs);
+    } catch (error) {
+      console.error("Get jobs error:", error);
+      res.status(500).json({ message: "Failed to fetch jobs" });
+    }
+  });
+
+  // Campus Support Endpoints
+  app.get("/api/campus-events", async (req, res) => {
+    try {
+      const events = await storage.getCampusEvents();
+      res.json(events);
+    } catch (error) {
+      console.error("Get campus events error:", error);
+      res.status(500).json({ message: "Failed to fetch campus events" });
+    }
+  });
+
+  app.get("/api/campus-resources", async (req, res) => {
+    try {
+      const resources = await storage.getCampusResources();
+      res.json(resources);
+    } catch (error) {
+      console.error("Get campus resources error:", error);
+      res.status(500).json({ message: "Failed to fetch campus resources" });
+    }
+  });
+
+  // Initialize sample data when server starts
+  await initializeSampleData();
+
   const httpServer = createServer(app);
   return httpServer;
+}
+
+// Initialize sample data for enhanced features
+async function initializeSampleData() {
+  try {
+    // Sample research projects
+    const researchProjects = [
+      {
+        title: "AI for Healthcare Diagnostics",
+        description: "Developing machine learning models to improve medical image analysis and early disease detection.",
+        professorName: "Dr. Sarah Chen",
+        field: "AI",
+        university: "MIT"
+      },
+      {
+        title: "Sustainable Energy Systems",
+        description: "Research on renewable energy integration and smart grid technologies for sustainable future.",
+        professorName: "Prof. Michael Johnson",
+        field: "Engineering",
+        university: "Stanford University"
+      },
+      {
+        title: "Computational Biology Research",
+        description: "Using computational methods to understand protein folding and drug discovery processes.",
+        professorName: "Dr. Emily Rodriguez",
+        field: "Biology",
+        university: "Harvard University"
+      }
+    ];
+
+    for (const project of researchProjects) {
+      await storage.createResearchProject(project);
+    }
+
+    // Sample grants
+    const grants = [
+      {
+        title: "AI Research Excellence Grant",
+        description: "Supporting outstanding AI research projects with significant societal impact.",
+        field: "AI",
+        amount: 50000,
+        deadline: "2025-06-30",
+        eligibility: "Graduate students and postdocs in AI/ML fields"
+      },
+      {
+        title: "Engineering Innovation Fund",
+        description: "Funding for innovative engineering solutions to global challenges.",
+        field: "Engineering",
+        amount: 75000,
+        deadline: "2025-08-15",
+        eligibility: "PhD students in engineering disciplines"
+      }
+    ];
+
+    for (const grant of grants) {
+      await storage.createGrant(grant);
+    }
+
+    // Sample jobs with spouse-friendly options
+    const jobs = [
+      {
+        title: "Software Engineer",
+        company: "Google",
+        location: "Mountain View, CA",
+        type: "Full-time",
+        experienceLevel: "Entry Level",
+        description: "Develop scalable software solutions for millions of users worldwide.",
+        salary: "$120,000 - $150,000",
+        spouseFriendly: false
+      },
+      {
+        title: "Remote Customer Support Specialist",
+        company: "Shopify",
+        location: "Remote",
+        type: "Part-time",
+        experienceLevel: "Entry Level",
+        description: "Provide excellent customer support for e-commerce businesses.",
+        salary: "$25 - $35/hour",
+        spouseFriendly: true
+      }
+    ];
+
+    for (const job of jobs) {
+      await storage.createJob(job);
+    }
+
+    // Sample campus events
+    const campusEvents = [
+      {
+        title: "International Student Orientation",
+        date: "2025-08-15",
+        location: "Student Center Auditorium",
+        university: "MIT",
+        description: "Welcome event for new international students with campus tour and information sessions."
+      },
+      {
+        title: "Career Fair - Tech Companies",
+        date: "2025-09-20",
+        location: "Sports Complex",
+        university: "Stanford University",
+        description: "Meet recruiters from top tech companies and explore internship and full-time opportunities."
+      }
+    ];
+
+    for (const event of campusEvents) {
+      await storage.createCampusEvent(event);
+    }
+
+    // Sample campus resources
+    const campusResources = [
+      {
+        title: "MIT Libraries",
+        type: "library",
+        description: "Comprehensive library system with digital resources, study spaces, and research support.",
+        location: "Building 14",
+        university: "MIT",
+        hours: "24/7 access for students"
+      },
+      {
+        title: "Student Health Services",
+        type: "health",
+        description: "Complete healthcare services including medical care, counseling, and wellness programs.",
+        location: "Campus Health Center",
+        university: "Stanford University",
+        hours: "Mon-Fri 8AM-5PM"
+      }
+    ];
+
+    for (const resource of campusResources) {
+      await storage.createCampusResource(resource);
+    }
+
+    console.log("Enhanced features sample data initialized successfully");
+  } catch (error) {
+    console.error("Error initializing enhanced features data:", error);
+  }
 }
 
 function generateEnhancedDocument(docType: string, department: string, level: string, info: string, university?: string): string {

@@ -236,6 +236,135 @@ export class MemStorage implements IStorage {
   async getCareerProfileByUserId(userId: number): Promise<CareerProfile | undefined> {
     return Array.from(this.careerProfiles.values()).find(profile => profile.userId === userId);
   }
+
+  // Research collaboration methods
+  async createResearchProject(project: InsertResearchProject): Promise<ResearchProject> {
+    const newProject: ResearchProject = { 
+      ...project, 
+      id: this.currentResearchProjectId++,
+      createdAt: new Date()
+    };
+    this.researchProjects.set(newProject.id, newProject);
+    return newProject;
+  }
+
+  async getResearchProjects(): Promise<ResearchProject[]> {
+    return Array.from(this.researchProjects.values());
+  }
+
+  async getResearchProjectsByField(field: string): Promise<ResearchProject[]> {
+    return Array.from(this.researchProjects.values()).filter(project => project.field === field);
+  }
+
+  async createGrant(grant: InsertGrant): Promise<Grant> {
+    const newGrant: Grant = { 
+      ...grant, 
+      id: this.currentGrantId++,
+      createdAt: new Date()
+    };
+    this.grants.set(newGrant.id, newGrant);
+    return newGrant;
+  }
+
+  async getGrants(): Promise<Grant[]> {
+    return Array.from(this.grants.values());
+  }
+
+  async getGrantsByField(field: string): Promise<Grant[]> {
+    return Array.from(this.grants.values()).filter(grant => grant.field === field);
+  }
+
+  async createCollaborationRequest(request: InsertCollaborationRequest): Promise<CollaborationRequest> {
+    const newRequest: CollaborationRequest = { 
+      ...request, 
+      id: this.currentCollaborationRequestId++,
+      createdAt: new Date()
+    };
+    this.collaborationRequests.set(newRequest.id, newRequest);
+    return newRequest;
+  }
+
+  async getCollaborationRequestsByProject(projectId: number): Promise<CollaborationRequest[]> {
+    return Array.from(this.collaborationRequests.values()).filter(request => request.projectId === projectId);
+  }
+
+  // Enhanced job search methods
+  async createJob(job: InsertJob): Promise<Job> {
+    const newJob: Job = { 
+      ...job, 
+      id: this.currentJobId++,
+      createdAt: new Date()
+    };
+    this.jobs.set(newJob.id, newJob);
+    return newJob;
+  }
+
+  async getJobs(): Promise<Job[]> {
+    return Array.from(this.jobs.values());
+  }
+
+  async getJobsByType(spouseFriendly?: boolean): Promise<Job[]> {
+    if (spouseFriendly === undefined) {
+      return this.getJobs();
+    }
+    return Array.from(this.jobs.values()).filter(job => job.spouseFriendly === spouseFriendly);
+  }
+
+  // Enhanced cultural resources methods
+  async createCulturalResource(resource: InsertCulturalResource): Promise<CulturalResource> {
+    const newResource: CulturalResource = { 
+      ...resource, 
+      id: this.currentCulturalResourceId++,
+      createdAt: new Date()
+    };
+    this.culturalResources.set(newResource.id, newResource);
+    return newResource;
+  }
+
+  async getCulturalResources(): Promise<CulturalResource[]> {
+    return Array.from(this.culturalResources.values());
+  }
+
+  async getCulturalResourcesByCategory(category: string): Promise<CulturalResource[]> {
+    return Array.from(this.culturalResources.values()).filter(resource => resource.category === category);
+  }
+
+  // Campus support methods
+  async createCampusEvent(event: InsertCampusEvent): Promise<CampusEvent> {
+    const newEvent: CampusEvent = { 
+      ...event, 
+      id: this.currentCampusEventId++,
+      createdAt: new Date()
+    };
+    this.campusEvents.set(newEvent.id, newEvent);
+    return newEvent;
+  }
+
+  async getCampusEvents(): Promise<CampusEvent[]> {
+    return Array.from(this.campusEvents.values());
+  }
+
+  async getCampusEventsByUniversity(university: string): Promise<CampusEvent[]> {
+    return Array.from(this.campusEvents.values()).filter(event => event.university === university);
+  }
+
+  async createCampusResource(resource: InsertCampusResource): Promise<CampusResource> {
+    const newResource: CampusResource = { 
+      ...resource, 
+      id: this.currentCampusResourceId++,
+      createdAt: new Date()
+    };
+    this.campusResources.set(newResource.id, newResource);
+    return newResource;
+  }
+
+  async getCampusResources(): Promise<CampusResource[]> {
+    return Array.from(this.campusResources.values());
+  }
+
+  async getCampusResourcesByUniversity(university: string): Promise<CampusResource[]> {
+    return Array.from(this.campusResources.values()).filter(resource => resource.university === university);
+  }
 }
 
 export const storage = new MemStorage();
