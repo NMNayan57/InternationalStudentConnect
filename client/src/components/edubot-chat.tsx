@@ -176,13 +176,19 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
         {messages.map((message) => (
           <div key={message.id} className="space-y-2">
             <div className={`flex ${message.sender === 'student' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-xs px-3 py-2 rounded-lg ${
+              <div className={`max-w-xs px-4 py-3 rounded-2xl shadow-sm ${
                 message.sender === 'student' 
-                  ? 'bg-[#2DD4BF] text-white' // Medium Teal for user messages
-                  : 'bg-[#A7F3D0] text-[#1F2937]' // Light Minty Green for EduBot responses
+                  ? 'bg-[#1E3A8A] text-white rounded-br-md' // Deep Blue for user messages (right side)
+                  : 'bg-white text-[#1F2937] border border-gray-200 rounded-bl-md' // White with border for EduBot (left side)
               }`}>
-                <p className="text-sm">{message.message}</p>
-                <p className="text-xs opacity-70 mt-1">{message.timestamp}</p>
+                {message.sender === 'edubot' && (
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Bot className="h-4 w-4 text-[#2DD4BF]" />
+                    <span className="text-xs font-medium text-[#2DD4BF]">EduBot</span>
+                  </div>
+                )}
+                <p className="text-sm leading-relaxed">{message.message}</p>
+                <p className="text-xs opacity-70 mt-2">{message.timestamp}</p>
               </div>
             </div>
             
@@ -195,11 +201,60 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
                     variant="outline"
                     size="sm"
                     onClick={() => sendQuickReply(reply)}
-                    className="text-xs bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white border-[#2DD4BF] hover:border-[#1E3A8A]"
+                    className="text-xs bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white border-[#2DD4BF] hover:border-[#1E3A8A] rounded-full px-3 py-1"
                   >
                     {reply}
                   </Button>
                 ))}
+              </div>
+            )}
+
+            {/* Action Buttons - Add these for university matching, scholarships, etc. */}
+            {message.sender === 'edubot' && message.message.toLowerCase().includes('university') && (
+              <div className="flex flex-wrap gap-2 ml-2 mt-2">
+                <button
+                  onClick={() => window.location.href = '/dashboard'}
+                  className="flex items-center space-x-2 bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
+                >
+                  <GraduationCap className="h-4 w-4" />
+                  <span>Find University Match</span>
+                </button>
+              </div>
+            )}
+
+            {message.sender === 'edubot' && message.message.toLowerCase().includes('scholarship') && (
+              <div className="flex flex-wrap gap-2 ml-2 mt-2">
+                <button
+                  onClick={() => window.location.href = '/dashboard'}
+                  className="flex items-center space-x-2 bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
+                >
+                  <Award className="h-4 w-4" />
+                  <span>Find Scholarships</span>
+                </button>
+              </div>
+            )}
+
+            {message.sender === 'edubot' && message.message.toLowerCase().includes('document') && (
+              <div className="flex flex-wrap gap-2 ml-2 mt-2">
+                <button
+                  onClick={() => window.location.href = '/dashboard'}
+                  className="flex items-center space-x-2 bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
+                >
+                  <FileText className="h-4 w-4" />
+                  <span>Prepare Documents</span>
+                </button>
+              </div>
+            )}
+
+            {message.sender === 'edubot' && message.message.toLowerCase().includes('visa') && (
+              <div className="flex flex-wrap gap-2 ml-2 mt-2">
+                <button
+                  onClick={() => window.location.href = '/dashboard'}
+                  className="flex items-center space-x-2 bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
+                >
+                  <Globe className="h-4 w-4" />
+                  <span>Visa Guidance</span>
+                </button>
               </div>
             )}
           </div>
