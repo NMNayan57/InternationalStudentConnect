@@ -8,52 +8,60 @@ import ChatWidget from "@/components/chat-widget";
 export default function Welcome() {
   const features = [
     {
-      icon: <MapPin className="h-8 w-8" />,
+      icon: <MapPin className="h-8 w-8 edujiin-icon" />,
       title: "Study Roadmap",
       description: "Personalized step-by-step journey planning from preparation to enrollment",
-      gradient: "from-blue-500 to-cyan-500"
+      href: "/study-roadmap",
+      color: "text-[#1E3A8A]"
     },
     {
-      icon: <GraduationCap className="h-8 w-8" />,
+      icon: <GraduationCap className="h-8 w-8 edujiin-icon" />,
       title: "University Matching",
       description: "AI-powered university recommendations based on your profile and goals",
-      gradient: "from-purple-500 to-pink-500"
+      href: "/university-search",
+      color: "text-[#2DD4BF]"
     },
     {
-      icon: <FileText className="h-8 w-8" />,
+      icon: <FileText className="h-8 w-8 edujiin-icon" />,
       title: "Document Preparation",
       description: "Professional SOP, CV, and application document creation assistance",
-      gradient: "from-green-500 to-teal-500"
+      href: "/enhanced-document-preparation",
+      color: "text-[#60A5FA]"
     },
     {
-      icon: <BookOpen className="h-8 w-8" />,
+      icon: <BookOpen className="h-8 w-8 edujiin-icon" />,
       title: "Test Preparation",
       description: "Comprehensive IELTS, TOEFL, GRE, and GMAT preparation resources",
-      gradient: "from-orange-500 to-red-500"
+      href: "/test-prep",
+      color: "text-[#1E3A8A]"
     },
     {
-      icon: <Award className="h-8 w-8" />,
+      icon: <Award className="h-8 w-8 edujiin-icon" />,
       title: "Scholarship Finder",
       description: "Discover funding opportunities and scholarship matches worldwide",
-      gradient: "from-indigo-500 to-purple-500"
+      href: "/scholarship-finder",
+      color: "text-[#2DD4BF]"
     },
     {
-      icon: <Globe className="h-8 w-8" />,
+      icon: <Globe className="h-8 w-8 edujiin-icon" />,
       title: "Cultural Adaptation",
       description: "Essential tips and guidance for adapting to new countries and cultures",
-      gradient: "from-cyan-500 to-blue-500"
+      href: "/cultural-adaptation",
+      color: "text-[#60A5FA]"
     },
     {
-      icon: <Target className="h-8 w-8" />,
+      icon: <Target className="h-8 w-8 edujiin-icon" />,
       title: "Career Development",
       description: "Job matching and career guidance for international opportunities",
-      gradient: "from-pink-500 to-rose-500"
+      href: "/career-development",
+      color: "text-[#1E3A8A]"
     },
     {
-      icon: <Users className="h-8 w-8" />,
+      icon: <Users className="h-8 w-8 edujiin-icon" />,
       title: "Expert Support",
       description: "Connect with experienced counselors and student communities",
-      gradient: "from-emerald-500 to-green-500"
+      href: "/contact-team",
+      color: "text-[#2DD4BF]"
     }
   ];
 
@@ -146,15 +154,18 @@ export default function Welcome() {
             </p>
           </div>
           
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="edujiin-grid">
             {features.map((feature, index) => (
-              <Link key={index} href="/dashboard" className="group">
-                <div className="bg-white hover:bg-gradient-to-br hover:from-[#A7F3D0] hover:to-[#2DD4BF] p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-[#60A5FA] hover:border-[#2DD4BF] text-center">
-                  <div className="w-16 h-16 bg-[#2DD4BF] rounded-full flex items-center justify-center text-white mx-auto mb-4 group-hover:scale-110 transition-transform">
+              <Link key={index} href={feature.href} className="group">
+                <div className="edujiin-card bg-white hover:bg-gradient-to-br hover:from-[#F9FAFB] hover:to-[#A7F3D0] p-6 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-[#60A5FA] hover:border-[#2DD4BF] text-center hover:scale-102">
+                  <div className="w-16 h-16 bg-[#1E3A8A] group-hover:bg-[#2DD4BF] rounded-full flex items-center justify-center text-white mx-auto mb-4 group-hover:scale-110 transition-all duration-300">
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-[#1E3A8A] mb-3">{feature.title}</h3>
-                  <p className="text-[#1F2937] text-sm leading-relaxed">{feature.description}</p>
+                  <h3 className="text-xl font-bold edujiin-heading mb-3">{feature.title}</h3>
+                  <p className="edujiin-text text-sm leading-relaxed">{feature.description}</p>
+                  <div className="mt-4 inline-flex items-center edujiin-link group-hover:text-[#1E3A8A]">
+                    Explore <ArrowRight className="ml-1 h-4 w-4" />
+                  </div>
                 </div>
               </Link>
             ))}
@@ -163,32 +174,32 @@ export default function Welcome() {
       </section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="section-padding bg-hero-gradient">
-        <div className="container-modern">
+      <section id="how-it-works" className="py-20 bg-white">
+        <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-navy mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold edujiin-heading mb-6">
               How Edujiin Works
             </h2>
-            <p className="text-xl text-secondary-gray max-w-2xl mx-auto">
+            <p className="text-xl edujiin-text max-w-2xl mx-auto">
               Simple steps to transform your educational dreams into reality
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-12">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-primary-gradient rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">1</div>
-              <h3 className="text-2xl font-semibold text-primary-navy mb-4">Create Your Profile</h3>
-              <p className="text-secondary-gray">Tell us about your academic background, goals, and preferences to get personalized recommendations.</p>
+            <div className="text-center edujiin-card">
+              <div className="w-20 h-20 bg-[#1E3A8A] hover:bg-[#2DD4BF] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 transition-all duration-300">1</div>
+              <h3 className="text-2xl font-bold edujiin-heading mb-4">Create Your Profile</h3>
+              <p className="edujiin-text">Tell us about your academic background, goals, and preferences to get personalized recommendations.</p>
             </div>
-            <div className="text-center">
-              <div className="w-20 h-20 bg-primary-gradient rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">2</div>
-              <h3 className="text-2xl font-semibold text-primary-navy mb-4">Get AI Guidance</h3>
-              <p className="text-secondary-gray">Our AI analyzes your profile and provides tailored university matches, document help, and roadmaps.</p>
+            <div className="text-center edujiin-card">
+              <div className="w-20 h-20 bg-[#2DD4BF] hover:bg-[#1E3A8A] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 transition-all duration-300">2</div>
+              <h3 className="text-2xl font-bold edujiin-heading mb-4">Get AI Guidance</h3>
+              <p className="edujiin-text">Our AI analyzes your profile and provides tailored university matches, document help, and roadmaps.</p>
             </div>
-            <div className="text-center">
-              <div className="w-20 h-20 bg-primary-gradient rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">3</div>
-              <h3 className="text-2xl font-semibold text-primary-navy mb-4">Achieve Success</h3>
-              <p className="text-secondary-gray">Follow your personalized plan, get expert support, and achieve your dream of studying abroad.</p>
+            <div className="text-center edujiin-card">
+              <div className="w-20 h-20 bg-[#60A5FA] hover:bg-[#2DD4BF] rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 transition-all duration-300">3</div>
+              <h3 className="text-2xl font-bold edujiin-heading mb-4">Achieve Success</h3>
+              <p className="edujiin-text">Follow your personalized plan, get expert support, and achieve your dream of studying abroad.</p>
             </div>
           </div>
         </div>

@@ -5,31 +5,36 @@
 @tailwind utilities;
 
 :root {
-  /* Fixed Dashboard Colors - Keeping original dashboard working */
-  --background: 255 255 255; /* #FFFFFF - Clean White */
-  --foreground: 15 23 42; /* #0F172A - Slate 900 */
-  --muted: 241 245 249; /* #F1F5F9 - Slate 100 */
+  /* Edujiin Brand Color System */
+  --background: 249 250 251; /* #F9FAFB - Off-White Background */
+  --foreground: 31 41 55; /* #1F2937 - Dark Gray Text */
+  --muted: 249 250 251; /* #F9FAFB - Off-White */
   --muted-foreground: 100 116 139; /* #64748B - Slate 500 */
   --popover: 255 255 255;
-  --popover-foreground: 15 23 42;
-  --card: 255 255 255; /* #FFFFFF - White Card Background */
-  --card-foreground: 15 23 42;
-  --border: 226 232 240; /* #E2E8F0 - Slate 200 */
-  --input: 255 255 255; /* White Input Background */
-  --primary: 59 130 246; /* #3B82F6 - Blue 500 */
+  --popover-foreground: 31 41 55;
+  --card: 255 255 255; /* #FFFFFF - White Cards */
+  --card-foreground: 31 41 55;
+  --border: 96 165 250; /* #60A5FA - Lighter Medium Blue */
+  --input: 249 250 251; /* #F9FAFB - Off-White Input Background */
+  --primary: 30 58 138; /* #1E3A8A - Deep Blue Primary */
   --primary-foreground: 255 255 255;
-  --secondary: 14 165 233; /* #0EA5E9 - Sky 500 */
+  --secondary: 45 212 191; /* #2DD4BF - Medium Teal Secondary */
   --secondary-foreground: 255 255 255;
-  --accent: 99 102 241; /* #6366F1 - Indigo 500 */
-  --accent-foreground: 255 255 255;
+  --accent: 167 243 208; /* #A7F3D0 - Light Minty Green */
+  --accent-foreground: 31 41 55;
   --destructive: 239 68 68;
   --destructive-foreground: 255 255 255;
-  --ring: 59 130 246; /* #3B82F6 - Blue 500 */
+  --ring: 45 212 191; /* #2DD4BF - Medium Teal Ring */
   --radius: 0.5rem;
-  --edujiin-light-blue: 59 130 246; /* #3B82F6 - Light Blue from logo */
+  
+  /* Edujiin Brand Colors */
+  --edujiin-deep-blue: 30 58 138; /* #1E3A8A */
+  --edujiin-medium-teal: 45 212 191; /* #2DD4BF */
+  --edujiin-light-minty-green: 167 243 208; /* #A7F3D0 */
+  --edujiin-lighter-medium-blue: 96 165 250; /* #60A5FA */
 }
 
-/* Fix for yellow autofill and input backgrounds */
+/* Edujiin Input Form Styling */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -38,13 +43,13 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus,
 select:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
-  -webkit-text-fill-color: #374151 !important;
-  background-color: white !important;
-  transition: background-color 5000s ease-in-out 0s;
+  -webkit-box-shadow: 0 0 0 30px #F9FAFB inset !important;
+  -webkit-text-fill-color: #1F2937 !important;
+  background-color: #F9FAFB !important;
+  border-color: #60A5FA !important;
 }
 
-/* Ensure all inputs have clean white backgrounds */
+/* Modern Input Styling */
 .form-control,
 input[type="text"],
 input[type="email"],
@@ -52,17 +57,22 @@ input[type="password"],
 input[type="number"],
 select,
 textarea,
-/* Target shadcn/ui Select components */
 [role="combobox"],
 [data-state="closed"],
 [data-state="open"],
 .select-trigger,
-button[role="combobox"] {
-  background-color: white !important;
-  border: 1px solid #E5E7EB !important;
-  color: #374151 !important;
+button[role="combobox"],
+*[class*="SelectTrigger"],
+*[class*="select-trigger"] {
+  background-color: #F9FAFB !important;
+  border: 2px solid #60A5FA !important;
+  border-radius: 4px !important;
+  color: #1F2937 !important;
+  padding: 12px !important;
+  transition: all 0.2s ease !important;
 }
 
+/* Focus States with Edujiin Teal */
 .form-control:focus,
 input[type="text"]:focus,
 input[type="email"]:focus,
@@ -70,45 +80,126 @@ input[type="password"]:focus,
 input[type="number"]:focus,
 select:focus,
 textarea:focus,
-/* Target shadcn/ui Select focus states */
 [role="combobox"]:focus,
 [data-state="closed"]:focus,
 [data-state="open"]:focus,
 .select-trigger:focus,
-button[role="combobox"]:focus {
-  background-color: white !important;
+button[role="combobox"]:focus,
+*[class*="SelectTrigger"]:focus,
+*[class*="select-trigger"]:focus {
+  background-color: #F9FAFB !important;
   border-color: #2DD4BF !important;
-  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.1) !important;
+  box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.2) !important;
+  outline: none !important;
 }
 
-/* Additional specific targeting for Select components */
-.ui-select-trigger,
-.ui-select-value,
-[class*="select"] button,
-[class*="Select"] button,
-/* Comprehensive Select component targeting */
-button[type="button"],
-div[role="combobox"],
-span[data-placeholder],
-.select-trigger,
-.SelectTrigger,
-button.select-trigger,
-button[aria-haspopup="listbox"],
-button[aria-expanded],
-*[class*="SelectTrigger"],
-*[class*="select-trigger"] {
-  background-color: white !important;
-  color: #374151 !important;
-  border: 1px solid #E5E7EB !important;
+/* Placeholder Styling */
+::placeholder {
+  color: #1F2937 !important;
+  opacity: 0.6;
 }
 
-/* Targeted fix for shadcn Select components showing yellow */
-.bg-yellow-400,
-.bg-yellow-300,
-.bg-yellow-200,
-.bg-yellow-100,
-[class*="bg-yellow"] {
-  background-color: white !important;
+/* Edujiin Modern Button System */
+.btn-primary {
+  background-color: #1E3A8A;
+  color: white;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #2DD4BF;
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background-color: #2DD4BF;
+  color: white;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #1E3A8A;
+  transform: scale(1.05);
+}
+
+/* Modern Card Styling */
+.edujiin-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  transition: all 0.2s ease;
+}
+
+.edujiin-card:hover {
+  background: linear-gradient(135deg, #F9FAFB 0%, #A7F3D0 100%);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Coursera-Inspired Grid Layout */
+.edujiin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 24px;
+}
+
+/* Typography */
+.edujiin-heading {
+  color: #1E3A8A;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+}
+
+.edujiin-text {
+  color: #1F2937;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+/* Icons and Accents */
+.edujiin-icon {
+  color: #2DD4BF;
+  transition: all 0.2s ease;
+}
+
+.edujiin-icon:hover {
+  color: #60A5FA;
+}
+
+/* Decorative Elements */
+.edujiin-swirl {
+  background: #60A5FA;
+  opacity: 0.2;
+  border-radius: 50%;
+}
+
+.edujiin-dot {
+  background: #2DD4BF;
+  opacity: 0.2;
+  border-radius: 50%;
+}
+
+/* Link Styling */
+.edujiin-link {
+  color: #2DD4BF;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.edujiin-link:hover {
+  color: #1E3A8A;
+  text-decoration: underline;
 }
 
 .dark {
