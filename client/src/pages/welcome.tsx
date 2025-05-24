@@ -133,21 +133,23 @@ export default function Welcome() {
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow border-edujiin-accent">
-                <CardHeader className="pb-4">
-                  <div className="w-16 h-16 bg-edujiin-light-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <div className="text-edujiin-secondary">
-                      {feature.icon}
+              <Link key={index} href="/dashboard">
+                <Card className="text-center hover:shadow-lg transition-all cursor-pointer border-gray-200 hover:border-edujiin-secondary hover:scale-105">
+                  <CardHeader className="pb-4">
+                    <div className="w-16 h-16 bg-edujiin-light-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <div className="text-edujiin-secondary">
+                        {feature.icon}
+                      </div>
                     </div>
-                  </div>
-                  <CardTitle className="text-edujiin-primary text-lg">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <CardDescription className="text-gray-600 text-sm">
-                    {feature.description}
-                  </CardDescription>
-                </CardContent>
-              </Card>
+                    <CardTitle className="text-edujiin-primary text-lg">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <CardDescription className="text-gray-600 text-sm">
+                      {feature.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
@@ -319,15 +321,15 @@ export default function Welcome() {
                 Start Your Journey <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-edujiin-primary px-8 py-4 text-lg bg-edujiin-secondary hover:bg-white">
-              Schedule Demo
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-edujiin-primary px-8 py-4 text-lg">
+              Learn More
             </Button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-primary text-primary-foreground py-12">
+      <footer className="bg-edujiin-primary text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
@@ -342,25 +344,25 @@ export default function Welcome() {
             <div>
               <h4 className="font-semibold mb-4">Platform</h4>
               <div className="space-y-2 text-sm">
-                <div><Link href="/dashboard" className="hover:text-secondary transition-colors">Dashboard</Link></div>
-                <div><a href="#features" className="hover:text-secondary transition-colors">Features</a></div>
-                <div><a href="#pricing" className="hover:text-secondary transition-colors">Pricing</a></div>
+                <div><Link href="/dashboard" className="hover:text-edujiin-light-green transition-colors">Dashboard</Link></div>
+                <div><a href="#features" className="hover:text-edujiin-light-green transition-colors">Features</a></div>
+                <div><a href="#pricing" className="hover:text-edujiin-light-green transition-colors">Pricing</a></div>
               </div>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Support</h4>
               <div className="space-y-2 text-sm">
-                <div><a href="#contact" className="hover:text-secondary transition-colors">Contact Us</a></div>
-                <div><a href="#" className="hover:text-secondary transition-colors">Help Center</a></div>
-                <div><a href="#" className="hover:text-secondary transition-colors">Documentation</a></div>
+                <div><a href="#contact" className="hover:text-edujiin-light-green transition-colors">Contact Us</a></div>
+                <div><a href="#" className="hover:text-edujiin-light-green transition-colors">Help Center</a></div>
+                <div><a href="#" className="hover:text-edujiin-light-green transition-colors">Documentation</a></div>
               </div>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Legal</h4>
               <div className="space-y-2 text-sm">
-                <div><a href="#" className="hover:text-secondary transition-colors">Privacy Policy</a></div>
-                <div><a href="#" className="hover:text-secondary transition-colors">Terms of Service</a></div>
-                <div><a href="#" className="hover:text-secondary transition-colors">Cookie Policy</a></div>
+                <div><a href="#" className="hover:text-edujiin-light-green transition-colors">Privacy Policy</a></div>
+                <div><a href="#" className="hover:text-edujiin-light-green transition-colors">Terms of Service</a></div>
+                <div><a href="#" className="hover:text-edujiin-light-green transition-colors">Cookie Policy</a></div>
               </div>
             </div>
           </div>
