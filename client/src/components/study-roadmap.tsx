@@ -354,28 +354,28 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
       </div>
 
       {/* Quick Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
+      <Card className="bg-white border-gray-200">
+        <CardHeader className="bg-white">
+          <CardTitle className="text-gray-900">Quick Actions</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="bg-white">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button variant="outline" className="flex items-center justify-center p-4 h-auto">
-              <BookOpen className="mr-2 h-5 w-5" />
+            <Button variant="outline" className="flex items-center justify-center p-4 h-auto bg-white border-gray-200 hover:bg-[#A7F3D0] hover:border-[#2DD4BF] text-gray-700 hover:text-[#1E3A8A]">
+              <BookOpen className="mr-2 h-5 w-5 text-[#2DD4BF]" />
               <div className="text-left">
                 <div className="font-semibold">IELTS Preparation</div>
                 <div className="text-xs text-gray-500">Start your language test prep</div>
               </div>
             </Button>
-            <Button variant="outline" className="flex items-center justify-center p-4 h-auto">
-              <GraduationCap className="mr-2 h-5 w-5" />
+            <Button variant="outline" className="flex items-center justify-center p-4 h-auto bg-white border-gray-200 hover:bg-[#A7F3D0] hover:border-[#2DD4BF] text-gray-700 hover:text-[#1E3A8A]">
+              <GraduationCap className="mr-2 h-5 w-5 text-[#2DD4BF]" />
               <div className="text-left">
                 <div className="font-semibold">Find Scholarships</div>
                 <div className="text-xs text-gray-500">Discover funding opportunities</div>
               </div>
             </Button>
-            <Button variant="outline" className="flex items-center justify-center p-4 h-auto">
-              <FileText className="mr-2 h-5 w-5" />
+            <Button variant="outline" className="flex items-center justify-center p-4 h-auto bg-white border-gray-200 hover:bg-[#A7F3D0] hover:border-[#2DD4BF] text-gray-700 hover:text-[#1E3A8A]">
+              <FileText className="mr-2 h-5 w-5 text-[#2DD4BF]" />
               <div className="text-left">
                 <div className="font-semibold">Document Checklist</div>
                 <div className="text-xs text-gray-500">Prepare application documents</div>
@@ -386,33 +386,33 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
       </Card>
 
       {/* Tips Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Pro Tips for Success</CardTitle>
+      <Card className="bg-white border-gray-200">
+        <CardHeader className="bg-white">
+          <CardTitle className="text-gray-900">Pro Tips for Success</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="bg-white">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              <h4 className="font-semibold text-blue-700 dark:text-blue-300 mb-2">Start Early</h4>
-              <p className="text-sm text-blue-600 dark:text-blue-400">
+            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-[#1E3A8A] mb-2">Start Early</h4>
+              <p className="text-sm text-gray-600">
                 Begin your preparation at least 12-18 months before your intended start date. This gives you time for multiple test attempts and thorough research.
               </p>
             </div>
-            <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-              <h4 className="font-semibold text-green-700 dark:text-green-300 mb-2">Stay Organized</h4>
-              <p className="text-sm text-green-600 dark:text-green-400">
+            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-[#2DD4BF] mb-2">Stay Organized</h4>
+              <p className="text-sm text-gray-600">
                 Keep track of deadlines, requirements, and application status using spreadsheets or apps. Set reminders for important dates.
               </p>
             </div>
-            <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-              <h4 className="font-semibold text-purple-700 dark:text-purple-300 mb-2">Apply Broadly</h4>
-              <p className="text-sm text-purple-600 dark:text-purple-400">
+            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-[#1E3A8A] mb-2">Apply Broadly</h4>
+              <p className="text-sm text-gray-600">
                 Apply to a mix of reach, match, and safety schools. Don't put all your hopes on just one or two universities.
               </p>
             </div>
-            <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-              <h4 className="font-semibold text-orange-700 dark:text-orange-300 mb-2">Seek Help</h4>
-              <p className="text-sm text-orange-600 dark:text-orange-400">
+            <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-[#2DD4BF] mb-2">Seek Help</h4>
+              <p className="text-sm text-gray-600">
                 Don't hesitate to ask for help from counselors, current students, or professionals. Join online communities for guidance and support.
               </p>
             </div>
