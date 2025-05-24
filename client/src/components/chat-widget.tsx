@@ -7,16 +7,17 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* EduBot Floating Chat Button - Deep Blue as specified */}
+      {/* Modern Chat Button with Smiley Face - Like the reference image */}
       <button
         onClick={() => setIsChatOpen(true)}
-        className={`fixed bottom-6 right-6 w-14 h-14 bg-[#1E3A8A] hover:bg-[#2DD4BF] rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 flex items-center justify-center z-40 ${isChatOpen ? 'hidden' : 'block'}`}
+        className={`fixed bottom-6 right-6 w-16 h-16 bg-[#2DD4BF] hover:bg-[#1E3A8A] rounded-full shadow-xl hover:shadow-2xl transform hover:scale-110 transition-all duration-300 flex items-center justify-center z-40 border-4 border-white ${isChatOpen ? 'hidden' : 'block'}`}
         aria-label="Open EduBot chat support"
       >
-        <MessageCircle className="h-6 w-6 text-white" />
+        {/* Friendly Smiley Face Icon */}
+        <div className="text-white text-2xl font-bold">😊</div>
         
-        {/* Pulse animation with Medium Teal */}
-        <div className="absolute inset-0 bg-[#2DD4BF] rounded-full animate-ping opacity-20"></div>
+        {/* Pulse animation */}
+        <div className="absolute inset-0 bg-[#2DD4BF] rounded-full animate-ping opacity-30"></div>
       </button>
 
       {/* EduBot Chat Component */}

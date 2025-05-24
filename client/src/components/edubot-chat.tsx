@@ -144,28 +144,25 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
 
   return (
     <div className="fixed bottom-4 right-4 w-80 h-96 bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col z-50">
-      {/* EduBot Header - Deep Blue with decorative elements */}
-      <div className="bg-[#1E3A8A] text-white p-4 rounded-t-lg flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Bot className="h-5 w-5" />
+      {/* Clean Modern Header - Like reference image */}
+      <div className="bg-white border-b border-gray-200 p-4 rounded-t-lg flex items-center justify-between shadow-sm">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-[#2DD4BF] rounded-full flex items-center justify-center shadow-sm">
+            <span className="text-white text-lg">😊</span>
+          </div>
           <div>
-            <h3 className="font-semibold text-white">EduBot - Your Study Abroad Guide</h3>
-            <div className="flex items-center space-x-2 mt-1">
-              {/* Decorative swirl and dots inspired by Edujiin logo */}
-              <div className="flex space-x-1">
-                <div className="w-1.5 h-1.5 bg-[#2DD4BF] rounded-full"></div>
-                <div className="w-1 h-1 bg-[#60A5FA] rounded-full"></div>
-                <div className="w-1.5 h-1.5 bg-[#2DD4BF] rounded-full"></div>
-              </div>
-              <p className="text-xs text-white opacity-90">Online • AI Assistant</p>
-            </div>
+            <h3 className="font-semibold text-gray-800">EduBot</h3>
+            <p className="text-xs text-green-500 flex items-center">
+              <span className="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
+              Online • Ready to help
+            </p>
           </div>
         </div>
         <Button
           variant="ghost"
           size="sm"
           onClick={onClose}
-          className="text-white hover:bg-white/20 p-1"
+          className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-1"
         >
           <X className="h-4 w-4" />
         </Button>
@@ -178,17 +175,19 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
             <div className={`flex ${message.sender === 'student' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-xs px-4 py-3 rounded-2xl shadow-sm ${
                 message.sender === 'student' 
-                  ? 'bg-[#1E3A8A] text-white rounded-br-md' // Deep Blue for user messages (right side)
-                  : 'bg-white text-[#1F2937] border border-gray-200 rounded-bl-md' // White with border for EduBot (left side)
+                  ? 'bg-[#2DD4BF] text-white rounded-tr-sm' // Medium Teal for user messages (right side)
+                  : 'bg-white text-gray-800 border border-gray-200 rounded-tl-sm' // White with border for EduBot (left side)
               }`}>
                 {message.sender === 'edubot' && (
                   <div className="flex items-center space-x-2 mb-2">
-                    <Bot className="h-4 w-4 text-[#2DD4BF]" />
+                    <div className="w-6 h-6 bg-[#2DD4BF] rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs">😊</span>
+                    </div>
                     <span className="text-xs font-medium text-[#2DD4BF]">EduBot</span>
                   </div>
                 )}
                 <p className="text-sm leading-relaxed">{message.message}</p>
-                <p className="text-xs opacity-70 mt-2">{message.timestamp}</p>
+                <p className="text-xs opacity-60 mt-2">{message.timestamp}</p>
               </div>
             </div>
             
@@ -201,7 +200,7 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
                     variant="outline"
                     size="sm"
                     onClick={() => sendQuickReply(reply)}
-                    className="text-xs bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white border-[#2DD4BF] hover:border-[#1E3A8A] rounded-full px-3 py-1"
+                    className="text-xs bg-[#A7F3D0] hover:bg-[#2DD4BF] text-gray-700 hover:text-white border-[#A7F3D0] hover:border-[#2DD4BF] rounded-full px-3 py-1"
                   >
                     {reply}
                   </Button>
@@ -293,20 +292,20 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Message Input */}
-      <div className="p-3 border-t border-gray-200 bg-white rounded-b-lg">
-        <div className="flex space-x-2">
+      {/* Clean Modern Input Area */}
+      <div className="p-4 border-t border-gray-200 bg-white rounded-b-lg">
+        <div className="flex space-x-3 items-center">
           <Input
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Type your message..."
-            className="flex-1 text-sm border-[#60A5FA] focus:border-[#2DD4BF]"
+            placeholder="Ask me anything about studying abroad..."
+            className="flex-1 text-sm bg-gray-50 border-gray-200 rounded-full px-4 py-2 focus:bg-white focus:border-[#2DD4BF] transition-all duration-300"
           />
           <Button
             onClick={sendMessage}
             disabled={!newMessage.trim()}
-            className="bg-[#1E3A8A] hover:bg-[#2DD4BF] text-white px-3 py-2"
+            className="bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white rounded-full p-2 w-10 h-10 flex items-center justify-center"
           >
             <Send className="h-4 w-4" />
           </Button>
