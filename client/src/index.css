@@ -202,41 +202,18 @@ button[role="combobox"]:focus,
   text-decoration: underline;
 }
 
-/* ULTIMATE FIX: Eliminate ALL Yellow Backgrounds */
-.card, [data-radix-collection-item], [role="option"],
-.card-header, .card-content, .card-footer,
-[class*="bg-yellow"], .bg-yellow-50, .bg-yellow-100, .bg-yellow-200, 
-.bg-yellow-300, .bg-yellow-400, .bg-yellow-500,
-[style*="background: yellow"], [style*="background-color: yellow"],
-[style*="background: #FFFF"], [style*="background-color: #FFFF"],
-[style*="background: #FFF0"], [style*="background-color: #FFF0"] {
+/* Targeted Yellow Background Fix */
+.bg-yellow-50, .bg-yellow-100, .bg-yellow-200, .bg-yellow-300, .bg-yellow-400, .bg-yellow-500 {
   background-color: white !important;
-  background: white !important;
 }
 
-/* Force ALL Select components to have white backgrounds */
+/* Select Component Styling */
 button[role="combobox"], 
 [data-state="closed"], [data-state="open"],
-.select-trigger, *[class*="SelectTrigger"], *[class*="select-trigger"],
-[aria-haspopup="listbox"], [aria-expanded],
-[class*="trigger"], button[type="button"] {
-  background-color: white !important;
-  background: white !important;
+*[class*="SelectTrigger"], *[class*="select-trigger"] {
+  background-color: #F9FAFB !important;
   border: 2px solid #60A5FA !important;
   color: #1F2937 !important;
-}
-
-/* Override ALL possible yellow backgrounds */
-body *, div *, section *, main *, 
-.container *, .card *, form *, 
-[class*="grid"] *, [class*="flex"] * {
-  background-color: inherit !important;
-}
-
-/* Specific override for Card components */
-.card {
-  background-color: white !important;
-  background: white !important;
 }
 
 .dark {
