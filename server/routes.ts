@@ -106,6 +106,73 @@ async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<a
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Application Tracker Endpoints - Must be defined FIRST
+  app.get("/api/applications", async (req, res) => {
+    try {
+      // Return sample applications for testing
+      const sampleApplications = [
+        {
+          id: 1,
+          university: "University of California, Berkeley",
+          program: "Computer Science",
+          deadline: "2025-12-01",
+          status: "in-progress",
+          createdAt: "2025-01-15T00:00:00Z"
+        },
+        {
+          id: 2,
+          university: "University of Toronto",
+          program: "Computer Science",
+          deadline: "2025-11-15",
+          status: "submitted",
+          createdAt: "2025-01-10T00:00:00Z"
+        },
+        {
+          id: 3,
+          university: "ETH Zurich",
+          program: "Engineering",
+          deadline: "2025-12-15",
+          status: "not-started",
+          createdAt: "2025-01-20T00:00:00Z"
+        }
+      ];
+      res.json(sampleApplications);
+    } catch (error) {
+      console.error("Get applications error:", error);
+      res.status(500).json({ message: "Failed to fetch applications" });
+    }
+  });
+
+  app.post("/api/applications", async (req, res) => {
+    try {
+      console.log("Creating application:", req.body);
+      const applicationData = req.body;
+      // For demo purposes, return the created application with an ID
+      const newApplication = {
+        id: Date.now(), // Simple ID generation for demo
+        ...applicationData,
+        createdAt: new Date().toISOString()
+      };
+      console.log("Returning application:", newApplication);
+      res.setHeader('Content-Type', 'application/json');
+      res.json(newApplication);
+    } catch (error) {
+      console.error("Create application error:", error);
+      res.status(500).json({ message: "Failed to create application" });
+    }
+  });
+
+  app.patch("/api/applications/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updateData = req.body;
+      // For demo purposes, return success
+      res.json({ id: parseInt(id), ...updateData, updatedAt: new Date().toISOString() });
+    } catch (error) {
+      console.error("Update application error:", error);
+      res.status(500).json({ message: "Failed to update application" });
+    }
+  });
   // Ensure API routes are registered first before any middleware
   console.log('Registering API routes...');
   // Chat API for StudyPathAI Chatbot
@@ -1885,73 +1952,7 @@ Please create a polished, professional document that stands out to admissions co
     }
   });
 
-  // Application Tracker Endpoints
-  app.get("/api/applications", async (req, res) => {
-    try {
-      // Return sample applications for testing
-      const sampleApplications = [
-        {
-          id: 1,
-          university: "University of California, Berkeley",
-          program: "Computer Science",
-          deadline: "2025-12-01",
-          status: "in-progress",
-          createdAt: "2025-01-15T00:00:00Z"
-        },
-        {
-          id: 2,
-          university: "University of Toronto",
-          program: "Computer Science",
-          deadline: "2025-11-15",
-          status: "submitted",
-          createdAt: "2025-01-10T00:00:00Z"
-        },
-        {
-          id: 3,
-          university: "ETH Zurich",
-          program: "Engineering",
-          deadline: "2025-12-15",
-          status: "not-started",
-          createdAt: "2025-01-20T00:00:00Z"
-        }
-      ];
-      res.json(sampleApplications);
-    } catch (error) {
-      console.error("Get applications error:", error);
-      res.status(500).json({ message: "Failed to fetch applications" });
-    }
-  });
 
-  app.post("/api/applications", async (req, res) => {
-    try {
-      console.log("Creating application:", req.body);
-      const applicationData = req.body;
-      // For demo purposes, return the created application with an ID
-      const newApplication = {
-        id: Date.now(), // Simple ID generation for demo
-        ...applicationData,
-        createdAt: new Date().toISOString()
-      };
-      console.log("Returning application:", newApplication);
-      res.setHeader('Content-Type', 'application/json');
-      res.json(newApplication);
-    } catch (error) {
-      console.error("Create application error:", error);
-      res.status(500).json({ message: "Failed to create application" });
-    }
-  });
-
-  app.patch("/api/applications/:id", async (req, res) => {
-    try {
-      const { id } = req.params;
-      const updateData = req.body;
-      // For demo purposes, return success
-      res.json({ id: parseInt(id), ...updateData, updatedAt: new Date().toISOString() });
-    } catch (error) {
-      console.error("Update application error:", error);
-      res.status(500).json({ message: "Failed to update application" });
-    }
-  });
 
   // Initialize sample data when server starts
   await initializeSampleData();
