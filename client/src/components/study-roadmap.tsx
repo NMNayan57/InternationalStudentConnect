@@ -228,14 +228,14 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
       </div>
 
       {/* Progress Overview */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <MapPin className="mr-2 h-5 w-5" />
+      <Card className="bg-white border-gray-200">
+        <CardHeader className="bg-white">
+          <CardTitle className="flex items-center text-gray-900">
+            <MapPin className="mr-2 h-5 w-5 text-[#2DD4BF]" />
             Your Progress
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="bg-white">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Overall Progress</span>
@@ -265,15 +265,15 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
       </Card>
 
       {/* Category Filter */}
-      <Card>
-        <CardContent className="pt-6">
+      <Card className="bg-white border-gray-200">
+        <CardContent className="pt-6 bg-white">
           <div className="flex flex-wrap gap-2">
             <Button
               variant="outline"
               size="sm"
               className={selectedCategory === 'all' 
-                ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700' 
-                : 'bg-white text-blue-600 border-blue-600 hover:bg-blue-50'}
+                ? 'bg-[#1E3A8A] text-white border-[#1E3A8A] hover:bg-[#2DD4BF]' 
+                : 'bg-white text-[#1E3A8A] border-gray-200 hover:bg-[#A7F3D0] hover:text-[#1E3A8A]'}
               onClick={() => setSelectedCategory('all')}
             >
               All Steps ({steps.length})
@@ -284,8 +284,8 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
                 variant="outline"
                 size="sm"
                 className={selectedCategory === category 
-                  ? 'bg-cyan-600 text-white border-cyan-600 hover:bg-cyan-700' 
-                  : 'bg-white text-cyan-600 border-cyan-600 hover:bg-cyan-50'}
+                  ? 'bg-[#2DD4BF] text-white border-[#2DD4BF] hover:bg-[#1E3A8A]' 
+                  : 'bg-white text-[#1E3A8A] border-gray-200 hover:bg-[#A7F3D0] hover:text-[#1E3A8A]'}
                 onClick={() => setSelectedCategory(category)}
               >
                 <span className="capitalize">{category}</span> ({steps.filter(s => s.category === category).length})
