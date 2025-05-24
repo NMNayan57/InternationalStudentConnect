@@ -299,7 +299,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                             <FormLabel>Previous Test Experience</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="bg-white border-gray-300 text-gray-700">
                                   <SelectValue placeholder="Have you taken this test before?" />
                                 </SelectTrigger>
                               </FormControl>
@@ -351,7 +351,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                           <FormLabel>Study Preference</FormLabel>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
-                              <SelectTrigger>
+                              <SelectTrigger className="bg-white border-gray-300 text-gray-700">
                                 <SelectValue placeholder="How do you prefer to study?" />
                               </SelectTrigger>
                             </FormControl>
