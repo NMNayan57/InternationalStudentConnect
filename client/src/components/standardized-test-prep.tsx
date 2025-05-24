@@ -188,7 +188,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                             <FormLabel>Test Type</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="bg-white border-gray-300 text-gray-700">
                                   <SelectValue placeholder="Select test" />
                                 </SelectTrigger>
                               </FormControl>
@@ -212,7 +212,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                             <FormLabel>Current Level</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="bg-white border-gray-300 text-gray-700">
                                   <SelectValue placeholder="Select current level" />
                                 </SelectTrigger>
                               </FormControl>
@@ -250,7 +250,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                             <FormLabel>Study Timeframe</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="bg-white border-gray-300 text-gray-700">
                                   <SelectValue placeholder="How long to prepare?" />
                                 </SelectTrigger>
                               </FormControl>
@@ -275,7 +275,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                             <FormLabel>Daily Study Hours</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="bg-white border-gray-300 text-gray-700">
                                   <SelectValue placeholder="Hours per day" />
                                 </SelectTrigger>
                               </FormControl>
