@@ -367,44 +367,44 @@ export default function Welcome() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container-modern">
+      <footer className="bg-[#1E3A8A] text-white py-12">
+        <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
                 <img src={logoImage} alt="Edujiin Logo" className="h-8 w-auto" />
-                <span className="text-xl font-bold">Edujiin</span>
+                <span className="text-xl font-bold text-white">Edujiin</span>
               </div>
-              <p className="text-sm opacity-80">
+              <p className="text-sm text-white opacity-80">
                 Your Smart Path to Global Education
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Platform</h4>
+              <h4 className="font-semibold mb-4 text-white">Platform</h4>
               <div className="space-y-2 text-sm">
-                <div><Link href="/dashboard" className="hover:text-accent-green transition-colors">Dashboard</Link></div>
-                <div><a href="#features" className="hover:text-accent-green transition-colors">Features</a></div>
-                <div><a href="#pricing" className="hover:text-accent-green transition-colors">Pricing</a></div>
+                <div><Link href="/dashboard" className="text-white hover:text-[#2DD4BF] transition-colors">Dashboard</Link></div>
+                <div><a href="#features" className="text-white hover:text-[#2DD4BF] transition-colors">Features</a></div>
+                <div><a href="#pricing" className="text-white hover:text-[#2DD4BF] transition-colors">Pricing</a></div>
               </div>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Support</h4>
+              <h4 className="font-semibold mb-4 text-white">Support</h4>
               <div className="space-y-2 text-sm">
-                <div><a href="#" className="hover:text-accent-green transition-colors">Help Center</a></div>
-                <div><a href="#" className="hover:text-accent-green transition-colors">Contact Us</a></div>
-                <div><a href="#" className="hover:text-accent-green transition-colors">Documentation</a></div>
+                <div><a href="#" className="text-white hover:text-[#2DD4BF] transition-colors">About Us</a></div>
+                <div><a href="#contact" className="text-white hover:text-[#2DD4BF] transition-colors">Contact Us</a></div>
+                <div><a href="#" className="text-white hover:text-[#2DD4BF] transition-colors">Help Center</a></div>
               </div>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
+              <h4 className="font-semibold mb-4 text-white">Legal</h4>
               <div className="space-y-2 text-sm">
-                <div><a href="#" className="hover:text-accent-green transition-colors">Privacy Policy</a></div>
-                <div><a href="#" className="hover:text-accent-green transition-colors">Terms of Service</a></div>
-                <div><a href="#" className="hover:text-accent-green transition-colors">Cookie Policy</a></div>
+                <div><a href="#" className="text-white hover:text-[#2DD4BF] transition-colors">Terms of Service</a></div>
+                <div><a href="#" className="text-white hover:text-[#2DD4BF] transition-colors">Privacy Policy</a></div>
+                <div><a href="#" className="text-white hover:text-[#2DD4BF] transition-colors">Cookie Policy</a></div>
               </div>
             </div>
           </div>
-          <div className="border-t border-white/20 mt-8 pt-8 text-center text-sm opacity-80">
+          <div className="border-t border-white/20 mt-8 pt-8 text-center text-sm text-white opacity-80">
             © 2024 Edujiin. All rights reserved. Empowering global education dreams.
           </div>
         </div>
