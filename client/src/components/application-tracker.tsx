@@ -36,12 +36,17 @@ export default function ApplicationTracker() {
   });
 
   const addApplicationMutation = useMutation({
-    mutationFn: (data: typeof newApplication) => 
-      fetch('/api/applications', {
+    mutationFn: async (data: typeof newApplication) => {
+      const response = await fetch('/api/applications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
-      }).then(res => res.json()),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to create application');
+      }
+      return response.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/applications'] });
       setNewApplication({ university: '', program: '', deadline: '', status: 'not-started' });
