@@ -349,7 +349,7 @@ export default function Welcome() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-primary-navy text-white py-12">
+      <footer className="bg-gray-900 text-white py-12">
         <div className="container-modern">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
