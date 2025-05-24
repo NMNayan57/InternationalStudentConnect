@@ -151,13 +151,13 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
           <div className="lg:col-span-1 space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Test Overview</h3>
             {Object.entries(testInfo).map(([key, test]) => (
-              <Card key={key} className="border-l-4 border-l-blue-500">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm">{test.name}</CardTitle>
-                  <CardDescription className="text-xs">{test.description}</CardDescription>
+              <Card key={key} className="bg-white border-l-4 border-l-[#2DD4BF] border-gray-200">
+                <CardHeader className="pb-2 bg-white">
+                  <CardTitle className="text-sm text-[#1E3A8A]">{test.name}</CardTitle>
+                  <CardDescription className="text-xs text-gray-600">{test.description}</CardDescription>
                 </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="space-y-1 text-xs">
+                <CardContent className="pt-0 bg-white">
+                  <div className="space-y-1 text-xs text-gray-600">
                     <p><strong>Sections:</strong> {test.sections.join(", ")}</p>
                     <p><strong>Score:</strong> {test.scoreRange}</p>
                     <p><strong>Duration:</strong> {test.duration}</p>
@@ -169,14 +169,14 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
 
           {/* Form */}
           <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Create Your Study Plan</CardTitle>
-                <CardDescription>
+            <Card className="bg-white border-gray-200">
+              <CardHeader className="bg-white">
+                <CardTitle className="text-[#1E3A8A]">Create Your Study Plan</CardTitle>
+                <CardDescription className="text-gray-600">
                   Tell us about your goals and current level to get a personalized preparation roadmap
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="bg-white">
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <div className="grid md:grid-cols-2 gap-4">
