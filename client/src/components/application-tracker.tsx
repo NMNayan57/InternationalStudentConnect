@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, Plus, Clock, CheckCircle, AlertCircle, Circle } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar, Plus, Clock, CheckCircle, AlertCircle, Circle, FileText, HelpCircle, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 
@@ -250,10 +252,216 @@ export default function ApplicationTracker() {
 
             <div className="pt-4 border-t">
               <h3 className="font-semibold mb-3">Form Assistant</h3>
-              <Button variant="outline" className="w-full">
-                <Calendar className="h-4 w-4 mr-2" />
-                Get Application Form Assistance
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full">
+                    <HelpCircle className="h-4 w-4 mr-2" />
+                    Get Application Form Assistance
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>University Application Form Assistant</DialogTitle>
+                  </DialogHeader>
+                  
+                  <Tabs defaultValue="checklist" className="w-full">
+                    <TabsList className="grid w-full grid-cols-4">
+                      <TabsTrigger value="checklist">Checklist</TabsTrigger>
+                      <TabsTrigger value="documents">Documents</TabsTrigger>
+                      <TabsTrigger value="essays">Essays</TabsTrigger>
+                      <TabsTrigger value="deadlines">Deadlines</TabsTrigger>
+                    </TabsList>
+                    
+                    <TabsContent value="checklist" className="space-y-4">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center gap-2">
+                            <CheckCircle className="h-5 w-5 text-green-600" />
+                            Application Checklist
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          <div className="grid gap-3">
+                            <div className="flex items-center gap-3 p-3 border rounded-lg">
+                              <input type="checkbox" className="rounded" />
+                              <div>
+                                <p className="font-medium">Academic Transcripts</p>
+                                <p className="text-sm text-gray-600">Official transcripts from all institutions attended</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3 p-3 border rounded-lg">
+                              <input type="checkbox" className="rounded" />
+                              <div>
+                                <p className="font-medium">Standardized Test Scores</p>
+                                <p className="text-sm text-gray-600">TOEFL/IELTS, GRE/GMAT scores as required</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3 p-3 border rounded-lg">
+                              <input type="checkbox" className="rounded" />
+                              <div>
+                                <p className="font-medium">Personal Statement/Essays</p>
+                                <p className="text-sm text-gray-600">Statement of purpose, personal statement, supplemental essays</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3 p-3 border rounded-lg">
+                              <input type="checkbox" className="rounded" />
+                              <div>
+                                <p className="font-medium">Letters of Recommendation</p>
+                                <p className="text-sm text-gray-600">2-3 academic/professional recommendations</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3 p-3 border rounded-lg">
+                              <input type="checkbox" className="rounded" />
+                              <div>
+                                <p className="font-medium">Financial Documentation</p>
+                                <p className="text-sm text-gray-600">Bank statements, scholarship letters, sponsor affidavits</p>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                    
+                    <TabsContent value="documents" className="space-y-4">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center gap-2">
+                            <FileText className="h-5 w-5 text-blue-600" />
+                            Document Requirements
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="grid gap-4">
+                            <div className="border rounded-lg p-4">
+                              <h4 className="font-semibold mb-2">Academic Documents</h4>
+                              <ul className="space-y-1 text-sm text-gray-600">
+                                <li>• Official transcripts (sealed envelopes or electronic)</li>
+                                <li>• Degree certificates/diplomas</li>
+                                <li>• Grade conversion charts if needed</li>
+                                <li>• Course syllabi for credit transfer evaluation</li>
+                              </ul>
+                            </div>
+                            <div className="border rounded-lg p-4">
+                              <h4 className="font-semibold mb-2">Test Scores</h4>
+                              <ul className="space-y-1 text-sm text-gray-600">
+                                <li>• TOEFL iBT (typically 80-100+ required)</li>
+                                <li>• IELTS Academic (typically 6.5-7.0+ required)</li>
+                                <li>• GRE General (for graduate programs)</li>
+                                <li>• GMAT (for business programs)</li>
+                                <li>• Subject GRE (if required by program)</li>
+                              </ul>
+                            </div>
+                            <div className="border rounded-lg p-4">
+                              <h4 className="font-semibold mb-2">Supporting Documents</h4>
+                              <ul className="space-y-1 text-sm text-gray-600">
+                                <li>• Passport copy</li>
+                                <li>• Financial statements ($20,000-$70,000 typically)</li>
+                                <li>• Resume/CV (academic format)</li>
+                                <li>• Portfolio (for relevant programs)</li>
+                                <li>• Research proposal (for research degrees)</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                    
+                    <TabsContent value="essays" className="space-y-4">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center gap-2">
+                            <FileText className="h-5 w-5 text-purple-600" />
+                            Essay Writing Guide
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="grid gap-4">
+                            <div className="border rounded-lg p-4">
+                              <h4 className="font-semibold mb-2">Statement of Purpose</h4>
+                              <p className="text-sm text-gray-600 mb-2">Key elements to include:</p>
+                              <ul className="space-y-1 text-sm text-gray-600">
+                                <li>• Academic background and research interests</li>
+                                <li>• Career goals and how the program fits</li>
+                                <li>• Relevant experience and achievements</li>
+                                <li>• Why this specific university/program</li>
+                                <li>• Future contributions to the field</li>
+                              </ul>
+                            </div>
+                            <div className="border rounded-lg p-4">
+                              <h4 className="font-semibold mb-2">Personal Statement</h4>
+                              <p className="text-sm text-gray-600 mb-2">Focus on:</p>
+                              <ul className="space-y-1 text-sm text-gray-600">
+                                <li>• Personal journey and motivations</li>
+                                <li>• Overcoming challenges</li>
+                                <li>• Leadership and community involvement</li>
+                                <li>• Diversity and unique perspectives</li>
+                                <li>• Character and values</li>
+                              </ul>
+                            </div>
+                            <div className="border rounded-lg p-4">
+                              <h4 className="font-semibold mb-2">Writing Tips</h4>
+                              <ul className="space-y-1 text-sm text-gray-600">
+                                <li>• Start early and write multiple drafts</li>
+                                <li>• Show, don't tell - use specific examples</li>
+                                <li>• Stay within word limits (typically 500-1000 words)</li>
+                                <li>• Get feedback from professors or advisors</li>
+                                <li>• Proofread carefully for grammar and clarity</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                    
+                    <TabsContent value="deadlines" className="space-y-4">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="flex items-center gap-2">
+                            <Clock className="h-5 w-5 text-red-600" />
+                            Application Timeline
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="grid gap-4">
+                            <div className="border rounded-lg p-4">
+                              <h4 className="font-semibold mb-2">6-12 Months Before Deadline</h4>
+                              <ul className="space-y-1 text-sm text-gray-600">
+                                <li>• Research universities and programs</li>
+                                <li>• Take standardized tests (TOEFL, GRE, etc.)</li>
+                                <li>• Request transcripts from previous institutions</li>
+                                <li>• Identify potential recommenders</li>
+                              </ul>
+                            </div>
+                            <div className="border rounded-lg p-4">
+                              <h4 className="font-semibold mb-2">3-6 Months Before Deadline</h4>
+                              <ul className="space-y-1 text-sm text-gray-600">
+                                <li>• Begin essay writing process</li>
+                                <li>• Request letters of recommendation</li>
+                                <li>• Gather financial documentation</li>
+                                <li>• Create application accounts</li>
+                              </ul>
+                            </div>
+                            <div className="border rounded-lg p-4">
+                              <h4 className="font-semibold mb-2">1-3 Months Before Deadline</h4>
+                              <ul className="space-y-1 text-sm text-gray-600">
+                                <li>• Complete and review all application materials</li>
+                                <li>• Submit applications early</li>
+                                <li>• Follow up on missing documents</li>
+                                <li>• Prepare for potential interviews</li>
+                              </ul>
+                            </div>
+                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                              <p className="text-sm font-medium text-yellow-800">
+                                💡 Pro Tip: Submit applications at least 1-2 weeks before the deadline to avoid technical issues!
+                              </p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  </Tabs>
+                </DialogContent>
+              </Dialog>
             </div>
           </CardContent>
         </Card>
