@@ -215,35 +215,35 @@ export default function Welcome() {
             </Card>
 
             {/* Paid Plan */}
-            <Card className="relative border-2 border-secondary">
+            <Card className="relative border-2 border-edujiin-secondary">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-secondary text-white">Most Popular</Badge>
+                <Badge className="bg-edujiin-secondary text-white">Most Popular</Badge>
               </div>
               <CardHeader className="text-center">
                 <CardTitle className="text-edujiin-primary">Pro</CardTitle>
-                <div className="text-3xl font-bold text-secondary">$29</div>
+                <div className="text-3xl font-bold text-edujiin-secondary">$29</div>
                 <CardDescription>AI-powered personalized guidance</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">AI-powered recommendations</span>
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">Enhanced document preparation</span>
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">Real-time job matching</span>
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">Priority support</span>
                   </div>
                 </div>
-                <Button className="w-full bg-secondary hover:bg-secondary/90">
+                <Button className="w-full bg-edujiin-secondary hover:bg-edujiin-secondary/90 text-white">
                   Upgrade to Pro
                 </Button>
               </CardContent>
@@ -253,29 +253,29 @@ export default function Welcome() {
             <Card className="relative">
               <CardHeader className="text-center">
                 <CardTitle className="text-edujiin-primary">Premium</CardTitle>
-                <div className="text-3xl font-bold text-secondary">$99</div>
+                <div className="text-3xl font-bold text-edujiin-secondary">$99</div>
                 <CardDescription>Complete guidance package</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">Everything in Pro</span>
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">1-on-1 counseling sessions</span>
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">Application review</span>
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-secondary mr-2" />
+                    <CheckCircle className="h-4 w-4 text-edujiin-secondary mr-2" />
                     <span className="text-sm">Visa assistance</span>
                   </div>
                 </div>
-                <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-white">
+                <Button variant="outline" className="w-full border-edujiin-primary text-edujiin-primary hover:bg-edujiin-primary hover:text-white">
                   Contact Sales
                 </Button>
               </CardContent>
@@ -299,7 +299,7 @@ export default function Welcome() {
                 Start Your Journey <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg">
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-edujiin-primary px-8 py-4 text-lg">
               Schedule Demo
             </Button>
           </div>
