@@ -11,6 +11,8 @@ import ScholarshipFinder from "@/components/scholarship-finder";
 import UniversitySearch from "@/components/university-search";
 import CoursePlanning from "@/components/course-planning";
 import StudyRoadmap from "@/components/study-roadmap";
+import ApplicationTracker from "@/components/application-tracker";
+import DuringStudySupport from "@/components/during-study-support";
 import OnCampusSupport from "@/components/on-campus-support";
 import PricingPlans from "@/components/pricing-plans";
 import ContactTeam from "@/components/contact-team";
@@ -20,7 +22,7 @@ import { Bell, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useAIToggle } from "@/hooks/use-ai-toggle";
 
-type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'on-campus-support' | 'pricing' | 'contact-team';
+type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'application-tracker' | 'during-study-support' | 'on-campus-support' | 'pricing' | 'contact-team';
 
 export default function Dashboard() {
   const [currentSection, setCurrentSection] = useState<Section>('study-roadmap');
@@ -44,12 +46,16 @@ export default function Dashboard() {
         return <UniversitySearch aiEnabled={aiEnabled} />;
       case 'course-planning':
         return <CoursePlanning aiEnabled={aiEnabled} />;
+      case 'application-tracker':
+        return <ApplicationTracker />;
       case 'visa-support':
         return <VisaSupport aiEnabled={aiEnabled} />;
       case 'cultural-adaptation':
         return <CulturalAdaptation aiEnabled={aiEnabled} />;
       case 'career-development':
         return <CareerDevelopment aiEnabled={aiEnabled} />;
+      case 'during-study-support':
+        return <DuringStudySupport aiEnabled={aiEnabled} />;
       case 'on-campus-support':
         return <OnCampusSupport />;
       case 'pricing':
