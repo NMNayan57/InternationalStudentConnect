@@ -48,21 +48,110 @@ export default function RealTimeChat({ isOpen, onClose }: RealTimeChatProps) {
   }, [messages]);
 
   useEffect(() => {
-    if (isOpen && !ws.current) {
+    if (isOpen) {
       connectToChat();
     }
-
-    return () => {
-      if (ws.current) {
-        ws.current.close();
-        ws.current = null;
-      }
-    };
   }, [isOpen]);
 
   const connectToChat = () => {
+    // Initialize EduBot AI Assistant
+    setIsConnected(true);
+    setConnectionStatus('connected');
+    
+    // EduBot welcome message with quick prompts
+    const welcomeMessage: Message = {
+      id: `${Date.now()}-welcome`,
+      sender: 'ai_assistant',
+      senderName: 'EduBot',
+      message: "Hi there! I'm EduBot, your guide for studying abroad. I can help you with university matching, visa applications, scholarships, cultural tips, document preparation, and much more. How can I assist you today?",
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      quickReplies: quickPrompts.map(prompt => prompt.text)
+    };
+    setMessages([welcomeMessage]);
+  };
+
+  const sendMessage = async () => {
+    if (!newMessage.trim() || !isConnected) return;
+
+    const userMessage: Message = {
+      id: `${Date.now()}-user`,
+      sender: 'student',
+      message: newMessage,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setShowQuickPrompts(false);
+    
+    // Send to EduBot API
+    await sendMessageToAI(newMessage);
+    setNewMessage('');
+  };
+
+  const sendQuickReply = async (reply: string) => {
+    const userMessage: Message = {
+      id: `${Date.now()}-quick`,
+      sender: 'student', 
+      message: reply,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setShowQuickPrompts(false);
+    
+    // Send to EduBot API
+    await sendMessageToAI(reply);
+  };
+
+  const sendMessageToAI = async (message: string) => {
     try {
-      setConnectionStatus('connecting');
+      setIsTyping(true);
+      
+      const response = await fetch('/api/edubot/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: message,
+          context: 'edubot_assistance'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get EduBot response');
+      }
+
+      const data = await response.json();
+      
+      const aiMessage: Message = {
+        id: `${Date.now()}-edubot`,
+        sender: 'ai_assistant',
+        senderName: 'EduBot',
+        message: data.response,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        quickReplies: data.quickReplies || []
+      };
+      
+      setMessages(prev => [...prev, aiMessage]);
+    } catch (error) {
+      console.error('Error getting EduBot response:', error);
+      const errorMessage: Message = {
+        id: `${Date.now()}-error`,
+        sender: 'ai_assistant',
+        senderName: 'EduBot',
+        message: "I'm having trouble connecting right now. Please try again in a moment, or feel free to explore the platform features in the meantime!",
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      sendMessage();
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const wsUrl = `${protocol}//${window.location.host}/ws`;
       
