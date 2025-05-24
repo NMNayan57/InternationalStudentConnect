@@ -80,7 +80,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Services</h3>
+            <h3 className="text-base font-semibold text-white mb-3">Services</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/profile-evaluation" className="text-gray-300 hover:text-[#A7F3D0] transition-colors duration-300 text-sm">
@@ -112,7 +112,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Contact Us</h3>
+            <h3 className="text-base font-semibold text-white mb-3">Contact Us</h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
                 <Mail className="h-4 w-4 text-[#2DD4BF] mt-1 flex-shrink-0" />
@@ -147,9 +147,9 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
+      {/* Streamlined Bottom Bar */}
       <div className="border-t border-[#2DD4BF]/20 bg-[#1E3A8A]/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-300 text-sm">
               © 2024 Edujiin. All rights reserved. Empowering students worldwide.
