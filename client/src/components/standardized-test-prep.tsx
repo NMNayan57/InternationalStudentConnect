@@ -370,7 +370,7 @@ export default function StandardizedTestPrep({ aiEnabled }: StandardizedTestPrep
                     <Button 
                       type="submit" 
                       disabled={mutation.isPending}
-                      className="w-full"
+                      className="w-full bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white"
                     >
                       {mutation.isPending ? 'Creating Study Plan...' : 'Generate Study Plan'}
                     </Button>
