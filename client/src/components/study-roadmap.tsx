@@ -191,10 +191,10 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  preparation: 'bg-blue-50 text-blue-700 border-blue-200',
-  applications: 'bg-cyan-50 text-cyan-700 border-cyan-200', 
-  visa: 'bg-green-50 text-green-700 border-green-200',
-  departure: 'bg-gray-50 text-gray-700 border-gray-200'
+  preparation: 'bg-[#A7F3D0] text-[#1E3A8A] border-[#2DD4BF]',
+  applications: 'bg-[#F9FAFB] text-[#2DD4BF] border-[#60A5FA]', 
+  visa: 'bg-[#A7F3D0] text-[#1E3A8A] border-[#2DD4BF]',
+  departure: 'bg-[#F9FAFB] text-[#60A5FA] border-[#2DD4BF]'
 };
 
 interface StudyRoadmapProps {

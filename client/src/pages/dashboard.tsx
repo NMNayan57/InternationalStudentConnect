@@ -62,7 +62,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-[#F9FAFB] dark:bg-gray-900">
       {/* Professional Header Component */}
       <Header />
 
@@ -77,9 +77,11 @@ export default function Dashboard() {
           />
         </div>
 
-        {/* Main Content */}
-        <main className="flex-1 p-6 lg:p-8">
-          {renderSection()}
+        {/* Main Content with Edujiin Design */}
+        <main className="flex-1 p-6 lg:p-8 bg-[#F9FAFB]">
+          <div className="max-w-7xl mx-auto">
+            {renderSection()}
+          </div>
         </main>
       </div>
 
