@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import NavigationSidebar from "@/components/navigation-sidebar";
 import ProfileEvaluation from "@/components/profile-evaluation";
 import EnhancedDocumentPreparation from "@/components/enhanced-document-preparation";
@@ -61,49 +63,8 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-                  <i className="fas fa-graduation-cap text-white text-sm"></i>
-                </div>
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white">Edujiin</h1>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm">
-                <Bell className="h-5 w-5" />
-              </Button>
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-medium">JS</span>
-                </div>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 hidden sm:block">John Smith</span>
-              </div>
-              {/* Mobile menu trigger */}
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="sm" className="lg:hidden">
-                    <Menu className="h-5 w-5" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left" className="w-64 p-0">
-                  <NavigationSidebar 
-                    currentSection={currentSection}
-                    onSectionChange={setCurrentSection}
-                    aiEnabled={aiEnabled}
-                    onToggleAI={toggleAI}
-                    isMobile
-                  />
-                </SheetContent>
-              </Sheet>
-            </div>
-          </div>
-        </div>
-      </header>
+      {/* Professional Header Component */}
+      <Header />
 
       <div className="flex">
         {/* Desktop Sidebar */}
@@ -155,6 +116,9 @@ export default function Dashboard() {
           </button>
         </div>
       </div>
+      
+      {/* Professional Footer Component */}
+      <Footer />
       
       {/* Unified Edujiin Chat Support */}
       <ChatWidget />

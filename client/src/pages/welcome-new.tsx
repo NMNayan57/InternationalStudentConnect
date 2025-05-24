@@ -90,29 +90,8 @@ export default function Welcome() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Modern Navigation - Deep Blue Header */}
-      <nav className="fixed top-0 left-0 right-0 z-50 py-4 bg-[#1E3A8A] backdrop-blur-sm">
-        <div className="container mx-auto px-6 flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-3">
-            <img src={logoImage} alt="Edujiin" className="h-10 w-auto" />
-            <div>
-              <span className="text-2xl font-bold text-white">Edujiin</span>
-              <p className="text-xs text-[#1F2937]">Your Smart Path to Global Education</p>
-            </div>
-          </Link>
-          
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-white hover:text-[#2DD4BF] font-medium transition-colors">Features</a>
-            <a href="#pricing" className="text-white hover:text-[#2DD4BF] font-medium transition-colors">Pricing</a>
-            <a href="#contact" className="text-white hover:text-[#2DD4BF] font-medium transition-colors">Contact</a>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <Link href="/dashboard" className="text-white hover:text-[#2DD4BF] font-medium transition-colors">Sign In</Link>
-            <Link href="/dashboard" className="bg-[#1E3A8A] hover:bg-[#2DD4BF] text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 border border-[#60A5FA] hover:border-[#2DD4BF]">Get Started</Link>
-          </div>
-        </div>
-      </nav>
+      {/* Professional Header Component */}
+      <Header />
 
       {/* Hero Section - Light Minty Green to Medium Teal Gradient */}
       <section className="pt-32 pb-20 bg-gradient-to-br from-[#A7F3D0] to-[#2DD4BF]">
@@ -368,49 +347,8 @@ export default function Welcome() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-[#1E3A8A] text-white py-12">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <img src={logoImage} alt="Edujiin Logo" className="h-8 w-auto" />
-                <span className="text-xl font-bold text-white">Edujiin</span>
-              </div>
-              <p className="text-sm text-white opacity-80">
-                Your Smart Path to Global Education
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4 text-white">Platform</h4>
-              <div className="space-y-2 text-sm">
-                <div><Link href="/dashboard" className="text-white hover:text-[#2DD4BF] transition-colors">Dashboard</Link></div>
-                <div><a href="#features" className="text-white hover:text-[#2DD4BF] transition-colors">Features</a></div>
-                <div><a href="#pricing" className="text-white hover:text-[#2DD4BF] transition-colors">Pricing</a></div>
-              </div>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4 text-white">Support</h4>
-              <div className="space-y-2 text-sm">
-                <div><a href="#" className="text-white hover:text-[#2DD4BF] transition-colors">About Us</a></div>
-                <div><a href="#contact" className="text-white hover:text-[#2DD4BF] transition-colors">Contact Us</a></div>
-                <div><a href="#" className="text-white hover:text-[#2DD4BF] transition-colors">Help Center</a></div>
-              </div>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4 text-white">Legal</h4>
-              <div className="space-y-2 text-sm">
-                <div><a href="#" className="text-white hover:text-[#2DD4BF] transition-colors">Terms of Service</a></div>
-                <div><a href="#" className="text-white hover:text-[#2DD4BF] transition-colors">Privacy Policy</a></div>
-                <div><a href="#" className="text-white hover:text-[#2DD4BF] transition-colors">Cookie Policy</a></div>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-white/20 mt-8 pt-8 text-center text-sm text-white opacity-80">
-            © 2024 Edujiin. All rights reserved. Empowering global education dreams.
-          </div>
-        </div>
-      </footer>
+      {/* Professional Footer Component */}
+      <Footer />
 
       {/* Real-time Chat Support */}
       <ChatWidget />
