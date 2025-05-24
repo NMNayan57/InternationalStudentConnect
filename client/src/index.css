@@ -202,6 +202,28 @@ button[role="combobox"]:focus,
   text-decoration: underline;
 }
 
+/* EMERGENCY FIX: Eliminate ALL Yellow Backgrounds */
+* {
+  background-color: inherit !important;
+}
+
+body, div, section, card, .card, [class*="card"] {
+  background-color: #F9FAFB !important;
+}
+
+/* Force white background for all containers */
+.container, .card-content, [class*="bg-yellow"], 
+.bg-yellow-50, .bg-yellow-100, .bg-yellow-200, .bg-yellow-300, .bg-yellow-400, .bg-yellow-500,
+[style*="background: yellow"], [style*="background-color: yellow"] {
+  background-color: white !important;
+}
+
+/* Override any inline yellow styles */
+[style*="background: #FFFF"], [style*="background-color: #FFFF"],
+[style*="background: #FFF0"], [style*="background-color: #FFF0"] {
+  background-color: white !important;
+}
+
 .dark {
   --background: 222 47% 11%;
   --foreground: 210 40% 98%;

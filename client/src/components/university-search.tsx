@@ -147,20 +147,20 @@ export default function UniversitySearch({ aiEnabled }: UniversitySearchProps) {
         </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Filter className="h-5 w-5" />
+      <Card className="bg-white border-[#60A5FA]" style={{backgroundColor: 'white !important'}}>
+        <CardHeader className="bg-white" style={{backgroundColor: 'white !important'}}>
+          <CardTitle className="flex items-center space-x-2 text-[#1E3A8A]">
+            <Filter className="h-5 w-5 text-[#2DD4BF]" />
             <span>Search Criteria</span>
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="bg-white" style={{backgroundColor: 'white !important'}}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* Primary Filters - First Row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="space-y-2">
                 <Select onValueChange={(value) => form.setValue('region', value)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-[#60A5FA] text-[#1F2937]" style={{backgroundColor: 'white !important'}}>
                     <SelectValue placeholder="Region" />
                   </SelectTrigger>
                   <SelectContent>
@@ -175,7 +175,7 @@ export default function UniversitySearch({ aiEnabled }: UniversitySearchProps) {
 
               <div className="space-y-2">
                 <Select onValueChange={(value) => form.setValue('location', value)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-[#60A5FA] text-[#1F2937]" style={{backgroundColor: 'white !important'}}>
                     <SelectValue placeholder="Location" />
                   </SelectTrigger>
                   <SelectContent>
@@ -190,7 +190,7 @@ export default function UniversitySearch({ aiEnabled }: UniversitySearchProps) {
 
               <div className="space-y-2">
                 <Select onValueChange={(value) => form.setValue('city', value)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-[#60A5FA] text-[#1F2937]" style={{backgroundColor: 'white !important'}}>
                     <SelectValue placeholder="City" />
                   </SelectTrigger>
                   <SelectContent>
@@ -205,7 +205,7 @@ export default function UniversitySearch({ aiEnabled }: UniversitySearchProps) {
 
               <div className="space-y-2">
                 <Select onValueChange={(value) => form.setValue('studyLevel', value)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-white border-[#60A5FA] text-[#1F2937]" style={{backgroundColor: 'white !important'}}>
                     <SelectValue placeholder="Study Level" />
                   </SelectTrigger>
                   <SelectContent>
