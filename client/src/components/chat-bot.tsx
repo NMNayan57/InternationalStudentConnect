@@ -19,7 +19,7 @@ export function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: 'Hi there! I\'m StudyPathAI, your educational assistant. How can I help you with your academic journey today?',
+      content: 'Hi there! I\'m Edujiin, your educational assistant. How can I help you with your academic journey today?',
       sender: 'bot',
       timestamp: new Date(),
     },
@@ -117,10 +117,10 @@ export function ChatBot() {
           <CardHeader className="p-4 border-b">
             <CardTitle className="text-lg flex items-center">
               <Avatar className="h-8 w-8 mr-2">
-                <AvatarImage src="/robot.png" alt="StudyPathAI" />
-                <AvatarFallback>AI</AvatarFallback>
+                <AvatarImage src="/robot.png" alt="Edujiin" />
+                <AvatarFallback className="bg-edujiin-primary text-white">E</AvatarFallback>
               </Avatar>
-              StudyPathAI
+              Edujiin
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">

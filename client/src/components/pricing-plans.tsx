@@ -215,7 +215,7 @@ export default function PricingPlans() {
 
       {/* Additional Benefits */}
       <div className="bg-gray-50 dark:bg-gray-900/50 p-8 rounded-xl">
-        <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">Why Choose StudyPathAI?</h3>
+        <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">Why Choose Edujiin?</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="flex justify-center mb-4">

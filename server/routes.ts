@@ -122,7 +122,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Message is required" });
       }
       
-      const prompt = `You are StudyPathAI, an educational assistant chatbot focused on helping international students.
+      const prompt = `You are Edujiin, an educational assistant chatbot focused on helping international students.
       
       USER QUERY: ${message}
       
