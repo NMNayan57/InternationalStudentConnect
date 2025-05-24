@@ -5,28 +5,34 @@
 @tailwind utilities;
 
 :root {
-  /* Fixed Dashboard Colors - Keeping original dashboard working */
+  /* Edujiin Brand Colors - Applied Globally */
   --background: 255 255 255; /* #FFFFFF - Clean White */
-  --foreground: 15 23 42; /* #0F172A - Slate 900 */
-  --muted: 241 245 249; /* #F1F5F9 - Slate 100 */
-  --muted-foreground: 100 116 139; /* #64748B - Slate 500 */
+  --foreground: 30 58 138; /* #1E3A8A - Deep Blue */
+  --muted: 167 243 208; /* #A7F3D0 - Light Minty Green */
+  --muted-foreground: 31 41 55; /* #1F2937 - Dark Gray */
   --popover: 255 255 255;
-  --popover-foreground: 15 23 42;
+  --popover-foreground: 30 58 138;
   --card: 255 255 255; /* #FFFFFF - White Card Background */
-  --card-foreground: 15 23 42;
-  --border: 226 232 240; /* #E2E8F0 - Slate 200 */
+  --card-foreground: 30 58 138; /* #1E3A8A - Deep Blue */
+  --border: 229 231 235; /* #E5E7EB - Light Gray Border */
   --input: 255 255 255; /* White Input Background */
-  --primary: 59 130 246; /* #3B82F6 - Blue 500 */
+  --primary: 30 58 138; /* #1E3A8A - Deep Blue (Primary Brand Color) */
   --primary-foreground: 255 255 255;
-  --secondary: 14 165 233; /* #0EA5E9 - Sky 500 */
+  --secondary: 45 212 191; /* #2DD4BF - Medium Teal (Secondary Brand Color) */
   --secondary-foreground: 255 255 255;
-  --accent: 99 102 241; /* #6366F1 - Indigo 500 */
-  --accent-foreground: 255 255 255;
+  --accent: 167 243 208; /* #A7F3D0 - Light Minty Green (Accent Color) */
+  --accent-foreground: 30 58 138; /* #1E3A8A - Deep Blue */
   --destructive: 239 68 68;
   --destructive-foreground: 255 255 255;
-  --ring: 59 130 246; /* #3B82F6 - Blue 500 */
+  --ring: 45 212 191; /* #2DD4BF - Medium Teal for focus rings */
   --radius: 0.5rem;
-  --edujiin-light-blue: 59 130 246; /* #3B82F6 - Light Blue from logo */
+  /* Edujiin Brand Color Variables */
+  --edujiin-deep-blue: 30 58 138; /* #1E3A8A */
+  --edujiin-medium-teal: 45 212 191; /* #2DD4BF */
+  --edujiin-light-minty-green: 167 243 208; /* #A7F3D0 */
+  --edujiin-lighter-blue: 96 165 250; /* #60A5FA */
+  --edujiin-off-white: 249 250 251; /* #F9FAFB */
+  --edujiin-dark-gray: 31 41 55; /* #1F2937 */
 }
 
 .dark {
