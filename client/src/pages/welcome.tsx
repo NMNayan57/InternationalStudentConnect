@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { GraduationCap, Globe, BookOpen, Users, Star, ArrowRight, CheckCircle } from "lucide-react";
+import { GraduationCap, Globe, BookOpen, Users, Star, ArrowRight, CheckCircle, FileText, DollarSign, Briefcase } from "lucide-react";
 import logoImage from "@assets/logo2.png";
 
 export default function Welcome() {
@@ -17,13 +17,33 @@ export default function Welcome() {
     },
     {
       icon: <GraduationCap className="h-6 w-6" />,
-      title: "University Matching",
-      description: "Find the perfect university for your goals"
+      title: "University Search",
+      description: "Advanced search with comprehensive filters"
+    },
+    {
+      icon: <Star className="h-6 w-6" />,
+      title: "Document Preparation",
+      description: "Professional CVs, SOPs, and application documents"
+    },
+    {
+      icon: <BookOpen className="h-6 w-6" />,
+      title: "Test Preparation",
+      description: "IELTS, TOEFL, GRE, GMAT study plans"
+    },
+    {
+      icon: <Star className="h-6 w-6" />,
+      title: "Scholarship Finder",
+      description: "Find funding opportunities worldwide"
+    },
+    {
+      icon: <ArrowRight className="h-6 w-6" />,
+      title: "Career Development",
+      description: "Job matching and career guidance"
     },
     {
       icon: <Globe className="h-6 w-6" />,
-      title: "Global Opportunities",
-      description: "Scholarships, jobs, and career guidance"
+      title: "Cultural Adaptation",
+      description: "Tips for adapting to new countries"
     },
     {
       icon: <Users className="h-6 w-6" />,
@@ -111,19 +131,19 @@ export default function Welcome() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
               <Card key={index} className="text-center hover:shadow-lg transition-shadow border-edujiin-accent">
-                <CardHeader>
-                  <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <div className="text-secondary">
+                <CardHeader className="pb-4">
+                  <div className="w-16 h-16 bg-edujiin-light-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="text-edujiin-secondary">
                       {feature.icon}
                     </div>
                   </div>
-                  <CardTitle className="text-edujiin-primary">{feature.title}</CardTitle>
+                  <CardTitle className="text-edujiin-primary text-lg">{feature.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-gray-600">
+                <CardContent className="pt-0">
+                  <CardDescription className="text-gray-600 text-sm">
                     {feature.description}
                   </CardDescription>
                 </CardContent>
