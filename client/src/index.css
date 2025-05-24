@@ -3,34 +3,41 @@
 @tailwind utilities;
 
 :root {
-  --background: 210 11% 98%; /* #F9FAFB */
-  --foreground: 222 47% 11%; /* #111827 */
-  --muted: 210 11% 96%; /* #F3F4F6 */
-  --muted-foreground: 215 16% 47%; /* #6B7280 */
+  /* Edujiin Brand Colors */
+  --background: 249 250 251; /* #F9FAFB - White/Off-White */
+  --foreground: 31 41 55; /* #1F2937 - Dark Gray */
+  --muted: 167 243 208; /* #A7F3D0 - Light Minty Green */
+  --muted-foreground: 31 41 55; /* #1F2937 - Dark Gray */
   --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
+  --popover-foreground: 31 41 55;
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --border: 214 20% 90%; /* #D1D5DB */
-  --input: 214 20% 90%;
-  --primary: 217 91% 60%; /* #2563EB */
-  --primary-foreground: 210 40% 98%;
-  --secondary: 262 83% 58%; /* #7C3AED */
-  --secondary-foreground: 210 40% 98%;
-  --accent: 158 64% 52%; /* #059669 */
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 60 9% 98%;
-  --ring: 217 91% 60%;
-  --radius: 0.5rem;
-  --sidebar-background: 0 0% 100%;
-  --sidebar-foreground: 222 47% 11%;
-  --sidebar-primary: 217 91% 60%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 210 11% 96%;
-  --sidebar-accent-foreground: 222 47% 11%;
-  --sidebar-border: 214 20% 90%;
-  --sidebar-ring: 217 91% 60%;
+  --card-foreground: 31 41 55;
+  --border: 229 231 235; /* Light Gray */
+  --input: 96 165 250; /* #60A5FA - Lighter Medium Blue */
+  --primary: 30 58 138; /* #1E3A8A - Deep Blue */
+  --primary-foreground: 255 255 255;
+  --secondary: 45 212 191; /* #2DD4BF - Medium Teal */
+  --secondary-foreground: 255 255 255;
+  --accent: 96 165 250; /* #60A5FA - Lighter Medium Blue */
+  --accent-foreground: 255 255 255;
+  --destructive: 239 68 68;
+  --destructive-foreground: 255 255 255;
+  --ring: 45 212 191; /* #2DD4BF - Medium Teal */
+  --radius: 0.75rem;
+  --sidebar-background: 30 58 138; /* #1E3A8A - Deep Blue */
+  --sidebar-foreground: 255 255 255;
+  --sidebar-primary: 45 212 191; /* #2DD4BF - Medium Teal */
+  --sidebar-primary-foreground: 255 255 255;
+  --sidebar-accent: 96 165 250; /* #60A5FA - Lighter Medium Blue */
+  --sidebar-accent-foreground: 255 255 255;
+  --sidebar-border: 96 165 250;
+  --sidebar-ring: 45 212 191;
+  
+  /* Custom Edujiin Properties */
+  --edujiin-deep-blue: 30 58 138; /* #1E3A8A */
+  --edujiin-medium-teal: 45 212 191; /* #2DD4BF */
+  --edujiin-light-mint: 167 243 208; /* #A7F3D0 */
+  --edujiin-light-blue: 96 165 250; /* #60A5FA */
 }
 
 .dark {
@@ -84,5 +91,57 @@
 @layer components {
   .strength-bar {
     background: linear-gradient(to right, hsl(var(--accent)), hsl(var(--primary)));
+  }
+  
+  /* Edujiin Custom Components */
+  .bg-edujiin-gradient {
+    background: linear-gradient(135deg, rgb(30, 58, 138) 0%, rgb(45, 212, 191) 50%, rgb(167, 243, 208) 100%);
+  }
+  
+  .bg-edujiin-hero {
+    background: linear-gradient(135deg, rgb(167, 243, 208) 0%, rgb(45, 212, 191) 100%);
+  }
+  
+  .text-edujiin-primary {
+    color: rgb(30, 58, 138);
+  }
+  
+  .text-edujiin-secondary {
+    color: rgb(45, 212, 191);
+  }
+  
+  .border-edujiin-accent {
+    border-color: rgb(96, 165, 250);
+  }
+  
+  .hover\:bg-edujiin-teal:hover {
+    background-color: rgb(45, 212, 191);
+  }
+  
+  .edujiin-swirl {
+    position: relative;
+  }
+  
+  .edujiin-swirl::before {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: conic-gradient(from 0deg, rgb(96, 165, 250), rgb(45, 212, 191), rgb(167, 243, 208));
+    border-radius: 50%;
+    opacity: 0.15;
+    z-index: -1;
+    top: -20px;
+    right: -20px;
+  }
+  
+  .edujiin-dots::after {
+    content: '• • •';
+    position: absolute;
+    color: rgb(45, 212, 191);
+    font-size: 1.2rem;
+    opacity: 0.7;
+    top: -15px;
+    right: -40px;
   }
 }

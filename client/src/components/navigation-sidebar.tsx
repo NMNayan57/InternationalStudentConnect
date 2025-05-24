@@ -36,8 +36,21 @@ export default function NavigationSidebar({
   ];
 
   return (
-    <aside className={`bg-white dark:bg-gray-800 shadow-sm border-r border-gray-200 dark:border-gray-700 ${isMobile ? 'w-full' : 'w-64'}`}>
-      <nav className="mt-8 px-4">
+    <aside className={`bg-primary text-primary-foreground shadow-lg border-r border-primary/20 ${isMobile ? 'w-full' : 'w-64'}`}>
+      {/* Edujiin Header */}
+      <div className="p-6 border-b border-primary-foreground/20">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+            <GraduationCap className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold">Edujiin</h1>
+            <p className="text-xs opacity-80">Your Smart Path to Global Education</p>
+          </div>
+        </div>
+      </div>
+      
+      <nav className="mt-6 px-4">
         <div className="space-y-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
