@@ -191,10 +191,10 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  preparation: 'bg-edujiin-primary/10 text-edujiin-primary border-edujiin-primary/20',
-  applications: 'bg-edujiin-secondary/10 text-edujiin-secondary border-edujiin-secondary/20',
-  visa: 'bg-edujiin-light-green/20 text-edujiin-primary border-edujiin-light-green/30',
-  departure: 'bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300'
+  preparation: 'bg-blue-50 text-blue-700 border-blue-200',
+  applications: 'bg-cyan-50 text-cyan-700 border-cyan-200', 
+  visa: 'bg-green-50 text-green-700 border-green-200',
+  departure: 'bg-gray-50 text-gray-700 border-gray-200'
 };
 
 interface StudyRoadmapProps {
@@ -269,9 +269,11 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
         <CardContent className="pt-6">
           <div className="flex flex-wrap gap-2">
             <Button
-              variant={selectedCategory === 'all' ? 'default' : 'outline'}
+              variant="outline"
               size="sm"
-              className={selectedCategory === 'all' ? 'bg-edujiin-primary hover:bg-edujiin-primary/90' : 'border-edujiin-primary text-edujiin-primary hover:bg-edujiin-primary hover:text-white'}
+              className={selectedCategory === 'all' 
+                ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700' 
+                : 'bg-white text-blue-600 border-blue-600 hover:bg-blue-50'}
               onClick={() => setSelectedCategory('all')}
             >
               All Steps ({steps.length})
@@ -279,9 +281,11 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
             {Object.keys(categoryColors).map((category) => (
               <Button
                 key={category}
-                variant={selectedCategory === category ? 'default' : 'outline'}
+                variant="outline"
                 size="sm"
-                className={selectedCategory === category ? 'bg-edujiin-secondary hover:bg-edujiin-secondary/90' : 'border-edujiin-secondary text-edujiin-secondary hover:bg-edujiin-secondary hover:text-white'}
+                className={selectedCategory === category 
+                  ? 'bg-cyan-600 text-white border-cyan-600 hover:bg-cyan-700' 
+                  : 'bg-white text-cyan-600 border-cyan-600 hover:bg-cyan-50'}
                 onClick={() => setSelectedCategory(category)}
               >
                 <span className="capitalize">{category}</span> ({steps.filter(s => s.category === category).length})
