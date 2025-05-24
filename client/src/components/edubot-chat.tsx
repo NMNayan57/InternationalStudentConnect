@@ -24,14 +24,12 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Quick reply prompts for EduBot
+  // Quick reply prompts for Jinn - Clean and focused
   const quickPrompts = [
-    { text: "Find a university", icon: <GraduationCap className="h-4 w-4" /> },
-    { text: "Help with visa application", icon: <FileText className="h-4 w-4" /> },
-    { text: "Find a scholarship", icon: <Award className="h-4 w-4" /> },
-    { text: "Cultural tips", icon: <Globe className="h-4 w-4" /> },
-    { text: "Mental health support", icon: <Heart className="h-4 w-4" /> },
-    { text: "Document preparation", icon: <BookOpen className="h-4 w-4" /> }
+    { text: "Find a university", icon: <GraduationCap className="h-4 w-4" />, route: "/dashboard" },
+    { text: "Visa guidance", icon: <Globe className="h-4 w-4" />, route: "/visa-support" },
+    { text: "Find scholarships", icon: <Award className="h-4 w-4" />, route: "/dashboard" },
+    { text: "Cultural adaptation", icon: <Heart className="h-4 w-4" />, route: "/cultural-adaptation" }
   ];
 
   const scrollToBottom = () => {
@@ -52,7 +50,7 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
     const welcomeMessage: Message = {
       id: `${Date.now()}-welcome`,
       sender: 'edubot',
-      message: "Hi there! I'm EduBot, your guide for studying abroad. I can help you with university matching, visa applications, scholarships, cultural tips, document preparation, and much more. How can I assist you today?",
+      message: "Hi there! I'm Jinn, your study abroad assistant. I can help you find universities, apply for visas, discover scholarships, and get cultural tips. How can I assist you today?",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       quickReplies: quickPrompts.map(prompt => prompt.text)
     };
@@ -151,10 +149,10 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
             <span className="text-white text-lg">😊</span>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-800">EduBot</h3>
+            <h3 className="font-semibold text-gray-800">Jinn</h3>
             <p className="text-xs text-green-500 flex items-center">
               <span className="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
-              Online • Ready to help
+              Your study abroad assistance
             </p>
           </div>
         </div>
@@ -183,7 +181,7 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
                     <div className="w-6 h-6 bg-[#2DD4BF] rounded-full flex items-center justify-center">
                       <span className="text-white text-xs">😊</span>
                     </div>
-                    <span className="text-xs font-medium text-[#2DD4BF]">EduBot</span>
+                    <span className="text-xs font-medium text-[#2DD4BF]">Jinn</span>
                   </div>
                 )}
                 <p className="text-sm leading-relaxed">{message.message}</p>
@@ -208,54 +206,7 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
               </div>
             )}
 
-            {/* Action Buttons - Add these for university matching, scholarships, etc. */}
-            {message.sender === 'edubot' && message.message.toLowerCase().includes('university') && (
-              <div className="flex flex-wrap gap-2 ml-2 mt-2">
-                <button
-                  onClick={() => window.location.href = '/dashboard'}
-                  className="flex items-center space-x-2 bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
-                >
-                  <GraduationCap className="h-4 w-4" />
-                  <span>Find University Match</span>
-                </button>
-              </div>
-            )}
 
-            {message.sender === 'edubot' && message.message.toLowerCase().includes('scholarship') && (
-              <div className="flex flex-wrap gap-2 ml-2 mt-2">
-                <button
-                  onClick={() => window.location.href = '/dashboard'}
-                  className="flex items-center space-x-2 bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
-                >
-                  <Award className="h-4 w-4" />
-                  <span>Find Scholarships</span>
-                </button>
-              </div>
-            )}
-
-            {message.sender === 'edubot' && message.message.toLowerCase().includes('document') && (
-              <div className="flex flex-wrap gap-2 ml-2 mt-2">
-                <button
-                  onClick={() => window.location.href = '/dashboard'}
-                  className="flex items-center space-x-2 bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
-                >
-                  <FileText className="h-4 w-4" />
-                  <span>Prepare Documents</span>
-                </button>
-              </div>
-            )}
-
-            {message.sender === 'edubot' && message.message.toLowerCase().includes('visa') && (
-              <div className="flex flex-wrap gap-2 ml-2 mt-2">
-                <button
-                  onClick={() => window.location.href = '/dashboard'}
-                  className="flex items-center space-x-2 bg-[#2DD4BF] hover:bg-[#1E3A8A] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-sm"
-                >
-                  <Globe className="h-4 w-4" />
-                  <span>Visa Guidance</span>
-                </button>
-              </div>
-            )}
           </div>
         ))}
 
@@ -267,7 +218,9 @@ export default function EduBotChat({ isOpen, onClose }: EduBotChatProps) {
                 key={index}
                 variant="outline"
                 size="sm"
-                onClick={() => sendQuickReply(prompt.text)}
+                onClick={() => {
+                  window.location.href = prompt.route;
+                }}
                 className="flex items-center justify-center space-x-2 text-xs bg-white hover:bg-[#A7F3D0] text-gray-700 hover:text-[#1E3A8A] border-gray-200 hover:border-[#2DD4BF] p-3 rounded-lg min-h-[2.8rem] transition-all duration-300 shadow-sm"
               >
                 <div className="flex-shrink-0">{prompt.icon}</div>
