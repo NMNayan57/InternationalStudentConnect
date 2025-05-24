@@ -90,6 +90,86 @@ export const careerProfiles = pgTable("career_profiles", {
   immigrationInfo: text("immigration_info"),
 });
 
+// Enhanced Research Collaboration Tables
+export const researchProjects = pgTable("research_projects", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  professorId: integer("professor_id"),
+  professorName: text("professor_name").notNull(),
+  field: text("field").notNull(),
+  university: text("university").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const grants = pgTable("grants", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  field: text("field").notNull(),
+  amount: integer("amount").notNull(),
+  deadline: text("deadline").notNull(),
+  eligibility: text("eligibility").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const collaborationRequests = pgTable("collaboration_requests", {
+  id: serial("id").primaryKey(),
+  projectId: integer("project_id").references(() => researchProjects.id),
+  studentId: integer("student_id").references(() => users.id),
+  studentName: text("student_name").notNull(),
+  studentEmail: text("student_email").notNull(),
+  message: text("message").notNull(),
+  status: text("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Enhanced Family Support Tables
+export const jobs = pgTable("jobs", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  company: text("company").notNull(),
+  location: text("location").notNull(),
+  type: text("type").notNull(),
+  experienceLevel: text("experience_level").notNull(),
+  description: text("description").notNull(),
+  salary: text("salary"),
+  spouseFriendly: boolean("spouse_friendly").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const culturalResources = pgTable("cultural_resources", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  country: text("country").notNull(),
+  type: text("type").notNull(),
+  content: text("content").notNull(),
+  category: text("category").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// On-Campus Support Tables
+export const campusEvents = pgTable("campus_events", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  date: text("date").notNull(),
+  location: text("location").notNull(),
+  university: text("university").notNull(),
+  description: text("description"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const campusResources = pgTable("campus_resources", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  type: text("type").notNull(),
+  description: text("description").notNull(),
+  location: text("location").notNull(),
+  university: text("university").notNull(),
+  hours: text("hours"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({ id: true });
 export const insertProfileSchema = createInsertSchema(profiles).omit({ id: true, createdAt: true });
@@ -98,6 +178,13 @@ export const insertResearchInterestSchema = createInsertSchema(researchInterests
 export const insertVisaApplicationSchema = createInsertSchema(visaApplications).omit({ id: true });
 export const insertCulturalAdaptationSchema = createInsertSchema(culturalAdaptation).omit({ id: true });
 export const insertCareerProfileSchema = createInsertSchema(careerProfiles).omit({ id: true });
+export const insertResearchProjectSchema = createInsertSchema(researchProjects).omit({ id: true, createdAt: true });
+export const insertGrantSchema = createInsertSchema(grants).omit({ id: true, createdAt: true });
+export const insertCollaborationRequestSchema = createInsertSchema(collaborationRequests).omit({ id: true, createdAt: true });
+export const insertJobSchema = createInsertSchema(jobs).omit({ id: true, createdAt: true });
+export const insertCulturalResourceSchema = createInsertSchema(culturalResources).omit({ id: true, createdAt: true });
+export const insertCampusEventSchema = createInsertSchema(campusEvents).omit({ id: true, createdAt: true });
+export const insertCampusResourceSchema = createInsertSchema(campusResources).omit({ id: true, createdAt: true });
 
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -114,3 +201,17 @@ export type InsertCulturalAdaptation = z.infer<typeof insertCulturalAdaptationSc
 export type CulturalAdaptation = typeof culturalAdaptation.$inferSelect;
 export type InsertCareerProfile = z.infer<typeof insertCareerProfileSchema>;
 export type CareerProfile = typeof careerProfiles.$inferSelect;
+export type InsertResearchProject = z.infer<typeof insertResearchProjectSchema>;
+export type ResearchProject = typeof researchProjects.$inferSelect;
+export type InsertGrant = z.infer<typeof insertGrantSchema>;
+export type Grant = typeof grants.$inferSelect;
+export type InsertCollaborationRequest = z.infer<typeof insertCollaborationRequestSchema>;
+export type CollaborationRequest = typeof collaborationRequests.$inferSelect;
+export type InsertJob = z.infer<typeof insertJobSchema>;
+export type Job = typeof jobs.$inferSelect;
+export type InsertCulturalResource = z.infer<typeof insertCulturalResourceSchema>;
+export type CulturalResource = typeof culturalResources.$inferSelect;
+export type InsertCampusEvent = z.infer<typeof insertCampusEventSchema>;
+export type CampusEvent = typeof campusEvents.$inferSelect;
+export type InsertCampusResource = z.infer<typeof insertCampusResourceSchema>;
+export type CampusResource = typeof campusResources.$inferSelect;

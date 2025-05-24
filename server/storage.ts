@@ -1,9 +1,14 @@
 import { 
   users, profiles, universityMatches, documents, researchInterests, professorMatches,
-  visaApplications, culturalAdaptation, careerProfiles,
+  visaApplications, culturalAdaptation, careerProfiles, researchProjects, grants, 
+  collaborationRequests, jobs, culturalResources, campusEvents, campusResources,
   type User, type InsertUser, type Profile, type InsertProfile, type Document, type InsertDocument,
   type ResearchInterest, type InsertResearchInterest, type VisaApplication, type InsertVisaApplication,
-  type CulturalAdaptation, type InsertCulturalAdaptation, type CareerProfile, type InsertCareerProfile
+  type CulturalAdaptation, type InsertCulturalAdaptation, type CareerProfile, type InsertCareerProfile,
+  type ResearchProject, type InsertResearchProject, type Grant, type InsertGrant,
+  type CollaborationRequest, type InsertCollaborationRequest, type Job, type InsertJob,
+  type CulturalResource, type InsertCulturalResource, type CampusEvent, type InsertCampusEvent,
+  type CampusResource, type InsertCampusResource
 } from "@shared/schema";
 
 export interface IStorage {
@@ -44,6 +49,34 @@ export interface IStorage {
   // Career profiles
   createCareerProfile(profile: InsertCareerProfile): Promise<CareerProfile>;
   getCareerProfileByUserId(userId: number): Promise<CareerProfile | undefined>;
+
+  // Research collaboration
+  createResearchProject(project: InsertResearchProject): Promise<ResearchProject>;
+  getResearchProjects(): Promise<ResearchProject[]>;
+  getResearchProjectsByField(field: string): Promise<ResearchProject[]>;
+  createGrant(grant: InsertGrant): Promise<Grant>;
+  getGrants(): Promise<Grant[]>;
+  getGrantsByField(field: string): Promise<Grant[]>;
+  createCollaborationRequest(request: InsertCollaborationRequest): Promise<CollaborationRequest>;
+  getCollaborationRequestsByProject(projectId: number): Promise<CollaborationRequest[]>;
+
+  // Enhanced job search
+  createJob(job: InsertJob): Promise<Job>;
+  getJobs(): Promise<Job[]>;
+  getJobsByType(spouseFriendly?: boolean): Promise<Job[]>;
+
+  // Enhanced cultural resources
+  createCulturalResource(resource: InsertCulturalResource): Promise<CulturalResource>;
+  getCulturalResources(): Promise<CulturalResource[]>;
+  getCulturalResourcesByCategory(category: string): Promise<CulturalResource[]>;
+
+  // Campus support
+  createCampusEvent(event: InsertCampusEvent): Promise<CampusEvent>;
+  getCampusEvents(): Promise<CampusEvent[]>;
+  getCampusEventsByUniversity(university: string): Promise<CampusEvent[]>;
+  createCampusResource(resource: InsertCampusResource): Promise<CampusResource>;
+  getCampusResources(): Promise<CampusResource[]>;
+  getCampusResourcesByUniversity(university: string): Promise<CampusResource[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -57,6 +90,15 @@ export class MemStorage implements IStorage {
   private culturalAdaptations: Map<number, CulturalAdaptation> = new Map();
   private careerProfiles: Map<number, CareerProfile> = new Map();
   
+  // Enhanced features storage
+  private researchProjects: Map<number, ResearchProject> = new Map();
+  private grants: Map<number, Grant> = new Map();
+  private collaborationRequests: Map<number, CollaborationRequest> = new Map();
+  private jobs: Map<number, Job> = new Map();
+  private culturalResources: Map<number, CulturalResource> = new Map();
+  private campusEvents: Map<number, CampusEvent> = new Map();
+  private campusResources: Map<number, CampusResource> = new Map();
+  
   private currentUserId = 1;
   private currentProfileId = 1;
   private currentDocumentId = 1;
@@ -64,6 +106,13 @@ export class MemStorage implements IStorage {
   private currentVisaApplicationId = 1;
   private currentCulturalAdaptationId = 1;
   private currentCareerProfileId = 1;
+  private currentResearchProjectId = 1;
+  private currentGrantId = 1;
+  private currentCollaborationRequestId = 1;
+  private currentJobId = 1;
+  private currentCulturalResourceId = 1;
+  private currentCampusEventId = 1;
+  private currentCampusResourceId = 1;
 
   async getUser(id: number): Promise<User | undefined> {
     return this.users.get(id);

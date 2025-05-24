@@ -1,0 +1,72 @@
+Update the Edujiin platform by enhancing existing features and adding a new module, ensuring seamless integration with the current setup. Specifically, update the Research Matching section (part of University Search & Matching) to include advanced research collaboration features, extend the Career Development & Job Search and Cultural Adaptation Support modules for family support, and create a new On-Campus Support Tools module. Additionally, update the EduBot chatbot to handle course planning and time management queries with a specific response. Ensure that AI mode (using DeepSeek R1 via OpenRouter API) is implemented with a perfect prompt for data retrieval, and provide mock data as a fallback when AI is disabled. Follow these specifications:
+
+Feature 1: Update Research Matching Section (Advanced Research Collaboration)
+
+Objective: Enhance the existing Research Matching section (part of University Search & Matching, which includes Professor Search) by adding a research project database, AI-driven grant matching, and collaboration tools.
+
+Research Project Database:
+Update the existing UniversitySearch.tsx component (or create a new tab within it) to include a “Research Projects” section.
+Database Structure (PostgreSQL): Create a table research_projects with columns: id (UUID, primary key), title (string), description (text), professor_id (UUID, foreign key linking to the existing professors table), field (string, e.g., “AI”), university (string), created_at (timestamp).
+Mock Data: Add 10 sample research projects (e.g., “AI for Healthcare” by Prof. John Doe at MIT, field: “AI”, description: “Exploring AI applications in medical diagnostics”).
+UI: Display projects in a grid layout (grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4). Each project card should show the title, professor name, university, and a “View Details” button. Add a search input to filter projects by field, professor, or university.
+AI-Driven Grant Matching:
+Database: Create a table grants with columns: id (UUID, primary key), title (string), description (text), field (string), amount (integer), deadline (date), eligibility (text), created_at (timestamp).
+Mock Data: Add 5 sample grants (e.g., “AI Research Grant”, field: “AI”, amount: $10,000, deadline: “2025-06-30”, eligibility: “Graduate students in AI”).
+AI Mode (Enabled): Use DeepSeek R1 via OpenRouter API to match grants to research projects and student profiles. API Prompt: “Given a student profile with study level [study_level], research interests [interests], and a research project in field [field], recommend grants that match the field and eligibility criteria. Return a list of grants with title, amount, deadline, and eligibility.” Example: “Given a student profile with study level ‘Graduate’, research interests ‘AI’, and a research project in field ‘AI’, recommend grants.”
+AI Mode (Disabled): Fallback to mock data by filtering the grants table based on the project’s field (e.g., field = 'AI') and basic eligibility (e.g., study level matches).
+UI: Add a “Grants” tab in the Research Matching section to display matched grants in a grid (same layout as projects). Show grant title, amount, deadline, eligibility, and an “Apply” button.
+Collaboration Tools:
+Add a “Collaborate” button on each project card, opening a modal with a form to send a collaboration request (fields: message, student name, email).
+Database: Create a table collaboration_requests with columns: id (UUID, primary key), project_id (UUID, foreign key to research_projects), student_id (UUID, foreign key to users), message (text), status (string: “pending”, “accepted”, “rejected”), created_at (timestamp).
+UI: Modal should include a form with text inputs for message, name, and email, and a “Send Request” button.
+Integration:
+Update the dashboard in WelcomePage.tsx to ensure the “Research Collaboration” button (already linked to /research-collaboration for Premium users) reflects this updated section.
+Feature 2: Family Support Services (Extend Existing Modules)
+
+Objective: Extend the Career Development & Job Search module for spouse employment and enhance the Cultural Adaptation Support module with family-specific cultural content, using the same database structure.
+
+Spouse Job Search (Extend Job Search Module):
+Update the existing JobFinding.tsx component to add a “Spouse Job Search” tab alongside the existing job search functionality.
+Database: Update the existing jobs table (assumed structure: id (UUID), title (string), location (string), type (string, e.g., “full-time”), experience_level (string), created_at (timestamp)) by adding a spouse_friendly column (boolean) to tag jobs suitable for spouses (e.g., part-time, remote).
+Mock Data: Tag 5 existing jobs as spouse-friendly (e.g., “Remote Customer Support, Part-Time”, spouse_friendly: true).
+UI: Add a toggle or dropdown in the Job Search section to filter between “For Student” and “For Spouse”. Display spouse-friendly jobs in a grid (grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4). Job cards should show title, location, type, and an “Apply” button. Add a search input to filter jobs by location or type.
+Family Cultural Adaptation Content:
+Update the existing CulturalSupport.tsx component to add a “Family Support” tab alongside the existing cultural tips.
+Database: Update the existing cultural_resources table (assumed structure: id (UUID), country (string), type (string, e.g., “tip”), content (text), created_at (timestamp)) by adding a category column (string: “student”, “family”) to categorize resources.
+Mock Data: Add 5 family-specific resources (e.g., “Family Activities in Canada: Local Parks and Events”, category: "family", country: “Canada”).
+UI: Display family resources in a grid (same layout as jobs). Each resource card should show the title, country, and content. Add a search input to filter resources by country or category.
+Integration:
+Update the dashboard in WelcomePage.tsx to ensure the “Job Finding” and “Cultural Support” buttons (linked to /career-development and /cultural-support) reflect these updates.
+Feature 3: On-Campus Support Tools (New Module)
+
+Objective: Develop a new standalone module to improve post-arrival support, integrating with university APIs for event calendars and resource directories.
+
+Component Creation:
+Create a new component OnCampusSupport.tsx for on-campus support tools.
+Event Calendars:
+Integrate with a mock university API (e.g., a JSON endpoint with event data). Example structure: { "events": [{ "id": "1", "title": "Orientation Day", "date": "2025-06-01", "location": "Main Hall", "university": "MIT" }] }. If a real university API is available, use it to fetch events; otherwise, rely on mock data.
+Database: Create a table campus_events in PostgreSQL: id (UUID, primary key), title (string), date (date), location (string), university (string), created_at (timestamp).
+Mock Data: Add 5 sample events (e.g., “Career Fair at MIT, 2025-06-15”, location: “Student Center”).
+UI: Add an “Events” tab in OnCampusSupport.tsx to display events in a grid (grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4). Each event card should show the title, date, location, university, and an “Add to Calendar” button. Add a search input to filter events by university or date.
+Resource Directories:
+Database: Create a table campus_resources: id (UUID, primary key), title (string), type (string, e.g., “library”), description (text), location (string), university (string), created_at (timestamp).
+Mock Data: Add 5 sample resources (e.g., “MIT Library”, type: “library”, location: “Building 10”, description: “Open 9 AM - 5 PM”).
+UI: Add a “Resources” tab in OnCampusSupport.tsx to display resources in a grid (same layout as events). Each resource card should show the title, type, location, university, and description. Add a search input to filter resources by type or university.
+Integration:
+Add an “On-Campus Support” button in the dashboard (WelcomePage.tsx) for all users, linking to /on-campus-support.
+EduBot Update:
+
+Objective: Update EduBot to respond to queries about course planning and time management with a specific message.
+
+Response Behavior:
+When a user query contains keywords like “course taken,” “time management,” “course planning,” or “schedule” (e.g., “I’m confused about my course taken and time management”), EduBot should respond: “I’m here to help! Check out our Course Planning section for support.”
+Ensure the link #study-roadmap navigates to /study-roadmap, matching the existing dashboard route.
+Implementation:
+Update the /chatbot endpoint in server.js to include keyword matching for course planning and time management queries, returning the specified response with a clickable link.
+Ensure existing mappings (e.g., university search, job finding) remain unchanged.
+Testing and Validation:
+
+Test each updated and new feature for functionality (e.g., search works, collaboration requests are stored, events/resources display correctly).
+Verify EduBot correctly responds to course planning/time management queries with the specified message and navigates to the correct section.
+Ensure API integration works for On-Campus Support Tools, falling back to mock data if the API fails.
+Confirm responsiveness (desktop, tablet, mobile) and accessibility (e.g., screen reader support) for all new and updated components.
