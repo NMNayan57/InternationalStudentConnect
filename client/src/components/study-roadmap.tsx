@@ -298,7 +298,11 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
       {/* Roadmap Steps */}
       <div className="space-y-4">
         {filteredSteps.map((step, index) => (
-          <Card key={step.id} className={`transition-all duration-200 ${step.completed ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-800' : ''}`}>
+          <Card key={step.id} className={`transition-all duration-200 ${
+            step.completed 
+              ? 'bg-gradient-to-r from-green-50 to-emerald-50 dark:bg-green-900/10 border-green-200 dark:border-green-800' 
+              : 'bg-gradient-to-r from-blue-50 to-cyan-50 dark:bg-slate-800 border-blue-200 dark:border-slate-700 hover:shadow-lg'
+          }`}>
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex items-start space-x-3">

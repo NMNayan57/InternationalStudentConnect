@@ -156,10 +156,7 @@ export default function Dashboard() {
         </div>
       </div>
       
-      {/* StudyPathAI Chatbot */}
-      <ChatBot />
-      
-      {/* Real-time Chat Support */}
+      {/* Unified Edujiin Chat Support */}
       <ChatWidget />
     </div>
   );

@@ -267,7 +267,7 @@ export default function RealTimeChat({ isOpen, onClose }: RealTimeChatProps) {
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder={isConnected ? "Type your message..." : "Connecting..."}
+            placeholder={isConnected ? "Type your message..." : "Getting ready..."}
             disabled={!isConnected}
             className="flex-1 text-sm"
           />
