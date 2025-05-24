@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { ArrowRight, BookOpen, GraduationCap, FileText, Globe, Users, Award, Target, CheckCircle, Star, MapPin, Zap } from "lucide-react";
 import logoImage from "@assets/logo2.png";
+import ChatWidget from "@/components/chat-widget";
 
 export default function Welcome() {
   const features = [
@@ -391,6 +392,9 @@ export default function Welcome() {
           </div>
         </div>
       </footer>
+
+      {/* Real-time Chat Support */}
+      <ChatWidget />
     </div>
   );
 }

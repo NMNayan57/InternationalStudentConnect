@@ -1,5 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { z } from "zod";
 
@@ -1810,6 +1811,222 @@ Please create a polished, professional document that stands out to admissions co
   });
 
   const httpServer = createServer(app);
+  
+  // Real-time Chat Support with WebSocket
+  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+  
+  // Store active connections and chat sessions
+  const chatSessions = new Map();
+  const supportAgents = new Set();
+  
+  wss.on('connection', (ws, req) => {
+    console.log('New WebSocket connection established');
+    
+    ws.on('message', async (data) => {
+      try {
+        const message = JSON.parse(data.toString());
+        
+        switch (message.type) {
+          case 'join_chat':
+            // Student joins chat
+            const sessionId = message.sessionId || `session_${Date.now()}`;
+            chatSessions.set(sessionId, {
+              student: ws,
+              agent: null,
+              messages: [],
+              startTime: new Date()
+            });
+            
+            ws.sessionId = sessionId;
+            ws.userType = 'student';
+            
+            // Send welcome message
+            ws.send(JSON.stringify({
+              type: 'chat_message',
+              sender: 'system',
+              message: 'Welcome to Edujiin Support! How can we help you today?',
+              timestamp: new Date().toISOString()
+            }));
+            
+            // If no agents available, use AI assistant
+            if (supportAgents.size === 0) {
+              setTimeout(async () => {
+                const aiResponse = await callDeepSeekAPI(
+                  `You are a helpful Edujiin support assistant. A student just joined the chat. Greet them warmly and ask how you can help with their international education journey. Keep it friendly and concise.`,
+                  false
+                );
+                
+                ws.send(JSON.stringify({
+                  type: 'chat_message',
+                  sender: 'ai_assistant',
+                  senderName: 'Edujiin Assistant',
+                  message: aiResponse || 'Hi there! I\'m here to help with any questions about studying abroad. What can I assist you with today?',
+                  timestamp: new Date().toISOString()
+                }));
+              }, 1000);
+            }
+            break;
+            
+          case 'join_as_agent':
+            // Support agent joins
+            supportAgents.add(ws);
+            ws.userType = 'agent';
+            
+            // Notify agent of waiting students
+            const waitingSessions = Array.from(chatSessions.entries())
+              .filter(([_, session]) => !session.agent)
+              .map(([id, session]) => ({
+                sessionId: id,
+                waitTime: Date.now() - session.startTime.getTime(),
+                messageCount: session.messages.length
+              }));
+              
+            ws.send(JSON.stringify({
+              type: 'waiting_students',
+              sessions: waitingSessions
+            }));
+            break;
+            
+          case 'student_message':
+            // Student sends message
+            const studentSession = chatSessions.get(ws.sessionId);
+            if (studentSession) {
+              const messageData = {
+                sender: 'student',
+                message: message.content,
+                timestamp: new Date().toISOString()
+              };
+              
+              studentSession.messages.push(messageData);
+              
+              // Send to agent if connected
+              if (studentSession.agent && studentSession.agent.readyState === WebSocket.OPEN) {
+                studentSession.agent.send(JSON.stringify({
+                  type: 'chat_message',
+                  sessionId: ws.sessionId,
+                  ...messageData
+                }));
+              } else {
+                // Use AI assistant if no agent available
+                try {
+                  const aiResponse = await callDeepSeekAPI(
+                    `You are a knowledgeable Edujiin support assistant helping international students. A student asked: "${message.content}". 
+                    
+                    Provide a helpful, accurate response about studying abroad, university applications, visas, scholarships, or any education-related topic. Keep it friendly and supportive.`,
+                    false
+                  );
+                  
+                  const aiMessageData = {
+                    type: 'chat_message',
+                    sender: 'ai_assistant',
+                    senderName: 'Edujiin Assistant',
+                    message: aiResponse || 'I\'m processing your question. Could you please provide more details so I can assist you better?',
+                    timestamp: new Date().toISOString()
+                  };
+                  
+                  studentSession.messages.push(aiMessageData);
+                  ws.send(JSON.stringify(aiMessageData));
+                } catch (error) {
+                  console.error('AI response error:', error);
+                  ws.send(JSON.stringify({
+                    type: 'chat_message',
+                    sender: 'system',
+                    message: 'I\'m having trouble processing your request right now. A support agent will be with you shortly.',
+                    timestamp: new Date().toISOString()
+                  }));
+                }
+              }
+            }
+            break;
+            
+          case 'agent_message':
+            // Agent sends message
+            const session = chatSessions.get(message.sessionId);
+            if (session && session.student.readyState === WebSocket.OPEN) {
+              const messageData = {
+                type: 'chat_message',
+                sender: 'agent',
+                senderName: message.agentName || 'Support Agent',
+                message: message.content,
+                timestamp: new Date().toISOString()
+              };
+              
+              session.messages.push(messageData);
+              session.student.send(JSON.stringify(messageData));
+            }
+            break;
+            
+          case 'assign_agent':
+            // Agent takes a chat session
+            const assignSession = chatSessions.get(message.sessionId);
+            if (assignSession && !assignSession.agent) {
+              assignSession.agent = ws;
+              ws.assignedSession = message.sessionId;
+              
+              // Send chat history to agent
+              ws.send(JSON.stringify({
+                type: 'chat_history',
+                sessionId: message.sessionId,
+                messages: assignSession.messages
+              }));
+              
+              // Notify student that agent joined
+              if (assignSession.student.readyState === WebSocket.OPEN) {
+                assignSession.student.send(JSON.stringify({
+                  type: 'chat_message',
+                  sender: 'system',
+                  message: 'A support agent has joined the chat and will assist you shortly.',
+                  timestamp: new Date().toISOString()
+                }));
+              }
+            }
+            break;
+        }
+      } catch (error) {
+        console.error('WebSocket message error:', error);
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'Failed to process message'
+        }));
+      }
+    });
+    
+    ws.on('close', () => {
+      // Clean up on disconnect
+      if (ws.userType === 'agent') {
+        supportAgents.delete(ws);
+        
+        // If agent was assigned to a session, reassign or use AI
+        if (ws.assignedSession) {
+          const session = chatSessions.get(ws.assignedSession);
+          if (session) {
+            session.agent = null;
+            
+            // Notify student
+            if (session.student.readyState === WebSocket.OPEN) {
+              session.student.send(JSON.stringify({
+                type: 'chat_message',
+                sender: 'system',
+                message: 'The agent has disconnected. We\'ll continue to assist you with our AI assistant.',
+                timestamp: new Date().toISOString()
+              }));
+            }
+          }
+        }
+      } else if (ws.userType === 'student' && ws.sessionId) {
+        // Clean up student session
+        chatSessions.delete(ws.sessionId);
+      }
+      
+      console.log('WebSocket connection closed');
+    });
+    
+    ws.on('error', (error) => {
+      console.error('WebSocket error:', error);
+    });
+  });
+  
+  console.log('Real-time chat support enabled with WebSocket server');
   return httpServer;
 }
 
