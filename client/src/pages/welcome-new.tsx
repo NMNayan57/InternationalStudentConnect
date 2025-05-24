@@ -1,6 +1,8 @@
 import { Link } from "wouter";
 import { ArrowRight, BookOpen, GraduationCap, FileText, Globe, Users, Award, Target, CheckCircle, Star, MapPin, Zap } from "lucide-react";
 import logoImage from "@assets/logo2.png";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import ChatWidget from "@/components/chat-widget";
 
 export default function Welcome() {
