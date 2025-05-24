@@ -37,15 +37,22 @@ export default function ApplicationTracker() {
 
   const addApplicationMutation = useMutation({
     mutationFn: async (data: typeof newApplication) => {
+      console.log('Sending application data:', data);
       const response = await fetch('/api/applications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers.get('content-type'));
+      
       if (!response.ok) {
         throw new Error('Failed to create application');
       }
-      return response.json();
+      
+      const result = await response.json();
+      console.log('Response data:', result);
+      return result;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/applications'] });
