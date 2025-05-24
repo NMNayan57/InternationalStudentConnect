@@ -31,15 +31,17 @@ export default function ApplicationTracker() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: applications = [], isLoading } = useQuery({
+  const { data: applications = [], isLoading } = useQuery<Application[]>({
     queryKey: ['/api/applications'],
   });
 
   const addApplicationMutation = useMutation({
-    mutationFn: (data: typeof newApplication) => apiRequest('/api/applications', {
-      method: 'POST',
-      body: data
-    }),
+    mutationFn: (data: typeof newApplication) => 
+      fetch('/api/applications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(res => res.json()),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/applications'] });
       setNewApplication({ university: '', program: '', deadline: '', status: 'not-started' });
@@ -59,10 +61,11 @@ export default function ApplicationTracker() {
 
   const updateStatusMutation = useMutation({
     mutationFn: ({ id, status }: { id: number, status: Application['status'] }) => 
-      apiRequest(`/api/applications/${id}`, {
+      fetch(`/api/applications/${id}`, {
         method: 'PATCH',
-        body: { status }
-      }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      }).then(res => res.json()),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/applications'] });
       toast({
