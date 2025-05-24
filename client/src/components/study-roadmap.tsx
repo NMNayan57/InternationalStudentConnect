@@ -191,10 +191,10 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  preparation: 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400',
-  applications: 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400',
-  visa: 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400',
-  departure: 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400'
+  preparation: 'bg-edujiin-primary/10 text-edujiin-primary border-edujiin-primary/20',
+  applications: 'bg-edujiin-secondary/10 text-edujiin-secondary border-edujiin-secondary/20',
+  visa: 'bg-edujiin-light-green/20 text-edujiin-primary border-edujiin-light-green/30',
+  departure: 'bg-gray-100 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300'
 };
 
 interface StudyRoadmapProps {
@@ -271,6 +271,7 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
             <Button
               variant={selectedCategory === 'all' ? 'default' : 'outline'}
               size="sm"
+              className={selectedCategory === 'all' ? 'bg-edujiin-primary hover:bg-edujiin-primary/90' : 'border-edujiin-primary text-edujiin-primary hover:bg-edujiin-primary hover:text-white'}
               onClick={() => setSelectedCategory('all')}
             >
               All Steps ({steps.length})
@@ -280,6 +281,7 @@ export default function StudyRoadmap({ onSectionChange }: StudyRoadmapProps = {}
                 key={category}
                 variant={selectedCategory === category ? 'default' : 'outline'}
                 size="sm"
+                className={selectedCategory === category ? 'bg-edujiin-secondary hover:bg-edujiin-secondary/90' : 'border-edujiin-secondary text-edujiin-secondary hover:bg-edujiin-secondary hover:text-white'}
                 onClick={() => setSelectedCategory(category)}
               >
                 <span className="capitalize">{category}</span> ({steps.filter(s => s.category === category).length})

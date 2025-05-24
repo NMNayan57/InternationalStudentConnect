@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { Link } from "wouter";
 import { GraduationCap, FileText, Microscope, Tickets, Globe, Briefcase, BookOpen, DollarSign, MapPin, CreditCard, Users } from "lucide-react";
 
 type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'pricing' | 'contact-team';
@@ -39,15 +40,17 @@ export default function NavigationSidebar({
     <aside className={`bg-primary text-primary-foreground shadow-lg border-r border-primary/20 ${isMobile ? 'w-full' : 'w-64'}`}>
       {/* Edujiin Header */}
       <div className="p-6 border-b border-primary-foreground/20">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-            <GraduationCap className="h-6 w-6 text-white" />
+        <Link href="/">
+          <div className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity">
+            <div className="w-10 h-10 bg-edujiin-secondary rounded-lg flex items-center justify-center">
+              <GraduationCap className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold">Edujiin</h1>
+              <p className="text-xs opacity-80">Your Smart Path to Global Education</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-bold">Edujiin</h1>
-            <p className="text-xs opacity-80">Your Smart Path to Global Education</p>
-          </div>
-        </div>
+        </Link>
       </div>
       
       <nav className="mt-6 px-4">
@@ -62,8 +65,8 @@ export default function NavigationSidebar({
                 variant={isActive ? "default" : "ghost"}
                 className={`w-full justify-start text-sm font-medium transition-all duration-200 ${
                   isActive 
-                    ? 'bg-secondary text-white shadow-md hover:bg-secondary/90' 
-                    : 'text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground'
+                    ? 'bg-edujiin-secondary text-white shadow-md hover:bg-edujiin-secondary/90' 
+                    : 'text-primary-foreground/80 hover:bg-edujiin-light-green/20 hover:text-white'
                 }`}
                 onClick={() => onSectionChange(item.id)}
               >
