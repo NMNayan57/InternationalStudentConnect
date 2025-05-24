@@ -4,8 +4,8 @@ import { GraduationCap, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linke
 export default function Footer() {
   return (
     <footer className="bg-[#1E3A8A] text-white">
-      {/* Streamlined Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Main Footer Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-1">
@@ -18,37 +18,52 @@ export default function Footer() {
                 <span className="text-xs text-[#A7F3D0] font-medium">Study Abroad Guide</span>
               </div>
             </Link>
-            <p className="text-gray-300 text-sm mb-3">
-              Empowering international students with AI-powered guidance for their academic journey abroad.
+            <p className="text-gray-300 text-sm leading-relaxed mb-4">
+              Empowering international students with AI-powered guidance for their academic journey abroad. 
+              From university selection to career planning, we're here to support your dreams.
             </p>
-            <div className="flex space-x-3">
+            <div className="flex space-x-4">
               <a 
                 href="#" 
-                className="w-7 h-7 bg-[#2DD4BF] hover:bg-[#A7F3D0] rounded-full flex items-center justify-center transition-colors duration-300"
+                className="w-8 h-8 bg-[#2DD4BF] hover:bg-[#A7F3D0] rounded-full flex items-center justify-center transition-colors duration-300"
                 aria-label="Facebook"
               >
-                <Facebook className="h-3 w-3 text-white" />
+                <Facebook className="h-4 w-4 text-white" />
               </a>
               <a 
                 href="#" 
-                className="w-7 h-7 bg-[#2DD4BF] hover:bg-[#A7F3D0] rounded-full flex items-center justify-center transition-colors duration-300"
+                className="w-8 h-8 bg-[#2DD4BF] hover:bg-[#A7F3D0] rounded-full flex items-center justify-center transition-colors duration-300"
                 aria-label="Twitter"
               >
-                <Twitter className="h-3 w-3 text-white" />
+                <Twitter className="h-4 w-4 text-white" />
               </a>
               <a 
                 href="#" 
-                className="w-7 h-7 bg-[#2DD4BF] hover:bg-[#A7F3D0] rounded-full flex items-center justify-center transition-colors duration-300"
+                className="w-8 h-8 bg-[#2DD4BF] hover:bg-[#A7F3D0] rounded-full flex items-center justify-center transition-colors duration-300"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-4 w-4 text-white" />
+              </a>
+              <a 
+                href="#" 
+                className="w-8 h-8 bg-[#2DD4BF] hover:bg-[#A7F3D0] rounded-full flex items-center justify-center transition-colors duration-300"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="h-3 w-3 text-white" />
+                <Linkedin className="h-4 w-4 text-white" />
+              </a>
+              <a 
+                href="#" 
+                className="w-8 h-8 bg-[#2DD4BF] hover:bg-[#A7F3D0] rounded-full flex items-center justify-center transition-colors duration-300"
+                aria-label="YouTube"
+              >
+                <Youtube className="h-4 w-4 text-white" />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-base font-semibold text-white mb-3">Quick Links</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/dashboard" className="text-gray-300 hover:text-[#A7F3D0] transition-colors duration-300 text-sm">
@@ -80,7 +95,7 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-base font-semibold text-white mb-3">Services</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Services</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/profile-evaluation" className="text-gray-300 hover:text-[#A7F3D0] transition-colors duration-300 text-sm">
@@ -112,7 +127,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-base font-semibold text-white mb-3">Contact Us</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Contact Us</h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
                 <Mail className="h-4 w-4 text-[#2DD4BF] mt-1 flex-shrink-0" />
@@ -147,9 +162,9 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Streamlined Bottom Bar */}
+      {/* Bottom Bar */}
       <div className="border-t border-[#2DD4BF]/20 bg-[#1E3A8A]/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-300 text-sm">
               © 2024 Edujiin. All rights reserved. Empowering students worldwide.
