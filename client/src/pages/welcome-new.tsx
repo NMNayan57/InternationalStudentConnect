@@ -235,7 +235,7 @@ export default function Welcome() {
                 />
                 <div className="flex justify-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                    <Star key={i} className="h-5 w-5 text-[#2DD4BF] fill-current" />
                   ))}
                 </div>
                 <p className="text-secondary-gray italic mb-4">"{testimonial.text}"</p>
