@@ -94,7 +94,7 @@ export default function Welcome() {
       <Header />
 
       {/* Hero Section - Light Minty Green to Medium Teal Gradient */}
-      <section className="pt-24 pb-20 mt-16 bg-gradient-to-br from-[#A7F3D0] to-[#2DD4BF]">
+      <section className="pt-28 pb-20 mt-20 bg-gradient-to-br from-[#A7F3D0] to-[#2DD4BF]">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-4xl mx-auto">
             {/* Decorative swirl and dots inspired by Edujiin logo */}

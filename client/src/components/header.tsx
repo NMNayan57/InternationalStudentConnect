@@ -15,36 +15,36 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-[#1E3A8A] to-[#2DD4BF] border-b border-[#60A5FA] shadow-md">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-[#1E3A8A] to-[#2DD4BF] border-b-2 border-[#60A5FA] shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo and Brand with Decorative Swirl */}
-          <Link href="/" className="flex items-center space-x-3 group relative">
-            <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
-              <GraduationCap className="h-6 w-6 text-white" />
+        <div className="flex items-center justify-between h-20 py-2">
+          {/* Logo and Brand with Enhanced Visual Prominence */}
+          <Link href="/" className="flex items-center space-x-4 group relative">
+            <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center group-hover:bg-white/30 transition-all duration-300 shadow-lg">
+              <GraduationCap className="h-7 w-7 text-white" />
             </div>
             <div className="flex flex-col relative">
               <div className="flex items-center space-x-2">
-                <span className="text-xl font-bold text-white">Edujiin</span>
-                {/* Decorative Swirl Element */}
-                <svg className="w-4 h-4 text-[#60A5FA]" viewBox="0 0 24 24" fill="currentColor">
+                <span className="text-2xl font-bold text-white tracking-wide">Edujiin</span>
+                {/* Enhanced Decorative Swirl Element */}
+                <svg className="w-5 h-5 text-[#A7F3D0] animate-pulse" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.19 0 2.34-.21 3.41-.6.3-.11.49-.4.49-.72 0-.43-.35-.78-.78-.78-.19 0-.37.07-.51.18-.9.32-1.87.49-2.87.49-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8c0 1.19-.26 2.32-.73 3.33-.47 1.01-1.13 1.92-1.95 2.67-.41.38-.43 1.02-.05 1.43.38.41 1.02.43 1.43.05 1.02-.94 1.85-2.08 2.44-3.34.59-1.26.9-2.6.9-3.99C22 6.48 17.52 2 12 2z"/>
                 </svg>
               </div>
-              <span className="text-xs text-white/80 font-medium">Study Abroad Guide</span>
+              <span className="text-sm text-white/90 font-medium tracking-wide">Study Abroad Guide</span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          {/* Enhanced Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-10">
             {navigationLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                className={`px-4 py-3 rounded-lg text-base font-semibold transition-all duration-300 ${
                   link.active
-                    ? 'text-white bg-white/20 border-b-2 border-white'
-                    : 'text-white hover:text-[#2DD4BF] hover:bg-white/10'
+                    ? 'text-white bg-white/25 border-b-2 border-[#A7F3D0] shadow-md'
+                    : 'text-white/90 hover:text-white hover:bg-white/15 hover:scale-105'
                 }`}
               >
                 {link.label}
@@ -52,20 +52,20 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Enhanced Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-5">
             <Button
               variant="outline"
-              size="sm"
-              className="text-white border-white/30 hover:bg-white/20 hover:border-white"
+              size="lg"
+              className="text-white border-white/40 hover:bg-white/20 hover:border-white px-6 py-3 font-semibold transition-all duration-300 hover:scale-105"
             >
-              <MessageCircle className="h-4 w-4 mr-2" />
+              <MessageCircle className="h-5 w-5 mr-2" />
               Support
             </Button>
             <Link href="/dashboard">
               <Button 
-                size="sm"
-                className="bg-white/20 hover:bg-white/30 text-white border-white/30 hover:border-white"
+                size="lg"
+                className="bg-white/25 hover:bg-white/35 text-white border-white/40 hover:border-white px-6 py-3 font-semibold shadow-md transition-all duration-300 hover:scale-105"
               >
                 Get Started
               </Button>
