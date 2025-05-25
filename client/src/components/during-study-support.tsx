@@ -145,14 +145,6 @@ export default function DuringStudySupport({ aiEnabled = false }: DuringStudySup
       case 'course-guidance':
         return (
           <div className="space-y-4">
-            <Button 
-              onClick={() => setSelectedDetailView('course')}
-              className="mb-4"
-              variant="outline"
-            >
-              <BookOpen className="h-4 w-4 mr-2" />
-              View Detailed Course Planning Tools
-            </Button>
             <Card>
               <CardHeader>
                 <CardTitle>Academic Support Services</CardTitle>
@@ -177,6 +169,17 @@ export default function DuringStudySupport({ aiEnabled = false }: DuringStudySup
                       <li>• Academic writing centers</li>
                     </ul>
                   </div>
+                </div>
+                
+                <div className="pt-4 border-t">
+                  <Button 
+                    onClick={() => setSelectedDetailView('course')}
+                    className="w-full"
+                    variant="default"
+                  >
+                    <BookOpen className="h-4 w-4 mr-2" />
+                    View Detailed Course Planning Tools
+                  </Button>
                 </div>
               </CardContent>
             </Card>
