@@ -35,6 +35,8 @@ function Router() {
       ) : (
         <>
           <Route path="/" component={Landing} />
+          {/* Handle auth routes by redirecting to home */}
+          <Route path="/api/*" component={() => { window.location.href = '/'; return null; }} />
           <Route component={NotFound} />
         </>
       )}
