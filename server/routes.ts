@@ -107,6 +107,86 @@ async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<a
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
+  // AI Profile Analysis endpoint
+  app.post("/api/analyze-profile", async (req, res) => {
+    try {
+      const { profileData } = req.body;
+      
+      if (!profileData) {
+        return res.status(400).json({ error: "Profile data is required" });
+      }
+
+      const profile = profileData.profile || {};
+      
+      const prompt = `Analyze this international student profile and provide comprehensive recommendations:
+
+STUDENT PROFILE:
+- Name: ${profileData.firstName} ${profileData.lastName}
+- Field of Study: ${profile.fieldOfStudy || 'Not specified'}
+- Academic Level: ${profile.degreeLevel || 'Not specified'}  
+- Current Institution: ${profile.currentInstitution || 'Not specified'}
+- GPA: ${profile.gpa || 'Not provided'}
+- TOEFL: ${profile.toeflScore || 'Not taken'} | IELTS: ${profile.ieltsScore || 'Not taken'}
+- SAT: ${profile.satScore || 'Not taken'} | GRE: ${profile.greScore || 'Not taken'}
+- Budget: $${profile.budget || 'Not specified'}
+- Preferred Countries: ${profile.preferredCountries?.join(', ') || 'Not specified'}
+- Career Goals: ${profile.careerGoals || 'Not specified'}
+- Skills: ${profile.skills?.join(', ') || 'None listed'}
+- Work Experience: ${profile.workExperience?.length || 0} entries
+- Research Experience: ${profile.researchExperience?.length || 0} entries
+
+PROVIDE DETAILED ANALYSIS: Based on this profile, analyze strengths, weaknesses, and provide specific university recommendations with match percentages. Include improvement areas and test score recommendations.
+
+RETURN ONLY VALID JSON:
+{
+  "profileCompleteness": 75,
+  "aiAnalysis": {
+    "strengthsWeaknesses": "Based on your profile analysis, your key strengths include strong academic background. Areas for improvement include test scores and research experience.",
+    "recommendedUniversities": [
+      {
+        "name": "Stanford University",
+        "country": "United States", 
+        "matchPercentage": 92,
+        "reasoning": "Excellent match for your academic background and goals",
+        "requirements": "Improve TOEFL score to 110+"
+      },
+      {
+        "name": "University of Toronto",
+        "country": "Canada", 
+        "matchPercentage": 88,
+        "reasoning": "Strong programs in your field with good funding opportunities",
+        "requirements": "Complete GRE with 320+ score"
+      }
+    ],
+    "improvementAreas": [
+      {
+        "area": "Test Scores",
+        "priority": "High",
+        "actionSteps": ["Take TOEFL/IELTS", "Aim for competitive scores"]
+      },
+      {
+        "area": "Research Experience",
+        "priority": "Medium",
+        "actionSteps": ["Join research projects", "Publish papers"]
+      }
+    ],
+    "testRecommendations": {
+      "requiredTests": ["TOEFL", "GRE"],
+      "targetScores": "TOEFL: 110+, GRE: 320+",
+      "timeline": "6 months before application deadlines"
+    }
+  }
+}`;
+
+      const analysis = await callDeepSeekAPI(prompt, true);
+      res.json(analysis);
+      
+    } catch (error: any) {
+      console.error("Profile analysis error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
   // Application Tracker Endpoints - Must be defined FIRST
   app.get("/api/applications", async (req, res) => {
     try {
