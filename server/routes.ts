@@ -106,8 +106,6 @@ async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<a
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Ensure body parsing is available
-  app.use(express.json());
   
   // Application Tracker Endpoints - Must be defined FIRST
   app.get("/api/applications", async (req, res) => {
