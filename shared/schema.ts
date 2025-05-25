@@ -1,67 +1,22 @@
-import { pgTable, text, serial, integer, boolean, jsonb, timestamp, index } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, jsonb, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Session storage table for Replit Auth
-export const sessions = pgTable(
-  "sessions",
-  {
-    sid: text("sid").primaryKey(),
-    sess: jsonb("sess").notNull(),
-    expire: timestamp("expire").notNull(),
-  },
-  (table) => [index("IDX_session_expire").on(table.expire)],
-);
-
-// User storage table for Replit Auth
 export const users = pgTable("users", {
-  id: text("id").primaryKey().notNull(), // Replit user ID
-  email: text("email").unique(),
-  firstName: text("first_name"),
-  lastName: text("last_name"),
-  profileImageUrl: text("profile_image_url"),
-  profileCompleted: boolean("profile_completed").default(false),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  id: serial("id").primaryKey(),
+  username: text("username").notNull().unique(),
+  password: text("password").notNull(),
 });
 
 export const profiles = pgTable("profiles", {
   id: serial("id").primaryKey(),
-  userId: text("user_id").references(() => users.id),
-  // Personal Information
-  dateOfBirth: text("date_of_birth"),
-  nationality: text("nationality"),
-  phoneNumber: text("phone_number"),
-  address: text("address"),
-  // Academic Information
-  currentEducationLevel: text("current_education_level"),
-  institution: text("institution"),
-  major: text("major"),
+  userId: integer("user_id").references(() => users.id),
   gpa: text("gpa"),
-  graduationYear: text("graduation_year"),
-  // Test Scores
   toeflScore: integer("toefl_score"),
-  ieltsScore: text("ielts_score"),
-  satScore: integer("sat_score"),
-  greScore: integer("gre_score"),
-  gmatScore: integer("gmat_score"),
-  // Preferences
-  targetCountries: text("target_countries").array(),
-  fieldOfStudy: text("field_of_study"),
-  preferredDegreeLevel: text("preferred_degree_level"),
+  satGreScore: integer("sat_gre_score"),
   budget: integer("budget"),
-  // Experience
-  workExperience: text("work_experience"),
+  fieldOfStudy: text("field_of_study"),
   extracurriculars: text("extracurriculars"),
-  achievements: text("achievements"),
-  // Profile completion tracking
-  personalInfoCompleted: boolean("personal_info_completed").default(false),
-  academicInfoCompleted: boolean("academic_info_completed").default(false),
-  preferencesCompleted: boolean("preferences_completed").default(false),
-  documentsCompleted: boolean("documents_completed").default(false),
-  workExperienceCompleted: boolean("work_experience_completed").default(false),
-  extracurricularsCompleted: boolean("extracurriculars_completed").default(false),
-  
   strengthScore: integer("strength_score"),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -78,7 +33,7 @@ export const universityMatches = pgTable("university_matches", {
 
 export const documents = pgTable("documents", {
   id: serial("id").primaryKey(),
-  userId: text("user_id").references(() => users.id),
+  userId: integer("user_id").references(() => users.id),
   documentType: text("document_type").notNull(),
   originalContent: text("original_content").notNull(),
   enhancedContent: text("enhanced_content"),
@@ -227,17 +182,8 @@ export const applications = pgTable("applications", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-// UpsertUser type for Replit Auth
-export type UpsertUser = {
-  id: string;
-  email?: string | null;
-  firstName?: string | null;
-  lastName?: string | null;
-  profileImageUrl?: string | null;
-};
-
 // Insert schemas
-export const insertUserSchema = createInsertSchema(users).omit({ createdAt: true, updatedAt: true });
+export const insertUserSchema = createInsertSchema(users).omit({ id: true });
 export const insertProfileSchema = createInsertSchema(profiles).omit({ id: true, createdAt: true });
 export const insertDocumentSchema = createInsertSchema(documents).omit({ id: true, createdAt: true });
 export const insertResearchInterestSchema = createInsertSchema(researchInterests).omit({ id: true });

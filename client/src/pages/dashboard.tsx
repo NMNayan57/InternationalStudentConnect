@@ -16,23 +16,20 @@ import DuringStudySupport from "@/components/during-study-support";
 import OnCampusSupport from "@/components/on-campus-support";
 import PricingPlans from "@/components/pricing-plans";
 import ContactTeam from "@/components/contact-team";
-import PersonalizedDashboard from "@/components/personalized-dashboard";
 import { ChatBot } from "@/components/chat-bot";
 import { Button } from "@/components/ui/button";
 import { Bell, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useAIToggle } from "@/hooks/use-ai-toggle";
 
-type Section = 'personalized-dashboard' | 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'application-tracker' | 'during-study-support' | 'on-campus-support' | 'pricing' | 'contact-team';
+type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'application-tracker' | 'during-study-support' | 'on-campus-support' | 'pricing' | 'contact-team';
 
 export default function Dashboard() {
-  const [currentSection, setCurrentSection] = useState<Section>('personalized-dashboard');
+  const [currentSection, setCurrentSection] = useState<Section>('study-roadmap');
   const { aiEnabled, toggleAI } = useAIToggle();
 
   const renderSection = () => {
     switch (currentSection) {
-      case 'personalized-dashboard':
-        return <PersonalizedDashboard onSectionChange={(section) => setCurrentSection(section as Section)} />;
       case 'ielts-preparation':
         return <StandardizedTestPrep aiEnabled={aiEnabled} />;
       case 'study-roadmap':

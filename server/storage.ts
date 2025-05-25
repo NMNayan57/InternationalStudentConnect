@@ -1,26 +1,25 @@
 import { 
   users, profiles, universityMatches, documents, researchInterests, professorMatches,
   visaApplications, culturalAdaptation, careerProfiles, researchProjects, grants, 
-  collaborationRequests, jobs, culturalResources, campusEvents, campusResources, applications,
-  type User, type UpsertUser, type Profile, type InsertProfile, type Document, type InsertDocument,
+  collaborationRequests, jobs, culturalResources, campusEvents, campusResources,
+  type User, type InsertUser, type Profile, type InsertProfile, type Document, type InsertDocument,
   type ResearchInterest, type InsertResearchInterest, type VisaApplication, type InsertVisaApplication,
   type CulturalAdaptation, type InsertCulturalAdaptation, type CareerProfile, type InsertCareerProfile,
   type ResearchProject, type InsertResearchProject, type Grant, type InsertGrant,
   type CollaborationRequest, type InsertCollaborationRequest, type Job, type InsertJob,
   type CulturalResource, type InsertCulturalResource, type CampusEvent, type InsertCampusEvent,
-  type CampusResource, type InsertCampusResource, type Application, type InsertApplication
+  type CampusResource, type InsertCampusResource
 } from "@shared/schema";
-import { db } from "./db";
-import { eq } from "drizzle-orm";
 
 export interface IStorage {
-  // User management for Replit Auth
-  getUser(id: string): Promise<User | undefined>;
-  upsertUser(user: UpsertUser): Promise<User>;
+  // User management
+  getUser(id: number): Promise<User | undefined>;
+  getUserByUsername(username: string): Promise<User | undefined>;
+  createUser(user: InsertUser): Promise<User>;
 
   // Profile management
   createProfile(profile: InsertProfile): Promise<Profile>;
-  getProfileByUserId(userId: string): Promise<Profile | undefined>;
+  getProfileByUserId(userId: number): Promise<Profile | undefined>;
   updateProfile(profileId: number, profile: Partial<InsertProfile>): Promise<Profile>;
 
   // University matches
@@ -375,216 +374,4 @@ export class MemStorage implements IStorage {
   }
 }
 
-// Database Storage Implementation
-export class DatabaseStorage implements IStorage {
-  // User operations for Replit Auth
-  async getUser(id: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user;
-  }
-
-  async upsertUser(userData: UpsertUser): Promise<User> {
-    const [user] = await db
-      .insert(users)
-      .values(userData)
-      .onConflictDoUpdate({
-        target: users.id,
-        set: {
-          ...userData,
-          updatedAt: new Date(),
-        },
-      })
-      .returning();
-    return user;
-  }
-
-  // Profile management
-  async createProfile(profile: InsertProfile): Promise<Profile> {
-    const [newProfile] = await db
-      .insert(profiles)
-      .values(profile)
-      .returning();
-    return newProfile;
-  }
-
-  async getProfileByUserId(userId: string): Promise<Profile | undefined> {
-    const [profile] = await db.select().from(profiles).where(eq(profiles.userId, userId));
-    return profile;
-  }
-
-  async updateProfile(profileId: number, profileData: Partial<InsertProfile>): Promise<Profile> {
-    const [profile] = await db
-      .update(profiles)
-      .set(profileData)
-      .where(eq(profiles.id, profileId))
-      .returning();
-    return profile;
-  }
-
-  // University matches
-  async createUniversityMatches(profileId: number, matches: any[]): Promise<void> {
-    if (matches.length > 0) {
-      await db.insert(universityMatches).values(matches.map(match => ({
-        ...match,
-        profileId
-      })));
-    }
-  }
-
-  async getUniversityMatchesByProfileId(profileId: number): Promise<any[]> {
-    return await db.select().from(universityMatches).where(eq(universityMatches.profileId, profileId));
-  }
-
-  // Document management
-  async createDocument(document: InsertDocument): Promise<Document> {
-    const [newDocument] = await db
-      .insert(documents)
-      .values(document)
-      .returning();
-    return newDocument;
-  }
-
-  async getDocumentsByUserId(userId: string): Promise<Document[]> {
-    return await db.select().from(documents).where(eq(documents.userId, userId));
-  }
-
-  // Application management
-  async createApplication(application: InsertApplication): Promise<Application> {
-    const [newApplication] = await db
-      .insert(applications)
-      .values(application)
-      .returning();
-    return newApplication;
-  }
-
-  async getApplications(): Promise<Application[]> {
-    return await db.select().from(applications);
-  }
-
-  async getApplicationsByUserId(userId: string): Promise<Application[]> {
-    return await db.select().from(applications).where(eq(applications.userId, userId));
-  }
-
-  async updateApplication(id: number, applicationData: Partial<InsertApplication>): Promise<Application> {
-    const [application] = await db
-      .update(applications)
-      .set(applicationData)
-      .where(eq(applications.id, id))
-      .returning();
-    return application;
-  }
-
-  // Other required methods (stubbed for now)
-  async createResearchInterest(interest: InsertResearchInterest): Promise<ResearchInterest> {
-    const [newInterest] = await db.insert(researchInterests).values(interest).returning();
-    return newInterest;
-  }
-
-  async getResearchInterestByUserId(userId: string): Promise<ResearchInterest | undefined> {
-    const [interest] = await db.select().from(researchInterests).where(eq(researchInterests.userId, userId));
-    return interest;
-  }
-
-  async createProfessorMatches(researchInterestId: number, matches: any[]): Promise<void> {
-    // Implementation for professor matches
-  }
-
-  async getProfessorMatchesByResearchInterestId(researchInterestId: number): Promise<any[]> {
-    return [];
-  }
-
-  async createVisaApplication(application: InsertVisaApplication): Promise<VisaApplication> {
-    const [newApplication] = await db.insert(visaApplications).values(application).returning();
-    return newApplication;
-  }
-
-  async getVisaApplicationByUserId(userId: string): Promise<VisaApplication | undefined> {
-    const [application] = await db.select().from(visaApplications).where(eq(visaApplications.userId, userId));
-    return application;
-  }
-
-  async createCulturalAdaptation(adaptation: InsertCulturalAdaptation): Promise<CulturalAdaptation> {
-    const [newAdaptation] = await db.insert(culturalAdaptation).values(adaptation).returning();
-    return newAdaptation;
-  }
-
-  async getCulturalAdaptationByUserId(userId: string): Promise<CulturalAdaptation | undefined> {
-    const [adaptation] = await db.select().from(culturalAdaptation).where(eq(culturalAdaptation.userId, userId));
-    return adaptation;
-  }
-
-  async createCareerProfile(profile: InsertCareerProfile): Promise<CareerProfile> {
-    const [newProfile] = await db.insert(careerProfiles).values(profile).returning();
-    return newProfile;
-  }
-
-  async getCareerProfileByUserId(userId: string): Promise<CareerProfile | undefined> {
-    const [profile] = await db.select().from(careerProfiles).where(eq(careerProfiles.userId, userId));
-    return profile;
-  }
-
-  async createResearchProject(project: InsertResearchProject): Promise<ResearchProject> {
-    const [newProject] = await db.insert(researchProjects).values(project).returning();
-    return newProject;
-  }
-
-  async getResearchProjects(): Promise<ResearchProject[]> {
-    return await db.select().from(researchProjects);
-  }
-
-  async createGrant(grant: InsertGrant): Promise<Grant> {
-    const [newGrant] = await db.insert(grants).values(grant).returning();
-    return newGrant;
-  }
-
-  async getGrants(): Promise<Grant[]> {
-    return await db.select().from(grants);
-  }
-
-  async createCollaborationRequest(request: InsertCollaborationRequest): Promise<CollaborationRequest> {
-    const [newRequest] = await db.insert(collaborationRequests).values(request).returning();
-    return newRequest;
-  }
-
-  async getCollaborationRequests(): Promise<CollaborationRequest[]> {
-    return await db.select().from(collaborationRequests);
-  }
-
-  async createJob(job: InsertJob): Promise<Job> {
-    const [newJob] = await db.insert(jobs).values(job).returning();
-    return newJob;
-  }
-
-  async getJobs(): Promise<Job[]> {
-    return await db.select().from(jobs);
-  }
-
-  async createCulturalResource(resource: InsertCulturalResource): Promise<CulturalResource> {
-    const [newResource] = await db.insert(culturalResources).values(resource).returning();
-    return newResource;
-  }
-
-  async getCulturalResources(): Promise<CulturalResource[]> {
-    return await db.select().from(culturalResources);
-  }
-
-  async createCampusEvent(event: InsertCampusEvent): Promise<CampusEvent> {
-    const [newEvent] = await db.insert(campusEvents).values(event).returning();
-    return newEvent;
-  }
-
-  async getCampusEvents(): Promise<CampusEvent[]> {
-    return await db.select().from(campusEvents);
-  }
-
-  async createCampusResource(resource: InsertCampusResource): Promise<CampusResource> {
-    const [newResource] = await db.insert(campusResources).values(resource).returning();
-    return newResource;
-  }
-
-  async getCampusResources(): Promise<CampusResource[]> {
-    return await db.select().from(campusResources);
-  }
-}
-
-export const storage = new DatabaseStorage();
+export const storage = new MemStorage();

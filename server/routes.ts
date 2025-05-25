@@ -106,44 +106,6 @@ async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<a
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Set up authentication middleware
-  await setupAuth(app);
-
-  // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
-  });
-
-  // Profile routes
-  app.post('/api/profile', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const profileData = insertProfileSchema.parse({ ...req.body, userId });
-      const profile = await storage.createProfile(profileData);
-      res.json(profile);
-    } catch (error) {
-      console.error("Error creating profile:", error);
-      res.status(500).json({ message: "Failed to create profile" });
-    }
-  });
-
-  app.get('/api/profile', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const profile = await storage.getProfileByUserId(userId);
-      res.json(profile);
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      res.status(500).json({ message: "Failed to fetch profile" });
-    }
-  });
   
   // Application Tracker Endpoints - Must be defined FIRST
   app.get("/api/applications", async (req, res) => {
