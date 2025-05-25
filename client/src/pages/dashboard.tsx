@@ -16,13 +16,14 @@ import DuringStudySupport from "@/components/during-study-support";
 import OnCampusSupport from "@/components/on-campus-support";
 import PricingPlans from "@/components/pricing-plans";
 import ContactTeam from "@/components/contact-team";
+import UserProfileManagement from "@/components/user-profile-management";
 import { ChatBot } from "@/components/chat-bot";
 import { Button } from "@/components/ui/button";
 import { Bell, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useAIToggle } from "@/hooks/use-ai-toggle";
 
-type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'application-tracker' | 'during-study-support' | 'on-campus-support' | 'pricing' | 'contact-team';
+type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'application-tracker' | 'during-study-support' | 'on-campus-support' | 'pricing' | 'contact-team' | 'user-profile';
 
 export default function Dashboard() {
   const [currentSection, setCurrentSection] = useState<Section>('study-roadmap');
@@ -62,6 +63,8 @@ export default function Dashboard() {
         return <PricingPlans />;
       case 'contact-team':
         return <ContactTeam />;
+      case 'user-profile':
+        return <UserProfileManagement />;
       default:
         return <StandardizedTestPrep aiEnabled={aiEnabled} />;
     }

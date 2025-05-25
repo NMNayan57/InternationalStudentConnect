@@ -5,20 +5,58 @@ import { z } from "zod";
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
+  email: text("email").notNull().unique(),
   password: text("password").notNull(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  profilePicture: text("profile_picture"),
+  isEmailVerified: boolean("is_email_verified").default(false),
+  mfaEnabled: boolean("mfa_enabled").default(false),
+  lastLogin: timestamp("last_login"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const profiles = pgTable("profiles", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id),
+  // Academic Records
   gpa: text("gpa"),
   toeflScore: integer("toefl_score"),
-  satGreScore: integer("sat_gre_score"),
-  budget: integer("budget"),
+  ieltsScore: text("ielts_score"),
+  satScore: integer("sat_score"),
+  greScore: integer("gre_score"),
   fieldOfStudy: text("field_of_study"),
-  extracurriculars: text("extracurriculars"),
+  degreeLevel: text("degree_level"), // Bachelor's, Master's, PhD
+  currentInstitution: text("current_institution"),
+  graduationYear: text("graduation_year"),
+  
+  // Extracurricular & Achievements
+  extracurriculars: jsonb("extracurriculars"), // Array of activities
+  achievements: jsonb("achievements"), // Awards, honors, etc.
+  researchExperience: jsonb("research_experience"),
+  workExperience: jsonb("work_experience"),
+  publications: jsonb("publications"),
+  skills: text("skills").array(),
+  
+  // Preferences
+  budget: integer("budget"),
+  preferredCountries: text("preferred_countries").array(),
+  programTypes: text("program_types").array(), // MS, PhD, etc.
+  careerGoals: text("career_goals"),
+  
+  // Family Details
+  familyDetails: jsonb("family_details"), // spouse, children info
+  
+  // AI Analysis Results
   strengthScore: integer("strength_score"),
+  aiAnalysis: jsonb("ai_analysis"), // strengths, weaknesses, recommendations
+  profileCompleteness: integer("profile_completeness").default(0),
+  
+  // Journey Tracking
+  journeyStage: text("journey_stage").default("pre-application"), // pre-application, applying, admitted, enrolled
+  
   createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const universityMatches = pgTable("university_matches", {
@@ -182,9 +220,58 @@ export const applications = pgTable("applications", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// User Settings and Preferences
+export const userSettings = pgTable("user_settings", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  emailNotifications: boolean("email_notifications").default(true),
+  smsNotifications: boolean("sms_notifications").default(false),
+  marketingEmails: boolean("marketing_emails").default(true),
+  language: text("language").default("en"),
+  timezone: text("timezone").default("UTC"),
+  theme: text("theme").default("light"), // light, dark, auto
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Document Management with Version Control
+export const profileDocuments = pgTable("profile_documents", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  fileName: text("file_name").notNull(),
+  fileType: text("file_type").notNull(), // CV, transcript, certificate, etc.
+  filePath: text("file_path").notNull(),
+  fileSize: integer("file_size").notNull(),
+  mimeType: text("mime_type").notNull(),
+  version: integer("version").default(1),
+  isActive: boolean("is_active").default(true),
+  uploadedAt: timestamp("uploaded_at").defaultNow(),
+});
+
+// Password Reset Tokens
+export const passwordResetTokens = pgTable("password_reset_tokens", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  token: text("token").notNull().unique(),
+  expiresAt: timestamp("expires_at").notNull(),
+  used: boolean("used").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Email Verification Tokens
+export const emailVerificationTokens = pgTable("email_verification_tokens", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  token: text("token").notNull().unique(),
+  email: text("email").notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  used: boolean("used").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Insert schemas
-export const insertUserSchema = createInsertSchema(users).omit({ id: true });
-export const insertProfileSchema = createInsertSchema(profiles).omit({ id: true, createdAt: true });
+export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });
+export const insertProfileSchema = createInsertSchema(profiles).omit({ id: true, createdAt: true, updatedAt: true });
 export const insertDocumentSchema = createInsertSchema(documents).omit({ id: true, createdAt: true });
 export const insertResearchInterestSchema = createInsertSchema(researchInterests).omit({ id: true });
 export const insertVisaApplicationSchema = createInsertSchema(visaApplications).omit({ id: true });
@@ -198,6 +285,10 @@ export const insertCulturalResourceSchema = createInsertSchema(culturalResources
 export const insertCampusEventSchema = createInsertSchema(campusEvents).omit({ id: true, createdAt: true });
 export const insertCampusResourceSchema = createInsertSchema(campusResources).omit({ id: true, createdAt: true });
 export const insertApplicationSchema = createInsertSchema(applications).omit({ id: true, createdAt: true });
+export const insertUserSettingsSchema = createInsertSchema(userSettings).omit({ id: true, createdAt: true, updatedAt: true });
+export const insertProfileDocumentSchema = createInsertSchema(profileDocuments).omit({ id: true, uploadedAt: true });
+export const insertPasswordResetTokenSchema = createInsertSchema(passwordResetTokens).omit({ id: true, createdAt: true });
+export const insertEmailVerificationTokenSchema = createInsertSchema(emailVerificationTokens).omit({ id: true, createdAt: true });
 
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -230,3 +321,11 @@ export type InsertCampusResource = z.infer<typeof insertCampusResourceSchema>;
 export type CampusResource = typeof campusResources.$inferSelect;
 export type InsertApplication = z.infer<typeof insertApplicationSchema>;
 export type Application = typeof applications.$inferSelect;
+export type InsertUserSettings = z.infer<typeof insertUserSettingsSchema>;
+export type UserSettings = typeof userSettings.$inferSelect;
+export type InsertProfileDocument = z.infer<typeof insertProfileDocumentSchema>;
+export type ProfileDocument = typeof profileDocuments.$inferSelect;
+export type InsertPasswordResetToken = z.infer<typeof insertPasswordResetTokenSchema>;
+export type PasswordResetToken = typeof passwordResetTokens.$inferSelect;
+export type InsertEmailVerificationToken = z.infer<typeof insertEmailVerificationTokenSchema>;
+export type EmailVerificationToken = typeof emailVerificationTokens.$inferSelect;
