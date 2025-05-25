@@ -1,0 +1,88 @@
+Prompt for Replit Agent: Develop Edujiin User Profile Management Feature
+
+Replit Agent, within my existing Edujiin project on Replit, create a fully functional User Profile Management feature with login, user account settings, personalized dashboard, and forgot password functionality for international students planning to study abroad. Use Replit Auth for authentication and the project’s existing database for storage, leveraging the DeepSeek AI via the OpenRouter API key already configured in the project for profile analysis. . Ensure it supports 2,000+ concurrent users, is error-free, and uses JavaScript, React, and Tailwind CSS for the frontend, and Node.js with Express for the backend. Generate mock data (2,000 profiles, 500 documents) and provide a real-time preview in the Replit workspace. Enable code modification via natural language prompts, host the app on Replit’s cloud with Autoscale deployment, and configure database connections automatically. Ensure GDPR and CCPA compliance.
+
+Feature Requirements: User Profile Management
+
+Description: Create a system for users to log in, manage profiles, adjust account settings, recover passwords, and view a personalized dashboard, using Replit Auth and the existing database.
+Functionality:
+Login with Replit Auth:
+Secure login via Replit Auth, supporting email/password and OAuth (Google, GitHub).
+Multi-factor authentication (MFA) with email OTP.
+Redirect to dashboard after login.
+Forgot Password:
+Forgot password flow using Replit Auth, sending a reset link via email (use Replit’s email service or mock for testing).
+Password reset form with validation (8+ characters, mixed case).
+User Account Settings:
+Settings page to update email, password, MFA, profile preferences (e.g., countries, budget), and notification preferences.
+GDPR-compliant account deletion with data removal from the database.
+Profile Creation and Management:
+Form capturing:
+Academic records (GPA, transcripts, TOEFL/IELTS/SAT/GRE).
+Extracurricular activities, achievements.
+Research interests/publications.
+Work experience/skills.
+Preferences (budget, countries, program types, career goals).
+Family details (spouse, children’s schooling).
+Secure document upload (transcripts, CVs; max 5MB, PDF/JPG/PNG) with version control and preview.
+Profile editing with version history and exportable PDF summary.
+Personalized Dashboard:
+Display profile completion percentage, strengths/weaknesses (from AI analysis), and study abroad journey progress (e.g., “Pre-Application”).
+Interactive widgets: progress bars, summary cards, quick actions (e.g., “Edit Profile”).
+Responsive UI with smooth animations, micro-interactions (e.g., hover effects), and intuitive navigation.
+AI Integration (DeepSeek):
+Analyze profiles for strengths/weaknesses and recommendations.
+LLM Prompt: “Analyze this student profile [JSON: {gpa: 3.8, toefl: 105, activities: [{name: ‘Debate Club’, role: ‘Member’}], research: [], preferences: {country: ‘USA’, budget: 30000}, work: [], family: {dependents: 0}}]. Provide a strengths/weaknesses report and three actionable recommendations to improve university application competitiveness (e.g., ‘Join a research project’). Return: {strengths: [], weaknesses: [], recommendations: []}.”
+Non-AI Fallback:
+Rule-based logic (e.g., GPA > 3.5 = “Strong Academics”).
+Static recommendations (e.g., “Add volunteer experience”).
+Data Requirements:
+Use Replit’s existing database (e.g., Replit DB).
+Mock data: 2,000 profiles (varied GPA, nationalities), 500 documents (transcripts, CVs).
+Validate inputs: GPA (0-4.0), email format, file size/format.
+Branding:
+Integrate Edujiin logo (in /public) in header and dashboard.
+Premium design with clean typography, whitespace, modern layout.
+Technical Requirements
+
+Frontend:
+React, Next.js, Tailwind CSS for a responsive single-page app.
+Components: Login, ForgotPassword, ProfileForm, Settings, Dashboard.
+WCAG 2.1 compliance, offline dashboard support via service workers.
+Animations: fade-in forms, button hovers.
+Backend:
+Node.js, Express for REST APIs:
+/api/auth/login: Replit Auth login.
+/api/auth/forgot-password: Initiate reset.
+/api/auth/reset-password: Reset password.
+/api/profile: Create/update/fetch profile.
+/api/documents: Upload/list documents.
+/api/settings: Update settings.
+/api/profile/analyze: DeepSeek analysis.
+Mock API responses for testing.
+Database:
+Replit’s default database (e.g., Replit DB).
+Schema: users (auth), profiles (data), documents (uploads).
+Seed 2,000 profiles, 500 documents via script.
+AI Integration:
+DeepSeek via OpenRouter (use project’s API key).
+Dockerized serving, fallback rule-based logic.
+Hosting:
+Replit’s Autoscale deployment for 2,000+ users.
+Real-time preview in Replit workspace sidebar.
+Security:
+GDPR/CCPA compliance, encryption, OWASP protections.
+Replit Secrets for sensitive data.
+Scalability:
+<2-second loads, 99.9% uptime.
+Optimized queries, caching.
+Replit Configuration:
+.replit file for one-click setup.
+Lightweight dependencies for free tier.
+Script for seeding data.
+Design and Experience
+
+Modern UI with intuitive forms, dynamic widgets.
+“Wow” factor: animated progress bars, document previews, guided onboarding.
+2-minute login/signup, welcome message (e.g., “Welcome to Edujiin!”), milestones (e.g., “Profile 50% complete”).
+Responsive across devices.
