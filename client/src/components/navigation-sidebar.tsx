@@ -25,7 +25,7 @@ export default function NavigationSidebar({
     { id: 'profile-evaluation' as Section, label: 'Profile Evaluation', icon: GraduationCap },
     { id: 'university-search' as Section, label: 'University Search', icon: GraduationCap },
     { id: 'application-tracker' as Section, label: 'Application Tracker', icon: Calendar },
-    { id: 'course-planning' as Section, label: 'Course Planning', icon: BookOpen },
+
     { id: 'document-preparation' as Section, label: 'Document Prep', icon: FileText },
     { id: 'research-matching' as Section, label: 'Research Matching', icon: Microscope },
     { id: 'scholarship-finder' as Section, label: 'Scholarships', icon: DollarSign },
