@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import Dashboard from "@/pages/dashboard";
 import OnCampusSupport from "@/components/on-campus-support";
-import Auth from "@/components/login";
+import Auth from "@/components/auth-form";
 import NotFound from "@/pages/not-found";
 
 function Router() {
