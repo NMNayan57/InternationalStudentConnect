@@ -30,11 +30,14 @@ function Router() {
         <>
           <Route path="/" component={Dashboard} />
           <Route path="/on-campus-support" component={OnCampusSupport} />
+          <Route component={NotFound} />
         </>
       ) : (
-        <Route path="/" component={Landing} />
+        <>
+          <Route path="/" component={Landing} />
+          <Route component={NotFound} />
+        </>
       )}
-      <Route component={NotFound} />
     </Switch>
   );
 }
