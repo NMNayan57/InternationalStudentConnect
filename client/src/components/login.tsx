@@ -182,7 +182,7 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
                         <FormControl>
                           <div className="relative">
                             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                            <Input {...field} type="email" placeholder="your.email@example.com" className="pl-10" />
+                            <Input {...field} type="email" placeholder="youremail@domain.com" className="pl-10" />
                           </div>
                         </FormControl>
                         <FormMessage />
@@ -273,7 +273,7 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
                         <FormControl>
                           <div className="relative">
                             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                            <Input {...field} type="email" placeholder="your.email@example.com" className="pl-10" />
+                            <Input {...field} type="email" placeholder="youremail@domain.com" className="pl-10" />
                           </div>
                         </FormControl>
                         <FormMessage />
