@@ -123,28 +123,19 @@ export default function UserProfileManagement() {
   const [isEditing, setIsEditing] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
-
-  // Mock current user data (in real app, this would come from auth context)
-  const currentUser = {
-    id: 1,
-    username: "johnsmith",
-    email: "john.smith@email.com",
-    firstName: "John",
-    lastName: "Smith",
-    profilePicture: null
-  };
+  const { user } = useAuth();
 
   // Fetch user profile data
   const { data: userData, isLoading } = useQuery({
-    queryKey: ['/api/profile', currentUser.id],
+    queryKey: ['/api/profile', user?.id],
     queryFn: async () => {
-      // Mock data for demonstration
+      // Return actual user data
       return {
-        id: 1,
-        username: "johnsmith",
-        email: "john.smith@email.com",
-        firstName: "John",
-        lastName: "Smith",
+        id: user?.id || 0,
+        username: user?.username || "",
+        email: user?.email || "",
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
         profilePicture: null,
         profile: {
           id: 1,
@@ -259,7 +250,7 @@ export default function UserProfileManagement() {
   // Update profile mutation
   const updateProfileMutation = useMutation({
     mutationFn: async (data: any) => {
-      return apiRequest(`/api/profile/${currentUser.id}`, {
+      return apiRequest(`/api/profile/${user?.id}`, {
         method: 'PATCH',
         body: JSON.stringify(data)
       });
