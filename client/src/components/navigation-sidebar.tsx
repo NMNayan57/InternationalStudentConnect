@@ -20,6 +20,7 @@ export default function NavigationSidebar({
   isMobile = false 
 }: NavigationSidebarProps) {
   const menuItems = [
+    { id: 'personalized-dashboard' as Section, label: 'Dashboard', icon: LayoutDashboard },
     { id: 'study-roadmap' as Section, label: 'Study Roadmap', icon: MapPin },
     { id: 'ielts-preparation' as Section, label: 'Test Prep', icon: BookOpen },
     { id: 'profile-evaluation' as Section, label: 'Profile Evaluation', icon: GraduationCap },
