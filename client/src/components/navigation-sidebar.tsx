@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { GraduationCap, FileText, Microscope, Tickets, Globe, Briefcase, BookOpen, DollarSign, MapPin, CreditCard, Users, Building, Calendar } from "lucide-react";
+import { GraduationCap, FileText, Microscope, Tickets, Globe, Briefcase, BookOpen, DollarSign, MapPin, CreditCard, Users, Building, Calendar, User } from "lucide-react";
 
-type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'application-tracker' | 'during-study-support' | 'on-campus-support' | 'pricing' | 'contact-team';
+type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'application-tracker' | 'during-study-support' | 'on-campus-support' | 'pricing' | 'contact-team' | 'user-profile';
 
 interface NavigationSidebarProps {
   currentSection: Section;
@@ -21,6 +21,7 @@ export default function NavigationSidebar({
 }: NavigationSidebarProps) {
   const menuItems = [
     { id: 'study-roadmap' as Section, label: 'Study Roadmap', icon: MapPin },
+    { id: 'user-profile' as Section, label: 'My Profile', icon: User },
     { id: 'ielts-preparation' as Section, label: 'Test Prep', icon: BookOpen },
     { id: 'profile-evaluation' as Section, label: 'Profile Evaluation', icon: GraduationCap },
     { id: 'university-search' as Section, label: 'University Search', icon: GraduationCap },
