@@ -6,17 +6,50 @@ export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  email: text("email"),
+  profileCompleted: boolean("profile_completed").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const profiles = pgTable("profiles", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id),
+  // Personal Information
+  dateOfBirth: text("date_of_birth"),
+  nationality: text("nationality"),
+  phoneNumber: text("phone_number"),
+  address: text("address"),
+  // Academic Information
+  currentEducationLevel: text("current_education_level"),
+  institution: text("institution"),
+  major: text("major"),
   gpa: text("gpa"),
+  graduationYear: text("graduation_year"),
+  // Test Scores
   toeflScore: integer("toefl_score"),
-  satGreScore: integer("sat_gre_score"),
-  budget: integer("budget"),
+  ieltsScore: text("ielts_score"),
+  satScore: integer("sat_score"),
+  greScore: integer("gre_score"),
+  gmatScore: integer("gmat_score"),
+  // Preferences
+  targetCountries: text("target_countries").array(),
   fieldOfStudy: text("field_of_study"),
+  preferredDegreeLevel: text("preferred_degree_level"),
+  budget: integer("budget"),
+  // Experience
+  workExperience: text("work_experience"),
   extracurriculars: text("extracurriculars"),
+  achievements: text("achievements"),
+  // Profile completion tracking
+  personalInfoCompleted: boolean("personal_info_completed").default(false),
+  academicInfoCompleted: boolean("academic_info_completed").default(false),
+  preferencesCompleted: boolean("preferences_completed").default(false),
+  documentsCompleted: boolean("documents_completed").default(false),
+  workExperienceCompleted: boolean("work_experience_completed").default(false),
+  extracurricularsCompleted: boolean("extracurriculars_completed").default(false),
+  
   strengthScore: integer("strength_score"),
   createdAt: timestamp("created_at").defaultNow(),
 });

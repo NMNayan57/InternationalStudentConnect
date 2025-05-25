@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { GraduationCap, FileText, Microscope, Tickets, Globe, Briefcase, BookOpen, DollarSign, MapPin, CreditCard, Users, Building, Calendar } from "lucide-react";
+import { GraduationCap, FileText, Microscope, Tickets, Globe, Briefcase, BookOpen, DollarSign, MapPin, CreditCard, Users, Building, Calendar, LayoutDashboard } from "lucide-react";
 
-type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'application-tracker' | 'during-study-support' | 'on-campus-support' | 'pricing' | 'contact-team';
+type Section = 'personalized-dashboard' | 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'application-tracker' | 'during-study-support' | 'on-campus-support' | 'pricing' | 'contact-team';
 
 interface NavigationSidebarProps {
   currentSection: Section;
