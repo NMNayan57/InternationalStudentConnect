@@ -22,12 +22,14 @@ import { Button } from "@/components/ui/button";
 import { Bell, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useAIToggle } from "@/hooks/use-ai-toggle";
+import { useAuth } from "@/hooks/use-auth";
 
 type Section = 'profile-evaluation' | 'document-preparation' | 'research-matching' | 'visa-support' | 'cultural-adaptation' | 'career-development' | 'ielts-preparation' | 'scholarship-finder' | 'university-search' | 'course-planning' | 'study-roadmap' | 'application-tracker' | 'during-study-support' | 'on-campus-support' | 'pricing' | 'contact-team' | 'user-profile';
 
 export default function Dashboard() {
   const [currentSection, setCurrentSection] = useState<Section>('study-roadmap');
   const { aiEnabled, toggleAI } = useAIToggle();
+  const { user, logout } = useAuth();
 
   const renderSection = () => {
     switch (currentSection) {
@@ -98,9 +100,16 @@ export default function Dashboard() {
               </Button>
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-medium">JS</span>
+                  <span className="text-white text-sm font-medium">
+                    {user?.firstName?.[0]}{user?.lastName?.[0]}
+                  </span>
                 </div>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 hidden sm:block">John Smith</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 hidden sm:block">
+                  {user?.firstName} {user?.lastName}
+                </span>
+                <Button variant="ghost" size="sm" onClick={logout}>
+                  Logout
+                </Button>
               </div>
               {/* Mobile menu trigger */}
               <Sheet>
