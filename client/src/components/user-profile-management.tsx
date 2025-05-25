@@ -48,6 +48,7 @@ import {
   BookOpen,
   Users,
   Heart,
+  Loader2,
   DollarSign
 } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -124,6 +125,52 @@ export default function UserProfileManagement() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const { user } = useAuth();
+  
+  const [aiAnalysis, setAiAnalysis] = useState<any>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  // AI Profile Analysis function
+  const analyzeProfile = async () => {
+    if (!userData) return;
+    
+    setIsAnalyzing(true);
+    try {
+      const response = await fetch("/api/analyze-profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          profileData: {
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            email: userData.email,
+            profile: userData.profile
+          }
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error("Analysis failed");
+      }
+      
+      const analysis = await response.json();
+      setAiAnalysis(analysis);
+      toast({
+        title: "Profile Analysis Complete",
+        description: "Your personalized recommendations are ready!",
+      });
+    } catch (error) {
+      console.error("Analysis error:", error);
+      toast({
+        title: "Analysis Failed", 
+        description: "Unable to analyze profile. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   // Fetch user profile data
   const { data: userData, isLoading } = useQuery({
@@ -369,9 +416,142 @@ export default function UserProfileManagement() {
                 <span className="text-sm">Add More Experience</span>
               </div>
             </div>
+            
+            {/* AI Profile Analysis Button */}
+            <div className="mt-6 pt-4 border-t">
+              <Button 
+                onClick={analyzeProfile}
+                disabled={isAnalyzing}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+              >
+                {isAnalyzing ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Analyzing Profile with AI...
+                  </>
+                ) : (
+                  <>
+                    <Brain className="mr-2 h-4 w-4" />
+                    Get AI Profile Analysis
+                  </>
+                )}
+              </Button>
+              <p className="text-xs text-gray-500 mt-2 text-center">
+                Get personalized university recommendations and improvement suggestions
+              </p>
+            </div>
           </div>
         </CardContent>
       </Card>
+
+      {/* AI Analysis Results */}
+      {aiAnalysis && (
+        <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-purple-50">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2 text-blue-700">
+              <Brain className="h-5 w-5" />
+              <span>AI Profile Analysis Results</span>
+            </CardTitle>
+            <CardDescription>
+              Personalized recommendations based on your profile
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Profile Completeness */}
+            <div className="bg-white p-4 rounded-lg border">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-medium">Profile Strength</span>
+                <span className="text-lg font-bold text-blue-600">{aiAnalysis.profileCompleteness}%</span>
+              </div>
+              <Progress value={aiAnalysis.profileCompleteness} className="h-3" />
+            </div>
+
+            {/* AI Analysis */}
+            {aiAnalysis.aiAnalysis && (
+              <>
+                {/* Strengths & Weaknesses */}
+                <div className="bg-white p-4 rounded-lg border">
+                  <h4 className="font-medium mb-2 flex items-center">
+                    <Target className="h-4 w-4 mr-2 text-green-600" />
+                    Analysis Summary
+                  </h4>
+                  <p className="text-gray-700">{aiAnalysis.aiAnalysis.strengthsWeaknesses}</p>
+                </div>
+
+                {/* University Recommendations */}
+                {aiAnalysis.aiAnalysis.recommendedUniversities && (
+                  <div className="bg-white p-4 rounded-lg border">
+                    <h4 className="font-medium mb-3 flex items-center">
+                      <GraduationCap className="h-4 w-4 mr-2 text-purple-600" />
+                      Recommended Universities
+                    </h4>
+                    <div className="space-y-3">
+                      {aiAnalysis.aiAnalysis.recommendedUniversities.map((uni: any, index: number) => (
+                        <div key={index} className="p-3 bg-gray-50 rounded-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <h5 className="font-medium">{uni.name}</h5>
+                            <Badge variant="secondary" className="bg-blue-100 text-blue-700">
+                              {uni.matchPercentage}% Match
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-gray-600 mb-1">{uni.country}</p>
+                          <p className="text-sm text-gray-700 mb-2">{uni.reasoning}</p>
+                          <p className="text-xs text-orange-600 font-medium">{uni.requirements}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Improvement Areas */}
+                {aiAnalysis.aiAnalysis.improvementAreas && (
+                  <div className="bg-white p-4 rounded-lg border">
+                    <h4 className="font-medium mb-3 flex items-center">
+                      <TrendingUp className="h-4 w-4 mr-2 text-orange-600" />
+                      Areas for Improvement
+                    </h4>
+                    <div className="space-y-3">
+                      {aiAnalysis.aiAnalysis.improvementAreas.map((area: any, index: number) => (
+                        <div key={index} className="p-3 bg-gray-50 rounded-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <h5 className="font-medium">{area.area}</h5>
+                            <Badge variant={area.priority === 'High' ? 'destructive' : area.priority === 'Medium' ? 'default' : 'secondary'}>
+                              {area.priority} Priority
+                            </Badge>
+                          </div>
+                          <ul className="text-sm text-gray-700 space-y-1">
+                            {area.actionSteps?.map((step: string, stepIndex: number) => (
+                              <li key={stepIndex} className="flex items-start">
+                                <span className="mr-2">•</span>
+                                <span>{step}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Test Recommendations */}
+                {aiAnalysis.aiAnalysis.testRecommendations && (
+                  <div className="bg-white p-4 rounded-lg border">
+                    <h4 className="font-medium mb-3 flex items-center">
+                      <BookOpen className="h-4 w-4 mr-2 text-green-600" />
+                      Test Score Recommendations
+                    </h4>
+                    <div className="space-y-2">
+                      <p className="text-sm"><strong>Required Tests:</strong> {aiAnalysis.aiAnalysis.testRecommendations.requiredTests?.join(', ')}</p>
+                      <p className="text-sm"><strong>Target Scores:</strong> {aiAnalysis.aiAnalysis.testRecommendations.targetScores}</p>
+                      <p className="text-sm"><strong>Timeline:</strong> {aiAnalysis.aiAnalysis.testRecommendations.timeline}</p>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Main Content Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
