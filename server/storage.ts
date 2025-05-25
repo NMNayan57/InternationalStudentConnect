@@ -1,21 +1,22 @@
 import { 
   users, profiles, universityMatches, documents, researchInterests, professorMatches,
   visaApplications, culturalAdaptation, careerProfiles, researchProjects, grants, 
-  collaborationRequests, jobs, culturalResources, campusEvents, campusResources,
-  type User, type InsertUser, type Profile, type InsertProfile, type Document, type InsertDocument,
+  collaborationRequests, jobs, culturalResources, campusEvents, campusResources, applications,
+  type User, type UpsertUser, type Profile, type InsertProfile, type Document, type InsertDocument,
   type ResearchInterest, type InsertResearchInterest, type VisaApplication, type InsertVisaApplication,
   type CulturalAdaptation, type InsertCulturalAdaptation, type CareerProfile, type InsertCareerProfile,
   type ResearchProject, type InsertResearchProject, type Grant, type InsertGrant,
   type CollaborationRequest, type InsertCollaborationRequest, type Job, type InsertJob,
   type CulturalResource, type InsertCulturalResource, type CampusEvent, type InsertCampusEvent,
-  type CampusResource, type InsertCampusResource
+  type CampusResource, type InsertCampusResource, type Application, type InsertApplication
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
-  // User management
-  getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  // User management for Replit Auth
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
 
   // Profile management
   createProfile(profile: InsertProfile): Promise<Profile>;

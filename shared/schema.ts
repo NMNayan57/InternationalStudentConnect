@@ -1,21 +1,33 @@
-import { pgTable, text, serial, integer, boolean, jsonb, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, jsonb, timestamp, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// Session storage table for Replit Auth
+export const sessions = pgTable(
+  "sessions",
+  {
+    sid: text("sid").primaryKey(),
+    sess: jsonb("sess").notNull(),
+    expire: timestamp("expire").notNull(),
+  },
+  (table) => [index("IDX_session_expire").on(table.expire)],
+);
+
+// User storage table for Replit Auth
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
+  id: text("id").primaryKey().notNull(), // Replit user ID
+  email: text("email").unique(),
   firstName: text("first_name"),
   lastName: text("last_name"),
-  email: text("email"),
+  profileImageUrl: text("profile_image_url"),
   profileCompleted: boolean("profile_completed").default(false),
   createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const profiles = pgTable("profiles", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id),
+  userId: text("user_id").references(() => users.id),
   // Personal Information
   dateOfBirth: text("date_of_birth"),
   nationality: text("nationality"),
@@ -66,7 +78,7 @@ export const universityMatches = pgTable("university_matches", {
 
 export const documents = pgTable("documents", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id),
+  userId: text("user_id").references(() => users.id),
   documentType: text("document_type").notNull(),
   originalContent: text("original_content").notNull(),
   enhancedContent: text("enhanced_content"),
@@ -215,8 +227,17 @@ export const applications = pgTable("applications", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// UpsertUser type for Replit Auth
+export type UpsertUser = {
+  id: string;
+  email?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  profileImageUrl?: string | null;
+};
+
 // Insert schemas
-export const insertUserSchema = createInsertSchema(users).omit({ id: true });
+export const insertUserSchema = createInsertSchema(users).omit({ createdAt: true, updatedAt: true });
 export const insertProfileSchema = createInsertSchema(profiles).omit({ id: true, createdAt: true });
 export const insertDocumentSchema = createInsertSchema(documents).omit({ id: true, createdAt: true });
 export const insertResearchInterestSchema = createInsertSchema(researchInterests).omit({ id: true });
