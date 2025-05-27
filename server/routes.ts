@@ -3,14 +3,14 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
 
-const DEEPSEEK_API_KEY = "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";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<any> {
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${DEEPSEEK_API_KEY}`,
+      "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
       "HTTP-Referer": "https://studypath-ai.replit.app",
       "X-Title": "StudyPath AI Platform"
     },
