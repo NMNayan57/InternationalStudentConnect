@@ -3,19 +3,21 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || "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";
+const OPENROUTER_API_KEY = "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";
 
 async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<any> {
+  console.log("Making API call with key:", OPENROUTER_API_KEY ? "Key exists" : "No key");
+  
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-      "HTTP-Referer": "https://studypath-ai.replit.app",
-      "X-Title": "StudyPath AI Platform"
+      "HTTP-Referer": "https://edujiin.replit.app",
+      "X-Title": "Edujiin AI Platform"
     },
     body: JSON.stringify({
-      model: "deepseek/deepseek-r1:free",
+      model: "openai/gpt-3.5-turbo",
       messages: [
         {
           role: "system", 
@@ -27,8 +29,12 @@ async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<a
     })
   });
 
+  console.log("API Response status:", response.status);
+  
   if (!response.ok) {
-    throw new Error(`DeepSeek API error: ${response.status} ${response.statusText}`);
+    const errorText = await response.text();
+    console.log("API Error details:", errorText);
+    throw new Error(`API error: ${response.status} ${response.statusText} - ${errorText}`);
   }
 
   const data = await response.json();

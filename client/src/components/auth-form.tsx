@@ -305,11 +305,14 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
                           <div className="relative">
                             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                             <Input 
-                              {...field}
                               type="email" 
                               placeholder="Enter your email address" 
                               className="pl-10"
                               autoComplete="email"
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                              onBlur={field.onBlur}
+                              name={field.name}
                             />
                           </div>
                         </FormControl>
