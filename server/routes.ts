@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || "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";
 
 async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<any> {
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
