@@ -17,7 +17,7 @@ async function callDeepSeekAPI(prompt: string, forceJsonParse = true): Promise<a
       "X-Title": "Edujiin AI Platform"
     },
     body: JSON.stringify({
-      model: "openai/gpt-3.5-turbo",
+      model: "meta-llama/llama-3.2-3b-instruct:free",
       messages: [
         {
           role: "system", 

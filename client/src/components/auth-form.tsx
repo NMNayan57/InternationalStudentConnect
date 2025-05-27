@@ -52,7 +52,8 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
       email: "",
       password: "",
       confirmPassword: "",
-    }
+    },
+    mode: "onChange"
   });
 
   const loginMutation = useMutation({
@@ -309,10 +310,7 @@ export default function Auth({ onAuthSuccess }: AuthProps) {
                               placeholder="Enter your email address" 
                               className="pl-10"
                               autoComplete="email"
-                              value={field.value || ""}
-                              onChange={field.onChange}
-                              onBlur={field.onBlur}
-                              name={field.name}
+                              {...field}
                             />
                           </div>
                         </FormControl>
